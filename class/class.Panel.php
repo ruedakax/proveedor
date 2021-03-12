@@ -32,10 +32,10 @@ class Panel{
     public function callAccion($datos){
         switch ($this->accion) {
             case 'consultar':
-                $this->instacia->consultar($datos);
+                return $this->instacia->consultar($datos);
             break;
             case 'guardar':                                
-                $this->instacia->guardar($datos);
+                return $this->instacia->guardar($datos);
             break;
             default:
                 echo "ERROR CONSULTA AL ADMON";

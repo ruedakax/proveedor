@@ -49,33 +49,6 @@ export function getIndex(){
     const indice = paneles[actual]
     return parseInt(indice)
 }
-/*genera el objeto segun el formulario que se pase por parametro*/
-export function serialize(objForm){
-    let otros = ['radio','checkbox'] 
-    let data_final = []  
-    let data = Array.from(objForm);
-    data.forEach(element => {    
-      if(element.name!==''){
-        if(otros.includes(element.type)){
-          if(element.type==='radio' && element.checked){
-            data_final[element.name] = element.value;
-          }else if(getKey(data_final,element.name)){
-            data_final[element.name] = [element.value]
-          }else{
-            data_final[element.name].push(element.value)
-          }     
-        }else{
-          data_final[element.name] = element.value;          
-        }
-      }
-    });
-    return JSON.stringify(data_final)
-  }
-  
-function getKey(arreglo,valor){  
-const key = arreglo.findIndex(llave=>llave === valor)
-return key
-}
 
 export function start(){
     //elminar la opcion inicial

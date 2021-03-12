@@ -4,8 +4,7 @@ require_once("./class/class.Panel.php");
 //
 $panel = new Panel($_REQUEST['tipo'],$_REQUEST['accion']);
 $panel->callPanel();
-$panel->callAccion($_REQUEST);
-
+$respuesta = $panel->callAccion($_REQUEST);
 echo $respuesta;
 //
 ?>

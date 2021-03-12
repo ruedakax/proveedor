@@ -1,13 +1,12 @@
 <?php
-  error_reporting(E_ALL);  
+  /*error_reporting(E_ALL);  
   require_once("./class/class.Panel.php");
   //
-  $panel   = new Panel('panel_1','consultar');
-  /*$panel->tipo = 'panel_1';
-  $panel->tipo = 'consultar';*/
+  $panel   = new Panel('panel_1','consultar');  
   $panel->callPanel();
-  $panelToShow = $panel->callAccion(array($_REQUEST['i']));
+  $panelToShow = $panel->callAccion(array($_REQUEST['i']));*/
   //  
+  $panelToShow = false;
 ?>
 <!DOCTYPE html>
 <html>
@@ -49,7 +48,7 @@
         </div>
 <?php } ?>
       </div>
-      <form class="all-form" name="c-form" action="#" method="post" id="c-form">
+      <form class="all-form" name="c-form" action="./api.php" method="post" id="c-form">
 <?php if(!$panelToShow){ ?>
         
 <?php } ?>      

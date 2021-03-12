@@ -1,4 +1,5 @@
-import {showHide,showHideByCheck,serialize} from './general.js'
+import {showHide,showHideByCheck} from './general.js'
+import {setPanel} from './envio.js'
 import {addNodo} from './nodos.js'
 
 function preparePanel1(){
@@ -7,13 +8,16 @@ function preparePanel1(){
 }
 ////*Envio del panel */    
 function savePanel1(){
-  const objForm = document.querySelector('#c-form')
-  const data = serialize(objForm)
-  console.log(data)
+  const objForm = document.querySelector('#c-form')  
+  const tipo = 'panel_1'
+  const accion = 'guardar'
+  setPanel(objForm,tipo,accion).then(function(response){
+    const data = JSON.parse(response);    
+    console.log(data)
+  });  
 }
 /*asociacion de eventos para elementos del panel que lo requieren*/
 function asociarEventos(){
-
     window.tipo_persona.selectedIndex = 0;
 
     window.tipo_persona.addEventListener('change', () => showHide('juridica'),false)
@@ -35,8 +39,6 @@ function asociarEventos(){
       addNodo(container,'dir_suc_',1,'nodoSucursal')
     })  
 }
-
-
 
 const panel_1 = `<!-- I N I C I O   -  C A B E C E R A   I N F O R M A C I O N   G E N E R A L-->
 <div class="form-box panel_1"><h3>1. Información General<i class="arrow down"></i></h3></div>
@@ -157,7 +159,7 @@ const panel_1 = `<!-- I N I C I O   -  C A B E C E R A   I N F O R M A C I O N  
       <fieldset>
         <label class="c-form-label negrita" for="autoretenedor">Autoretenedor<span class="c-form-required"> *</span></label><br/>
         <label class="alt_label c-form-label"><input type="radio" name="autoretenedor" id="autoretenedor" value="SI">SÍ</label>
-        <label class="alt_label c-form-label"><input type="radio" name="autoretenedor" id="autoretenedor" value="NO" checked>NO</label>                
+        <label class="alt_label c-form-label"><input type="radio" name="autoretenedor" id="autoretenedor" value="NO" checked>NO</label>
       </fieldset>
       <fieldset class="oculto autoretenedor item-sucursal">
           <label class="c-form-label negrita" for="retenedor_res">No. Resoluci&oacute;n<span class="c-form-required"> *</span></label>

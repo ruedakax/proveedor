@@ -10,7 +10,7 @@ class Panel1{
 
   }
 
-  public function guardar($datos){
+  public function guardar($datos){      
       return json_encode($datos);
   }    
 
