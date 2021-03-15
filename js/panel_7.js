@@ -18,5 +18,8 @@ const panel_7 =  `<!-- INCIO -  C A B E C E R A   I N F O R M A C I O N-->
                 </div>                
             </div>
         </div>`
+function savePanel7(){
 
-export default preparePanel7
+}
+
+export  {preparePanel7,savePanel7}

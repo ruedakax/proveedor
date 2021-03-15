@@ -1,26 +1,23 @@
 import {mover,start,getIndex} from './general.js'
 import {preparePanel1,savePanel1} from './panel_1.js'
-import preparePanel2 from './panel_2.js'
-import preparePanel3 from './panel_3.js'
-import preparePanel4 from './panel_4.js'
-import preparePanel5 from './panel_5.js'
-import preparePanel6 from './panel_6.js'
-import preparePanel7 from './panel_7.js'
-import preparePanel8 from './panel_8.js'
+import {preparePanel2,savePanel2} from './panel_2.js'
+import {preparePanel3,savePanel3} from './panel_3.js'
+import {preparePanel4,savePanel4} from './panel_4.js'
+import {preparePanel5,savePanel5} from './panel_5.js'
+import {preparePanel6,savePanel6} from './panel_6.js'
+import {preparePanel7,savePanel7} from './panel_7.js'
+import {preparePanel8,savePanel8} from './panel_8.js'
 
 const funciones = {
                    1:{prepare:preparePanel1,save:savePanel1},
-                   2:{prepare:preparePanel2},
-                   3:{prepare:preparePanel3},
-                   4:{prepare:preparePanel4},
-                   5:{prepare:preparePanel5},
-                   6:{prepare:preparePanel6},
-                   7:{prepare:preparePanel7},
-                   8:{prepare:preparePanel8}
+                   2:{prepare:preparePanel2,save:savePanel1},
+                   3:{prepare:preparePanel3,save:savePanel1},
+                   4:{prepare:preparePanel4,save:savePanel1},
+                   5:{prepare:preparePanel5,save:savePanel1},
+                   6:{prepare:preparePanel6,save:savePanel1},
+                   7:{prepare:preparePanel7,save:savePanel1},
+                   8:{prepare:preparePanel8,save:savePanel1}
                 }
-
-//conjunto de checboxes que permiten seleccion multiple
-const no_sel_unica = ["i3_p1_certificado","i2_p9_postventa"]
 
 export function showSection(){
     window.overlay.classList.remove('oculto')

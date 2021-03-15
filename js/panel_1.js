@@ -9,11 +9,18 @@ function preparePanel1(){
 ////*Envio del panel */    
 function savePanel1(){
   const objForm = document.querySelector('#c-form')  
-  const tipo = 'panel_1'
-  const accion = 'guardar'
-  setPanel(objForm,tipo,accion).then(function(response){
+
+  const valores_generales = {'tipo' : 'panel_1',
+                              'accion' : 'guardar',
+                              'tipo_registro' : document.querySelector('#enviar').dataset.tipoRegistro
+                            }
+  setPanel(objForm,valores_generales)
+  .then(function(response){
     const data = JSON.parse(response);    
     console.log(data)
+  })
+  .catch(function(response){
+    console.log(response)
   });  
 }
 /*asociacion de eventos para elementos del panel que lo requieren*/
@@ -64,7 +71,7 @@ const panel_1 = `<!-- I N I C I O   -  C A B E C E R A   I N F O R M A C I O N  
     <div class="two-columns item-sucursal oculto" id="juridica">
       <fieldset>
         <label class="c-form-label negrita" for="nombre_juridica">Nombre Representante Legal<span class="c-form-required"> *</span></label>
-        <input id="rep_legal" class="c-form-input" type="text" name="nombre_juridica" placeholder="Nombre" value="Pepito Castro">
+        <input id="rep_legal" class="c-form-input" type="text" name="rep_legal" placeholder="Nombre" value="Pepito Castro">
       </fieldset>
       <fieldset>
         <label class="c-form-label negrita" for="rep_documento">Documento<span class="c-form-required"> *</span></label>
@@ -80,7 +87,7 @@ const panel_1 = `<!-- I N I C I O   -  C A B E C E R A   I N F O R M A C I O N  
         <label class="alt_label c-form-label"><input type="radio" name="tipo_sociedad" value="privada">Privada</label>
         <label class="alt_label c-form-label"><input type="radio" name="tipo_sociedad" value="publica">Pública</label>
         <label class="alt_label c-form-label"><input type="radio" name="tipo_sociedad" value="mixta">Mixta</label>
-        <label class="alt_label c-form-label"><input type="radio" name="tipo_sociedad" value="ESAL">Entidad Sin Ánimo de Lucro</label>
+        <label class="alt_label c-form-label"><input type="radio" name="tipo_sociedad" value="ESAL" checked="true">Entidad Sin Ánimo de Lucro</label>
     </fieldset>            
     <div class="two-columns">
       <fieldset>
@@ -95,7 +102,7 @@ const panel_1 = `<!-- I N I C I O   -  C A B E C E R A   I N F O R M A C I O N  
     <div class="three-columns">
       <fieldset>
           <label class="c-form-label negrita" for="contacto_email">Email<span class="c-form-required"> *</span></label>
-          <input id="contacto_email" class="c-form-input" type="text" name="contacto_email" placeholder="email" value="prueba@prueba">
+          <input id="contacto_email" class="c-form-input" type="text" name="contacto_email" placeholder="email" value="prueba@prueba.co">
       </fieldset>
       <fieldset>
           <label class="c-form-label negrita" for="contacto_site">Página Web<span class="c-form-required"> *</span></label>
@@ -134,7 +141,7 @@ const panel_1 = `<!-- I N I C I O   -  C A B E C E R A   I N F O R M A C I O N  
       </fieldset>
       <fieldset>
           <label class="c-form-label negrita" for="fecha_mercantil">Fecha<span class="c-form-required"> *</span></label>
-          <input id="reg_fecha" class="c-form-input" type="text" name="fecha_mercantil" placeholder="AAAA-MM-DD" value="2021-02-21">
+          <input id="reg_fecha" class="c-form-input" type="text" name="reg_fecha" placeholder="AAAA-MM-DD" value="2021-02-21">
       </fieldset>              
     </div>            
     <div class="four-columns">
@@ -152,7 +159,7 @@ const panel_1 = `<!-- I N I C I O   -  C A B E C E R A   I N F O R M A C I O N  
       </fieldset>
       <fieldset>
           <label class="c-form-label negrita" for="escritura_ciudad">Ciudad<span class="c-form-required"> *</span></label>
-          <input id="escritura_ciudad" class="c-form-input" type="text" name="escritura_ciudad" placeholder="AAAA-MM-DD" value="2021-02-21">
+          <input id="escritura_ciudad" class="c-form-input" type="text" name="escritura_ciudad" placeholder="Ciudad" value="Medellín">
       </fieldset>              
     </div>
     <div class="two-columns">

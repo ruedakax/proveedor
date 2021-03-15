@@ -20,6 +20,10 @@ function preparePanel3(){
         item.addEventListener('change', () => showHideByCheck(item,'gi3_p2'))
     });   
 }
+
+function savePanel3(){
+
+}
   
 const panel_3 =  `<!-- INCIO -  C A B E C E R A   I N F O R M A C I O N   S I S T E M A S   G E S T I O N-->
 <div class="form-box panel_3"><h3>3. Información de Sistemas de Gestión<i class="arrow down"></i></h3></div>
@@ -130,4 +134,4 @@ function showGestion(item,tipoPersona){
   }
 }
 
-export default preparePanel3
+export  {preparePanel3,savePanel3}

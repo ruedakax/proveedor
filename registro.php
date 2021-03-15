@@ -1,10 +1,10 @@
 <?php
-  /*error_reporting(E_ALL);  
+  error_reporting(E_ALL);  
   require_once("./class/class.Panel.php");
   //
   $panel   = new Panel('panel_1','consultar');  
   $panel->callPanel();
-  $panelToShow = $panel->callAccion(array($_REQUEST['i']));*/
+  $panelToShow = $panel->callAccion(array($_REQUEST['i']));  
   //  
   $panelToShow = false;
 ?>

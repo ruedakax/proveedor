@@ -30,6 +30,9 @@ class Panel{
     }
 
     public function callAccion($datos){
+        //
+        SOConexion::stripInput($datos);
+        //
         switch ($this->accion) {
             case 'consultar':
                 return $this->instacia->consultar($datos);

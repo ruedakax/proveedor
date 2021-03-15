@@ -30,6 +30,10 @@ function preparePanel2(){
   })
 }
 
+function savePanel2(){
+
+}
+
 const panel_2 = `<!-- I N I C I O  -  C A B E C E R A   I N F O R M A C I O N   COMERCIAL-->
           <div class="form-box panel_2"><h3>2. Información Comercial<i class="arrow up"></i></h3></div>
           <div class="form-box panel_2" id="panel_2">
@@ -176,4 +180,4 @@ const panel_2 = `<!-- I N I C I O  -  C A B E C E R A   I N F O R M A C I O N   
             </div>
           </div>`
 
-export default preparePanel2
+export  {preparePanel2,savePanel2}

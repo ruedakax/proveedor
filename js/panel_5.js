@@ -25,6 +25,10 @@ function preparePanel5(objeto){
       addNodo(container,'contac_nombre_1',2,'nodoContactos')
   })    
 }
+
+function savePanel5(){
+
+}
   
 const panel_5 =  `<!-- INCIO -  C A B E C E R A   I N F O R M A C I O N  -->
           <div class="form-box panel_5"><h3>5. Control Lavado de Activos y Financiación del Terrorismo (LA/FT)<i class="arrow down"></i></h3></div>
@@ -196,3 +200,5 @@ function showControl(tipoPersona){
     window.accionistas.classList.add('oculto')
   }
 }
+
+export  {preparePanel5,savePanel5}

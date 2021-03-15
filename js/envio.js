@@ -25,10 +25,10 @@
         .join('&');    
 }
 
-export function setPanel(objForm,panel,accion){
+export function setPanel(objForm,valores){
     return new Promise(function(resolve, reject) {
         const form_params = serialize(objForm)
-        const params = `tipo=${panel}&accion=${accion}&${form_params}`
+        const params = `tipo=${valores.tipo}&accion=${valores.accion}&tipo_registro=${valores.tipo_registro}&${form_params}`
         //Ajax request
         const req = new XMLHttpRequest();
         req.open('POST', objForm.action, true);
