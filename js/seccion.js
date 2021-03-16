@@ -7,20 +7,22 @@ import {preparePanel5,savePanel5} from './panel_5.js'
 import {preparePanel6,savePanel6} from './panel_6.js'
 import {preparePanel7,savePanel7} from './panel_7.js'
 import {preparePanel8,savePanel8} from './panel_8.js'
+//alerts
+import {showModal} from './modal.js' 
 
 const funciones = {
                    1:{prepare:preparePanel1,save:savePanel1},
-                   2:{prepare:preparePanel2,save:savePanel1},
-                   3:{prepare:preparePanel3,save:savePanel1},
-                   4:{prepare:preparePanel4,save:savePanel1},
-                   5:{prepare:preparePanel5,save:savePanel1},
-                   6:{prepare:preparePanel6,save:savePanel1},
-                   7:{prepare:preparePanel7,save:savePanel1},
-                   8:{prepare:preparePanel8,save:savePanel1}
+                   2:{prepare:preparePanel2,save:savePanel2},
+                   3:{prepare:preparePanel3,save:savePanel3},
+                   4:{prepare:preparePanel4,save:savePanel4},
+                   5:{prepare:preparePanel5,save:savePanel5},
+                   6:{prepare:preparePanel6,save:savePanel6},
+                   7:{prepare:preparePanel7,save:savePanel7},
+                   8:{prepare:preparePanel8,save:savePanel8}
                 }
 
 export function showSection(){
-    window.overlay.classList.remove('oculto')
+    //window.overlay.classList.remove('oculto')
     return new Promise(resolve => setTimeout(()=>{
         const index = getIndex()
         //llamado dinamico de funciones según el panel
@@ -32,19 +34,50 @@ export function showSection(){
     },10));    
 }
 
-export function moveSection(tipo){
+export function moveSection(tipo){        
     if(tipo==="adelante"){
-        funciones[getIndex()].save()
+        adelantarSeccion(tipo)
     }else{
         //ToDo:cuando va atrás
-    }
-    mover(tipo)
-    showSection().then(()=>{
-            let actual = parseInt(document.querySelector('#buttonPanel').dataset.current)
-            if(actual > 0){
-                window.volver.classList.remove('oculto')
-            }else{
-                window.volver.classList.add('oculto')
-            }
-    })
+    }        
 }
+
+/*señala los input que no pasaron la validacion según la respuesta del servidor*/
+function displayErrors(respuesta){
+    if(respuesta.res==='error'){
+      showModal(respuesta.res,respuesta.mensaje)
+      respuesta.validaciones.forEach(element => {
+        window[element[0]].setAttribute('required', '');
+      });
+      return false
+    }else{
+      return true
+    }
+}
+
+function adelantarSeccion(tipo){
+    let res = funciones[getIndex()].save()
+    //promesa
+    res.then(function(response){
+        const respuesta = JSON.parse(response)
+        let ans = displayErrors(respuesta)        
+        if(ans){
+            mover(tipo)            
+            showSection().then(()=>{
+                showModal(respuesta.res,respuesta.mensaje)
+                let actual = parseInt(document.querySelector('#buttonPanel').dataset.current)
+                if(actual > 0){
+                    window.volver.classList.remove('oculto')
+                }else{
+                    window.volver.classList.add('oculto')
+                }
+            })            
+        }else{
+
+        }           
+    })
+    .catch(function(response){
+        console.log(response)   
+    });
+}
+

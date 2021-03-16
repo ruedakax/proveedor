@@ -41,7 +41,7 @@
         <div class="c-form">
           <fieldset>
               <label class="c-form-label negrita" for="tipo_registro"> ¿Cómo desea inscribirse en el registro?</label><br/>
-              <label class="alt_label c-form-label"><input type="checkbox" name="tipo_registro" class="tipo_registro" value="cliente">CLIENTE</label>
+              <label class="alt_label c-form-label"><input type="checkbox" name="tipo_registro" class="tipo_registro" value="cliente">CLIENTE</label> 
               <label class="alt_label c-form-label"><input type="checkbox" name="tipo_registro" class="tipo_registro" value="proveedor">PROVEEDOR</label>
               <label class="alt_label c-form-label"><input type="checkbox" name="tipo_registro" class="tipo_registro" value="contratista">CONTRATISTA &oacute; SUBCONTRATISTA</label>                
           </fieldset>  

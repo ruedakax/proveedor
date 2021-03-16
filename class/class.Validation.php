@@ -85,27 +85,34 @@
          * @param string $name nome del pattern
          * @return this
          */
-        public function pattern($name){
-            
+        public function pattern($name){        
             if($name == 'array'){
                 
                 if(!is_array($this->value)){
-                    $this->errors[] = array($this->name,'Formato campo '.$this->name.' non valido.');
+                    $this->errors[] = array($this->name,'Formato no válido');
                 }
             
-            }else{
-
-                if($name =="email"){
-                    if(!$this->is_email($this->value)){
-                        $this->errors[] = array($this->name,'Formato campo '.$this->name.' non valido.');
-                    }
-
-                }else{
-                    $regex = '/^('.$this->patterns[$name].')$/u';
-                    if($this->value != '' && !preg_match($regex, $this->value)){
-                        $this->errors[] = array($this->name,'Formato campo '.$this->name.' non valido.');
-                    }
-                }
+            }else{          
+                $regex = '/^('.$this->patterns[$name].')$/u';
+                switch ($name){
+                    case 'email':
+                        if(!$this->is_email($this->value)){
+                            $this->errors[] = array($this->name,'Formato no válido');
+                        }
+                    break;                    
+                    case 'date_ymd':
+                        $fecha = explode('-',$this->value);
+                        $res = checkdate($fecha[1], $fecha[2], $fecha[0]);                        
+                        if(($this->value != '' && !preg_match($regex, $this->value)) || !$res){
+                            $this->errors[] = array($this->name,'Formato no válido');
+                        }
+                    break;                    
+                    default:                        
+                        if($this->value != '' && !preg_match($regex, $this->value)){
+                            $this->errors[] = array($this->name,'Formato no válido');
+                        }
+                    break;
+                }                      
             }
             return $this;
             
@@ -121,7 +128,7 @@
             
             $regex = '/^('.$pattern.')$/u';
             if($this->value != '' && !preg_match($regex, $this->value)){
-                $this->errors[] = array($this->name,'Formato campo '.$this->name.' non valido.');
+                $this->errors[] = array($this->name,'Formato no válido');
             }
             return $this;
             
@@ -135,7 +142,7 @@
         public function required(){
             
             if((isset($this->file) && $this->file['error'] == 4) || ($this->value == '' || $this->value == null)){
-                array($this->name,'Formato campo '.$this->name.' non valido.');
+                $this->errors[] = array($this->name,'El campo es requerido');
             }            
             return $this;
             

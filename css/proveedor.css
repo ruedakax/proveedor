@@ -62,6 +62,11 @@ body {
 .c-form-required {
   color: #B0092D;
 }
+
+input:required {
+  box-shadow: 2px 2px 3px rgba(200, 0, 0, 0.85);
+}
+
 textarea.c-form-input {
   width: 100%;
   padding: 10px;

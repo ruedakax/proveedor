@@ -8,21 +8,17 @@ function preparePanel1(){
 }
 ////*Envio del panel */    
 function savePanel1(){
-  const objForm = document.querySelector('#c-form')  
+  const objForm = document.querySelector('#c-form')
 
   const valores_generales = {'tipo' : 'panel_1',
                               'accion' : 'guardar',
                               'tipo_registro' : document.querySelector('#enviar').dataset.tipoRegistro
                             }
-  setPanel(objForm,valores_generales)
-  .then(function(response){
-    const data = JSON.parse(response);    
-    console.log(data)
-  })
-  .catch(function(response){
-    console.log(response)
-  });  
+  /////PROMESA
+  return setPanel(objForm,valores_generales)
 }
+  
+
 /*asociacion de eventos para elementos del panel que lo requieren*/
 function asociarEventos(){
     window.tipo_persona.selectedIndex = 0;

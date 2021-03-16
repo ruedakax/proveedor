@@ -3,33 +3,91 @@ error_reporting(E_ALL);
 require_once("./class/class.Validation.php");
 
 class Panel1{
-  public $conn;      
-  
-  private function prepararPanel(){
-
-  }  
+  public $conn;        
 
   public function guardar($datos){
-    $ok = ['res'=>'OK','mensaje'=>'Información General Guardada con Éxito','validaciones'=>[]];
-    $error = ['res'=>'ERROR','mensaje'=>'','validaciones'=>[]];
+    $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'panel'=>[]];
+    //
     $res = $this->validar($datos);
-    if($res===TRUE){
+    if(!is_array($res)){
       $res = $this->execGuardar($datos);
-      if($res===TRUE){
-        $res = $ok;
+      if($res==FALSE){
+        $respuesta['mensaje'] = 'Error al Guardar o el NIT ya existe.';
+        $respuesta['validaciones'] = [];
+        $respuesta['panel'] = $datos;
+        $respuesta['res'] = "error";        
       }else{
-        $error['mensaje'] = 'Error al guardar';
-        $error['validaciones'] = [];
-        $res = $error;
+        if($datos['sucursales']=='SI'){//se guardan las sucursales
+          //dir_su_
+          $sucursales = $this->extraerSucursales($datos);
+          $this->guardarSucursales($sucursales,$datos['nit']);
+        }
+        $respuesta['mensaje'] = 'La Información General Fue Guardada.';
+        $respuesta['validaciones'] = [];
+        $respuesta['res'] = "success";
       }
     }else{
-      $error['mensaje'] = 'Algunos datos no son válidos';
-      $error['validaciones'] = $res->errors;
-      $res = $error;
+      $respuesta['mensaje'] = 'Algunos datos no son válidos : <strong>Revise los campos marcados.</strong>';
+      $respuesta['validaciones'] = $res; //->getErrors();
+      $respuesta['panel'] = $datos;
+      $respuesta['res'] = "error";
     }
-    
-    return $res;
+    return $respuesta;
   }
+
+  private function guardarSucursales($datos,$nit){
+    $query_string = "INSERT INTO dbo.ruSucursales (nit,direccion,pais,ciudad,usuarioCrea) VALUES('%s','%s','%s','%s','%s')";
+    $sql;
+    try{
+      foreach ($datos as $key => $value) {
+        $query = sprintf($query_string,$nit,$value['direccion'],$value['pais'],$value['ciudad'],'proveedor');        
+        $sql = odbc_exec($this->conn,$query);
+      }
+      odbc_close($this->conn);
+    }catch (\Throwable $th) {      
+      $sql = false;
+    }
+    return $sql;    
+  }
+
+  private function consultarSucursales($nit){
+    $query_string = "SELECT direccion,pais,ciudad FROM dbo.ruSucursales WHERE nit = '%s'";
+    $query_string = sprintf($query_string,$nit);
+    $sucursales = [];
+    try {
+      $sql = odbc_exec($this->conn,$query_string);
+      while($registro = odbc_fetch_array($sql)){
+        $sucursale[] = array('direccion'=>$registro['direccion'],'pais'=>$registro['pais'],'ciudad'=>$registro['ciudad']);
+      }
+    }catch (\Throwable $th) {
+      
+    }  
+    return $sucursales;    
+  }
+
+  private function extraerSucursales($datos){
+    $suc_datos = array('pais'=>[],
+                       'ciudad'=>[],
+                       'direccion'=>[],
+                      );
+    $datos_final = [];
+    //obtencion de la información desde el REQUEST
+    foreach ($datos as $key => $value){
+        if(stripos($key,'pais_suc_')!==FALSE && $value !=''){
+          array_push($suc_datos['pais'],$value);
+        }else if(stripos($key,'ciudad_suc_')!==FALSE && $value !=''){
+          array_push($suc_datos['ciudad'],$value);        
+        }else if(stripos($key,'dir_suc_')!==FALSE && $value !=''){
+          array_push($suc_datos['direccion'],$value);
+        }        
+    }
+    //organizar información 
+    for($i=0; $i < count($suc_datos['pais']); $i++){
+      if(isset($suc_datos['pais'][$i]) && isset($suc_datos['ciudad'][$i]) && isset($suc_datos['direccion'][$i]))
+        $datos_final[$i] = ['pais'=>$suc_datos['pais'][$i],'ciudad'=>$suc_datos['ciudad'][$i],'direccion'=>$suc_datos['direccion'][$i]];
+    }        
+    return $datos_final;
+  }  
 
   private function execGuardar($datos){
     //preparar datos
@@ -64,42 +122,43 @@ class Panel1{
       'fechaCrea'=>date('Y-m-d'),
     ];
     //
-    $query_string = "INSERT INTO [dbo].[registroUnicoP1]
-    ([nit]
-    ,[tipo_registro]
-    ,[nombre]
-    ,[tipo_persona]
-    ,[rep_legal]
-    ,[rep_documento]
-    ,[rep_email]
-    ,[tipo_sociedad]
-    ,[contacto_nombre]
-    ,[contacto_celular]
-    ,[contacto_email]
-    ,[contacto_site]
-    ,[contacto_telefono]
-    ,[direccion]
-    ,[pais]
-    ,[ciudad]
-    ,[sucursales]
-    ,[reg_mercantil]
-    ,[reg_fecha]
-    ,[escritura_num]
-    ,[escritura_fecha]
-    ,[escritura_notaria]
-    ,[escritura_ciudad]
-    ,[autoretenedor]
-    ,[retenedor_res]
-    ,[ip_origen]    
-    ,[usuarioCrea]
-    ,[fechaCrea])    
+    $query_string = "INSERT INTO dbo.registroUnicoP1
+    (nit
+    ,tipo_registro
+    ,nombre
+    ,tipo_persona
+    ,rep_legal
+    ,rep_documento
+    ,rep_email
+    ,tipo_sociedad
+    ,contacto_nombre
+    ,contacto_celular
+    ,contacto_email
+    ,contacto_site
+    ,contacto_telefono
+    ,direccion
+    ,pais
+    ,ciudad
+    ,sucursales
+    ,reg_mercantil
+    ,reg_fecha
+    ,escritura_num
+    ,escritura_fecha
+    ,escritura_notaria
+    ,escritura_ciudad
+    ,autoretenedor
+    ,retenedor_res
+    ,ip_origen    
+    ,usuarioCrea
+    ,fechaCrea)    
     VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',%s)";
     $query_string = vsprintf($query_string,$datos_organizados);
     //echo $query_string;
     $sql;
     try {
-      $sql = odbc_exec($this->conn,$query_string);    
-    } catch (\Throwable $th) {
+      $sql = odbc_exec($this->conn,$query_string);
+      //odbc_close($this->conn);
+    } catch (\Throwable $th) {      
       $sql = false;
     }    
     return $sql;
@@ -142,10 +201,14 @@ class Panel1{
     try {
       $sql = odbc_exec($this->conn,$query_string);
       $datos_panel = odbc_fetch_array($sql);
+      odbc_close($this->conn);
       if(!$datos_panel){
-        $ok['mensaje'] = "No existe";  
+        $ok['mensaje'] = "No existe";
         $ok['datos'] = [];
       }else{
+        if($datos_panel['sucursales'] == 'SI'){
+          $datos_panel['list_sucursales'] = $this->consultarSucursales($datos_panel['nit']);
+        }
         $ok['datos'] = $datos_panel;
       }      
       $res = $ok;
@@ -188,8 +251,8 @@ class Panel1{
     if($val->isSuccess()){
       return true;
     }else{
-    	//return $val->getErrors();
-      return $val;
+    	return $val->getErrors();
+      //return $val;
     }
   }
 }

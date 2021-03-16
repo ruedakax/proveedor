@@ -1,7 +1,5 @@
 //Se encarga de la funcionalidad de las secciones
 import {showSection,moveSection} from './seccion.js'
-//alerts?
-import {showModal} from './modal.js' 
     
 //window.onunload = () => true
 

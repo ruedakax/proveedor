@@ -49,9 +49,9 @@ const panel_5 =  `<!-- INCIO -  C A B E C E R A   I N F O R M A C I O N  -->
                 </fieldset>              
                 <fieldset>
                   <label class="alt_label c-form-label">Yo :&nbsp;</label>
-                  <input id="gi3_p1_control_calidad" class="c-form-input i5_p3" type="text" name="i5_p3_representante" placeholder="Nombre completo" required style="max-width:25.296875%;"><span class="c-form-required"> *</span>
+                  <input id="gi3_p1_control_calidad" class="c-form-input i5_p3" type="text" name="i5_p3_representante" placeholder="Nombre completo" style="max-width:25.296875%;"><span class="c-form-required"> *</span>
                   <label class="alt_label c-form-label">, actuando en nombre propio ó en calidad de Representante Legal de:&nbsp;</label>
-                  <input id="gi3_p1_control_calidad" class="c-form-input i5_p3" type="text" name="i5_p3_representado" placeholder="Nombre completo" required style="max-width:25.296875%;"><span class="c-form-required"> *</span>
+                  <input id="gi3_p1_control_calidad" class="c-form-input i5_p3" type="text" name="i5_p3_representado" placeholder="Nombre completo" style="max-width:25.296875%;"><span class="c-form-required"> *</span>
                   <label class="alt_label c-form-label">con la firma del presente documento, bajo la gravedad de juramento, declaro que:</label>
                 </fieldset>
                 <fieldset>
@@ -61,7 +61,7 @@ const panel_5 =  `<!-- INCIO -  C A B E C E R A   I N F O R M A C I O N  -->
                   <label class="alt_label c-form-label">Que mis recursos y/o los recursos de la persona jurídica que represento (si aplica) provienen de las siguientes fuentes:</label>
                 </fieldset>
                 <fieldset>
-                  <input id="i5_p4_fuentes" class="c-form-input i5_p4" type="text" name="i5_p4_fuentes" placeholder="Escriba las fuentes" required><span class="c-form-required"> *</span>
+                  <input id="i5_p4_fuentes" class="c-form-input i5_p4" type="text" name="i5_p4_fuentes" placeholder="Escriba las fuentes"><span class="c-form-required"> *</span>
                 </fieldset>
               </div>              
               <div id="accionistas">
@@ -72,19 +72,19 @@ const panel_5 =  `<!-- INCIO -  C A B E C E R A   I N F O R M A C I O N  -->
                   <div class="four-columns">                   
                     <fieldset>
                       <label class="c-form-label negrita" for="acci_nombre_1">Nombre<span class="c-form-required"> *</span></br></br></label>
-                      <input id="acci_nombre_1" class="c-form-input" type="text" name="acci_nombre_1" placeholder="Nombre" required>
+                      <input id="acci_nombre_1" class="c-form-input" type="text" name="acci_nombre_1" placeholder="Nombre">
                     </fieldset>
                     <fieldset>
                       <label class="c-form-label negrita" for="acci_nit_1">NIT/CC<span class="c-form-required"> *</span></br></br></label>
-                      <input id="acci_nit_1" class="c-form-input" type="text" name="acci_nit_1" placeholder="Número Nit/CC" required>
+                      <input id="acci_nit_1" class="c-form-input" type="text" name="acci_nit_1" placeholder="Número Nit/CC">
                     </fieldset>
                     <fieldset>
                       <label class="c-form-label negrita" for="acci_porcentaje_1">% de Participación<span class="c-form-required"> *</span></br></br></label>
-                      <input id="acci_porcentaje_1" class="c-form-input" type="text" name="acci_porcentaje_1" placeholder="" required>
+                      <input id="acci_porcentaje_1" class="c-form-input" type="text" name="acci_porcentaje_1" placeholder="">
                     </fieldset>
                     <fieldset>
                       <label class="c-form-label negrita" for="acci_vinculado_1">Es Persona Públicamente Expuesta o Vinculada con una de Ellas<span class="c-form-required"> *</span></label>
-                      <input id="acci_vinculado_1" class="c-form-input" type="text" name="acci_vinculado_1" placeholder="SI-NO- NOMBRE DEL VINCULADO" required>
+                      <input id="acci_vinculado_1" class="c-form-input" type="text" name="acci_vinculado_1" placeholder="SI-NO- NOMBRE DEL VINCULADO">
                     </fieldset>                    
                   </div>
                 </div>                
@@ -96,19 +96,19 @@ const panel_5 =  `<!-- INCIO -  C A B E C E R A   I N F O R M A C I O N  -->
                   <div class="four-columns">                   
                     <fieldset>
                       <label class="c-form-label negrita" for="socied_nombre_1">Nombre Accionista<span class="c-form-required"> *</span></label>
-                      <input id="socied_nombre_1" class="c-form-input" type="text" name="socied_nombre_1" placeholder="Nombre" required>
+                      <input id="socied_nombre_1" class="c-form-input" type="text" name="socied_nombre_1" placeholder="Nombre">
                     </fieldset>
                     <fieldset>
                       <label class="c-form-label negrita" for="socied_identificacion_1">No. de Identificación<span class="c-form-required"> *</span></label>
-                      <input id="socied_identificacion_1" class="c-form-input" type="text" name="socied_identificacion_1" placeholder="Número Nit/CC" required>
+                      <input id="socied_identificacion_1" class="c-form-input" type="text" name="socied_identificacion_1" placeholder="Número Nit/CC">
                     </fieldset>
                     <fieldset>
                       <label class="c-form-label negrita" for="socied_empresa_1">Empresa de la cual es Accionista<span class="c-form-required"> *</span></label>
-                      <input id="socied_empresa_1" class="c-form-input" type="text" name="socied_empresa_1" placeholder="Nombre de la empresa" required>
+                      <input id="socied_empresa_1" class="c-form-input" type="text" name="socied_empresa_1" placeholder="Nombre de la empresa">
                     </fieldset>
                     <fieldset>
                       <label class="c-form-label negrita" for="socied_porcentaje_1">% de Participación<span class="c-form-required"> *</span></label>
-                      <input id="socied_porcentaje_1" class="c-form-input" type="text" name="socied_porcentaje_1" placeholder="%" required>
+                      <input id="socied_porcentaje_1" class="c-form-input" type="text" name="socied_porcentaje_1" placeholder="%">
                     </fieldset>                    
                   </div>
                 </div>                
@@ -116,7 +116,7 @@ const panel_5 =  `<!-- INCIO -  C A B E C E R A   I N F O R M A C I O N  -->
               </div>
               <div class="break">                
                     <label class="c-form-label negrita item-sucursal" for="socied_nombre_1">DECLARACIONES</label>
-                    <p>Obrando en calidad de representante legal , de manera voluntaria declaro:</p>
+                    <p>Obrando en calidad de representante legal, de manera voluntaria declaro:</p>
                     <p>Que todos los datos e informacion suministrada en el presente documento, así como sus anexos corresponden a la realidad.</p> 
                     <label class="c-form-label negrita" for="socied_nombre_1">Origen de fondos y Bienes</label>                    
                     <p>Que los ingresos de la empresa que represento provienen de actividades licitas, y por consiguiente, no se encuentran relacionados con lavado de activos, financiación del terrorismo ni otro delito conexo con estas conductas punibles.</p>
@@ -142,19 +142,19 @@ const panel_5 =  `<!-- INCIO -  C A B E C E R A   I N F O R M A C I O N  -->
                   <div class="four-columns">                   
                     <fieldset>
                       <label class="c-form-label negrita" for="contacpro_nombre_1">Nombre<span class="c-form-required"> *</span></label>
-                      <input id="contacpro_nombre_1" class="c-form-input" type="text" name="contacpro_nombre_1" placeholder="Nombre Completo" required>
+                      <input id="contacpro_nombre_1" class="c-form-input" type="text" name="contacpro_nombre_1" placeholder="Nombre Completo">
                     </fieldset>
                     <fieldset>
                       <label class="c-form-label negrita" for="contacpro_identificacion_1">No. de Identificación<span class="c-form-required"> *</span></label>
-                      <input id="contacpro_identificacion_1" class="c-form-input" type="text" name="contacpro_identificacion_1" placeholder="Número Nit/CC" required>
+                      <input id="contacpro_identificacion_1" class="c-form-input" type="text" name="contacpro_identificacion_1" placeholder="Número Nit/CC">
                     </fieldset>
                     <fieldset>
                       <label class="c-form-label negrita" for="contacpro_telefono_1">Teléfono<span class="c-form-required"> *</span></label>
-                      <input id="contacpro_telefono_1" class="c-form-input" type="text" name="contacpro_telefono_1" placeholder="Teléfono" required>
+                      <input id="contacpro_telefono_1" class="c-form-input" type="text" name="contacpro_telefono_1" placeholder="Teléfono">
                     </fieldset>
                     <fieldset>
                       <label class="c-form-label negrita" for="contacpro_email_1">Correo Electrónico<span class="c-form-required"> *</span></label>
-                      <input id="contacpro_email_1" class="c-form-input" type="text" name="contacpro_email_1" placeholder="email" required>
+                      <input id="contacpro_email_1" class="c-form-input" type="text" name="contacpro_email_1" placeholder="email">
                     </fieldset>                    
                   </div>
                 </div>                
@@ -168,19 +168,19 @@ const panel_5 =  `<!-- INCIO -  C A B E C E R A   I N F O R M A C I O N  -->
                     <div class="four-columns">                   
                       <fieldset>
                         <label class="c-form-label negrita" for="contacto_nombre_1">Nombre<span class="c-form-required"> *</span></label>
-                        <input id="contacto_nombre_1" class="c-form-input" type="text" name="contacto_nombre_1" placeholder="Nombre Completo" required>
+                        <input id="contacto_nombre_1" class="c-form-input" type="text" name="contacto_nombre_1" placeholder="Nombre Completo">
                       </fieldset>
                       <fieldset>
                         <label class="c-form-label negrita" for="contacto_identificacion_1">No. de Identificación<span class="c-form-required"> *</span></label>
-                        <input id="contacto_identificacion_1" class="c-form-input" type="text" name="contacto_identificacion_1" placeholder="Número Nit/CC" required>
+                        <input id="contacto_identificacion_1" class="c-form-input" type="text" name="contacto_identificacion_1" placeholder="Número Nit/CC">
                       </fieldset>
                       <fieldset>
                         <label class="c-form-label negrita" for="contacto_telefono_1">Teléfono<span class="c-form-required"> *</span></label>
-                        <input id="contacto_telefono_1" class="c-form-input" type="text" name="contacto_telefono_1" placeholder="Teléfono" required>
+                        <input id="contacto_telefono_1" class="c-form-input" type="text" name="contacto_telefono_1" placeholder="Teléfono">
                       </fieldset>
                       <fieldset>
                         <label class="c-form-label negrita" for="contacto_email_1">Correo Electrónico<span class="c-form-required"> *</span></label>
-                        <input id="contacto_email_1" class="c-form-input" type="text" name="contacto_email_1" placeholder="email" required>
+                        <input id="contacto_email_1" class="c-form-input" type="text" name="contacto_email_1" placeholder="email">
                       </fieldset>                   
                     </div>
                 </div>                
