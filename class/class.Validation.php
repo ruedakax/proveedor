@@ -101,7 +101,7 @@
                         }
                     break;                    
                     case 'date_ymd':
-                        $fecha = explode('-',$this->value);
+                        $fecha = isset($this->value)?explode('-',$this->value):[0,0,0];
                         $res = checkdate($fecha[1], $fecha[2], $fecha[0]);                        
                         if(($this->value != '' && !preg_match($regex, $this->value)) || !$res){
                             $this->errors[] = array($this->name,'Formato no válido');

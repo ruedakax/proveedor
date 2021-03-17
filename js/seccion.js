@@ -22,16 +22,11 @@ const funciones = {
                 }
 
 export function showSection(){
-    //window.overlay.classList.remove('oculto')
-    return new Promise(resolve => setTimeout(()=>{
-        const index = getIndex()
-        //llamado dinamico de funciones según el panel
-        funciones[index].prepare()
-        start()
-        /// se llama al setTimeout definido
-        resolve()
-        ///       
-    },10));    
+    window.overlay.classList.remove('oculto')
+    //obtiene el indice del panel a mostrar
+    const index = getIndex()        
+    //llamado dinamico de funciones según el panel
+    funciones[index].prepare()    
 }
 
 export function moveSection(tipo){        
@@ -63,15 +58,14 @@ function adelantarSeccion(tipo){
         let ans = displayErrors(respuesta)        
         if(ans){
             mover(tipo)            
-            showSection().then(()=>{
-                showModal(respuesta.res,respuesta.mensaje)
-                let actual = parseInt(document.querySelector('#buttonPanel').dataset.current)
-                if(actual > 0){
-                    window.volver.classList.remove('oculto')
-                }else{
-                    window.volver.classList.add('oculto')
-                }
-            })            
+            showSection()
+            showModal(respuesta.res,respuesta.mensaje)
+            let actual = parseInt(document.querySelector('#buttonPanel').dataset.current)
+            if(actual > 0){
+                window.volver.classList.remove('oculto')
+            }else{
+                window.volver.classList.add('oculto')
+            }            
         }else{
 
         }           

@@ -31,12 +31,14 @@ export function setPanel(objForm,valores){
         const params = `tipo=${valores.tipo}&accion=${valores.accion}&tipo_registro=${valores.tipo_registro}&${form_params}`
         //Ajax request
         const req = new XMLHttpRequest();
-        req.open('POST', objForm.action, true);
+        req.open('POST', objForm.action);
         req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         // Handle the events
         req.onload = function() {
             if (req.status >= 200 && req.status < 400) {
                 resolve(req.responseText);
+            }else{
+                reject();    
             }
         };
         req.onerror = function() {
@@ -45,3 +47,27 @@ export function setPanel(objForm,valores){
         req.send(params);
     });
 };
+
+export function getPanel(valores){
+    return new Promise(function(resolve, reject) {
+        const nit = valores.nit
+        const params = `i=${valores.nit}&accion=${valores.accion}&tipo=${valores.tipo}`
+        const url = './api.php'
+        //Ajax request
+        const req = new XMLHttpRequest();
+        req.open('POST', url);
+        req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        // Handle the events
+        req.onload = function() {
+            if (req.status >= 200 && req.status < 400) {
+                resolve(req.responseText);
+            }else{
+                reject();    
+            }
+        };
+        req.onerror = function() {
+            reject();
+        };        
+        req.send(params);
+    });
+}

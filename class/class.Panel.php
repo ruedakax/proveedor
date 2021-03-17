@@ -40,20 +40,13 @@ class Panel{
             case 'guardar':                                
                 return $this->instacia->guardar($datos);
             break;
+            case 'preparar':                                
+                return $this->instacia->preparar($datos);
+            break;
             default:
                 echo "ERROR CONSULTA AL ADMON";
                 die;
             break;
         }
-    }
-
-    public function consultar($parametros){
-        $entrada = SOConexion::stripInput($parametros);
-        $this->instacia->consultar($entrada);
-    }
-
-    public function guardar($parametros){
-        $entrada = SOConexion::stripInput($parametros);
-        $this->instacia->guardar($entrada);
-    }
+    }    
 }

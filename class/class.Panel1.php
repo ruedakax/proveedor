@@ -1,9 +1,27 @@
 <?php
 error_reporting(E_ALL);
 require_once("./class/class.Validation.php");
+require_once("./class/class.View.php");
 
 class Panel1{
-  public $conn;        
+  
+  const DISPLAY_NONE = 'oculto';
+  //
+  public $conn;
+  
+  public function preparar($datos){
+    $res = $this->consultar(array($datos['i']));
+    ///Preparacion de datos para la vista segun las condiciones del formulario
+    $res_preparados = $this->prepareVariables($res,$datos['i']);
+    //
+    $view = new View;    
+    // asignar datos
+    $view->data['datos'] = $res_preparados;
+    // render
+    $html = $view->render('./views/view.panel1.php');
+    //
+    return $html;    
+  }
 
   public function guardar($datos){
     $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'panel'=>[]];
@@ -52,13 +70,14 @@ class Panel1{
 
   private function consultarSucursales($nit){
     $query_string = "SELECT direccion,pais,ciudad FROM dbo.ruSucursales WHERE nit = '%s'";
-    $query_string = sprintf($query_string,$nit);
+    $query_string = sprintf($query_string,$nit);    
     $sucursales = [];
     try {
       $sql = odbc_exec($this->conn,$query_string);
       while($registro = odbc_fetch_array($sql)){
-        $sucursale[] = array('direccion'=>$registro['direccion'],'pais'=>$registro['pais'],'ciudad'=>$registro['ciudad']);
+        $sucursales[] = array('direccion'=>$registro['direccion'],'pais'=>$registro['pais'],'ciudad'=>$registro['ciudad']);
       }
+      odbc_close($this->conn);
     }catch (\Throwable $th) {
       
     }  
@@ -165,10 +184,12 @@ class Panel1{
   }    
 
   public function consultar($parametros){
-    $ok = ['res'=>'OK','mensaje'=>'Consulta exitosa','datos'=>[]];
-    $error = ['res'=>'ERROR','mensaje'=>'','validaciones'=>[]];
+    $ok = ['res'=>'OK','res_bool'=>TRUE,'mensaje'=>'Consulta exitosa','datos'=>[]];
+    $error = ['res'=>'ERROR','res_bool'=>FALSE,'mensaje'=>'','validaciones'=>[]];
+    //
     $query_string = "SELECT nit
     ,nombre
+    ,tipo_registro
     ,tipo_persona
     ,rep_legal
     ,rep_documento
@@ -201,7 +222,7 @@ class Panel1{
     try {
       $sql = odbc_exec($this->conn,$query_string);
       $datos_panel = odbc_fetch_array($sql);
-      odbc_close($this->conn);
+      //odbc_close($this->conn);
       if(!$datos_panel){
         $ok['mensaje'] = "No existe";
         $ok['datos'] = [];
@@ -227,7 +248,7 @@ class Panel1{
     $val->name('tipo_persona')->value($datos['tipo_persona'])->pattern('words')->required();
     if($datos['tipo_persona'] == 'juridica'){
       $val->name('rep_legal')->value($datos['rep_legal'])->pattern('words')->required();
-      $val->name('rep_documento')->value($datos['rep_documento'])->pattern('alpha')->required();
+      $val->name('rep_documento')->value($datos['rep_documento'])->required();
       $val->name('rep_email')->value($datos['rep_email'])->pattern('email')->required();      
     }
     $val->name('contacto_nombre')->value($datos['contacto_nombre'])->pattern('words')->required();
@@ -251,8 +272,36 @@ class Panel1{
     if($val->isSuccess()){
       return true;
     }else{
-    	return $val->getErrors();
-      //return $val;
+    	return $val->getErrors();      
     }
   }
-}
+  //
+  private function prepareOptions($options,$selected){
+    if(!empty($selected)){
+      array_unshift($options, $selected);
+      $options = array_unique($options);
+    }
+    $html = '';
+    foreach ($options as $key => $value) {
+      $selected = $key===0?'selected':'';
+      $html .='<option value="'.$value.'" '.$selected.'>'.strtoupper($value).'</option>';
+    }
+    return $html;
+  }
+  //
+  private function prepareVariables($datos,$nit){
+    $res = $datos['datos'];
+    $res['nit'] = base64_decode($nit);
+    $res['clase'] = self::DISPLAY_NONE;
+    $tipo_persona = isset($res['tipo_persona'])?$res['tipo_persona']:'natural';
+    $res['tipo_persona_options'] = $this->prepareOptions(array('natural','juridica'),$tipo_persona);
+    $res['tipo_sociedad'] = isset($res['tipo_sociedad'])?$res['tipo_sociedad']:'ESAL';
+    $res['sucursales'] = isset($res['sucursales'])?$res['sucursales']:'NO';
+    $res['list_sucursales'] = isset($res['list_sucursales'])?$res['list_sucursales']:array();
+    $res['autoretenedor'] = isset($res['autoretenedor'])?$res['autoretenedor']:'NO';
+    return $res;  
+  }
+}//end class
+
+
+

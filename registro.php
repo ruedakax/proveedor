@@ -1,12 +1,15 @@
 <?php
-  error_reporting(E_ALL);  
+  error_reporting(E_ALL);
   require_once("./class/class.Panel.php");
-  //
-  $panel   = new Panel('panel_1','consultar');  
+  //NDIzNDIzNDIzNDQ%3D
+  //NzUwMDAwMDA%3D
+  $panel   = new Panel('panel_1','consultar');
   $panel->callPanel();
-  $panelToShow = $panel->callAccion(array($_REQUEST['i']));  
+  $panelToShow = $panel->callAccion(array($_GET['i']));
   //  
-  $panelToShow = false;
+  $inscrito = 'Usted está inscrito como %s. Marque la misma opción si desea mantenerla, de lo contrario marque su preferencia.';
+  $no_inscrito = '¿Cómo desea inscribirse en el registro?';  
+  $mensajeInicio = isset($panelToShow['datos']['tipo_registro'])?sprintf($inscrito,strtoupper($panelToShow['datos']['tipo_registro'])):$no_inscrito;
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,16 +40,14 @@
         </div>
       </div>
       <div class="form-box bottom" id="inicio">
-<?php if(!$panelToShow){ ?>
         <div class="c-form">
           <fieldset>
-              <label class="c-form-label negrita" for="tipo_registro"> ¿Cómo desea inscribirse en el registro?</label><br/>
+              <label class="c-form-label negrita" for="tipo_registro"><?php echo $mensajeInicio?></label><br/>
               <label class="alt_label c-form-label"><input type="checkbox" name="tipo_registro" class="tipo_registro" value="cliente">CLIENTE</label> 
               <label class="alt_label c-form-label"><input type="checkbox" name="tipo_registro" class="tipo_registro" value="proveedor">PROVEEDOR</label>
               <label class="alt_label c-form-label"><input type="checkbox" name="tipo_registro" class="tipo_registro" value="contratista">CONTRATISTA &oacute; SUBCONTRATISTA</label>                
           </fieldset>  
         </div>
-<?php } ?>
       </div>
       <form class="all-form" name="c-form" action="./api.php" method="post" id="c-form">
 <?php if(!$panelToShow){ ?>
@@ -58,7 +59,7 @@
         <div class="c-form">
           <div class="two-columns">
             <button class="c-form-btn oculto" type="button" id="volver">VOLVER</button>
-            <button class="c-form-btn" type="button" id="enviar" data-tipo-persona="" data-tipo-registro="">SIGUIENTE</button>
+            <button class="c-form-btn" type="button" id="enviar" data-tipo-persona="" data-tipo-registro="" data-nit="<?php echo $_GET['i']?>">SIGUIENTE</button>
           </div>
         </div>
       </div>
