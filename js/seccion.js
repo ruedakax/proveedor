@@ -1,4 +1,4 @@
-import {mover,start,getIndex} from './general.js'
+import {mover,getIndex} from './general.js'
 import {preparePanel1,savePanel1} from './panel_1.js'
 import {preparePanel2,savePanel2} from './panel_2.js'
 import {preparePanel3,savePanel3} from './panel_3.js'
@@ -41,8 +41,10 @@ export function moveSection(tipo){
 function displayErrors(respuesta){
     if(respuesta.res==='error'){
       showModal(respuesta.res,respuesta.mensaje)
-      respuesta.validaciones.forEach(element => {
-        window[element[0]].setAttribute('required', '');
+      respuesta.validaciones.forEach(element => {        
+        //objeto = document.querySelector(`#${element[0]}`)
+        //objeto.setAttribute('required', '')
+        window[element[0]].setAttribute('required', '')
       });
       return false
     }else{

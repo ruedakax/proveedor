@@ -30,17 +30,27 @@ class Panel1{
     if(!is_array($res)){
       $res = $this->execGuardar($datos);
       if($res==FALSE){
-        $respuesta['mensaje'] = 'Error al Guardar o el NIT ya existe.';
-        $respuesta['validaciones'] = [];
-        $respuesta['panel'] = $datos;
-        $respuesta['res'] = "error";        
+        $sucursales = $this->extraerSucursales($datos);
+        $res = $this->execActualizar($datos);
+        if($datos['sucursales']=='SI' && $res){
+          $res = $this->actualizarSucursales($sucursales,$datos['nit']);
+        }
+        if($res){
+          $respuesta['mensaje'] = 'La Información General Fue ACTUALIZADA.';
+          $respuesta['validaciones'] = [];
+          $respuesta['res'] = "success";
+        }else{
+          $respuesta['mensaje'] = 'Error al Guardar';
+          $respuesta['validaciones'] = [];
+          $respuesta['panel'] = $datos;
+          $respuesta['res'] = "error";
+        }
       }else{
-        if($datos['sucursales']=='SI'){//se guardan las sucursales
-          //dir_su_
+        if($datos['sucursales']=='SI'){//se guardan las sucursales          
           $sucursales = $this->extraerSucursales($datos);
           $this->guardarSucursales($sucursales,$datos['nit']);
         }
-        $respuesta['mensaje'] = 'La Información General Fue Guardada.';
+        $respuesta['mensaje'] = 'La Información General Fue GUARDADA.';
         $respuesta['validaciones'] = [];
         $respuesta['res'] = "success";
       }
@@ -53,16 +63,29 @@ class Panel1{
     return $respuesta;
   }
 
-  private function guardarSucursales($datos,$nit){
+  private function guardarSucursales($datos,$nit){    
     $query_string = "INSERT INTO dbo.ruSucursales (nit,direccion,pais,ciudad,usuarioCrea) VALUES('%s','%s','%s','%s','%s')";
-    $sql;
+    $sql=false;
     try{
-      foreach ($datos as $key => $value) {
+      foreach ($datos as $key => $value){
         $query = sprintf($query_string,$nit,$value['direccion'],$value['pais'],$value['ciudad'],'proveedor');        
         $sql = odbc_exec($this->conn,$query);
       }
       odbc_close($this->conn);
     }catch (\Throwable $th) {      
+      $sql = false;
+    }
+    return $sql;    
+  }
+
+  private function actualizarSucursales($datos,$nit){
+    $query_string = "DELETE FROM  dbo.ruSucursales WHERE nit = '%s'";
+    $sql;
+    try{
+        $query = sprintf($query_string,$nit);
+        //var_dump(odbc_exec($this->conn,$query)!=FALSE);
+        $sql = odbc_exec($this->conn,$query)!=FALSE?$this->guardarSucursales($datos,$nit):FALSE;
+    }catch (\Throwable $th) {
       $sql = false;
     }
     return $sql;    
@@ -110,36 +133,7 @@ class Panel1{
 
   private function execGuardar($datos){
     //preparar datos
-    $datos_organizados = [
-      'nit'=>$datos['nit'],
-      'tipo_registro'=>$datos['tipo_registro'],
-      'nombre'=>$datos['nombre'],
-      'tipo_persona'=>$datos['tipo_persona'],
-      'rep_legal'=>$datos['rep_legal'],
-      'rep_documento'=>$datos['rep_documento'],
-      'rep_email'=>$datos['rep_email'],
-      'tipo_sociedad'=>$datos['tipo_sociedad'],
-      'contacto_nombre'=>$datos['contacto_nombre'],
-      'contacto_celular'=>$datos['contacto_celular'],
-      'contacto_email'=>$datos['contacto_email'],
-      'contacto_site'=>$datos['contacto_site'],
-      'contacto_telefono'=>$datos['contacto_telefono'],
-      'direccion'=>$datos['direccion'],
-      'pais'=>$datos['pais'],
-      'ciudad'=>$datos['ciudad'],
-      'sucursales'=>$datos['sucursales'],
-      'reg_mercantil'=>$datos['reg_mercantil'],
-      'reg_fecha'=>$datos['reg_fecha'],
-      'escritura_num'=>$datos['escritura_num'],
-      'escritura_fecha'=>$datos['escritura_fecha'],
-      'escritura_notaria'=>$datos['escritura_notaria'],
-      'escritura_ciudad'=>$datos['escritura_ciudad'],
-      'autoretenedor'=>$datos['autoretenedor'],
-      'retenedor_res'=>$datos['retenedor_res'],
-      'ip_origen'=>$_SERVER['REMOTE_ADDR'],      
-      'usuarioCrea'=>'proveedor',//ToDo
-      'fechaCrea'=>date('Y-m-d'),
-    ];
+    $datos_organizados = $this->organizarDatos($datos);
     //
     $query_string = "INSERT INTO dbo.registroUnicoP1
     (nit
@@ -167,7 +161,7 @@ class Panel1{
     ,escritura_ciudad
     ,autoretenedor
     ,retenedor_res
-    ,ip_origen    
+    ,ip_origen
     ,usuarioCrea
     ,fechaCrea)    
     VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',%s)";
@@ -175,11 +169,55 @@ class Panel1{
     //echo $query_string;
     $sql;
     try {
+      $sql = @odbc_exec($this->conn,$query_string);
+      //odbc_close($this->conn);
+    } catch (\Throwable $th) {
+      $sql = false;
+    }
+    return $sql;
+  }    
+
+  private function execActualizar($datos){
+    //preparar datos
+    $datos_organizados = $this->organizarDatos($datos,'actualizar');
+    //
+    $query_string = "UPDATE dbo.registroUnicoP1 SET tipo_registro = '%s'
+    ,nombre = '%s'
+    ,tipo_persona = '%s'
+    ,rep_legal = '%s'
+    ,rep_documento = '%s'
+    ,rep_email = '%s'
+    ,tipo_sociedad = '%s'
+    ,contacto_nombre = '%s'
+    ,contacto_celular = '%s'
+    ,contacto_email = '%s'
+    ,contacto_site = '%s'
+    ,contacto_telefono = '%s'
+    ,direccion = '%s'
+    ,pais = '%s'
+    ,ciudad = '%s'
+    ,sucursales = '%s'
+    ,reg_mercantil = '%s'
+    ,reg_fecha = '%s'
+    ,escritura_num = '%s'
+    ,escritura_fecha = '%s'
+    ,escritura_notaria = '%s'
+    ,escritura_ciudad = '%s'
+    ,autoretenedor = '%s'
+    ,retenedor_res = '%s'
+    ,ip_origen    = '%s'
+    ,usuarioCrea = '%s'
+    ,fechaCrea = %s
+    WHERE nit = '%s'
+    ";
+    $query_string = vsprintf($query_string,$datos_organizados);    
+    $sql;
+    try {
       $sql = odbc_exec($this->conn,$query_string);
       //odbc_close($this->conn);
-    } catch (\Throwable $th) {      
+    } catch (\Throwable $th) {
       $sql = false;
-    }    
+    }
     return $sql;
   }    
 
@@ -244,21 +282,21 @@ class Panel1{
   private function validar($datos){
     $val = new Validation();
     $val->name('nit')->value($datos['nit'])->required();
-    $val->name('nombre')->value($datos['nombre'])->pattern('words')->required();
-    $val->name('tipo_persona')->value($datos['tipo_persona'])->pattern('words')->required();
+    $val->name('nombre')->value($datos['nombre'])->pattern('text')->required();
+    $val->name('tipo_persona')->value($datos['tipo_persona'])->pattern('text')->required();
     if($datos['tipo_persona'] == 'juridica'){
-      $val->name('rep_legal')->value($datos['rep_legal'])->pattern('words')->required();
+      $val->name('rep_legal')->value($datos['rep_legal'])->pattern('text')->required();
       $val->name('rep_documento')->value($datos['rep_documento'])->required();
       $val->name('rep_email')->value($datos['rep_email'])->pattern('email')->required();      
     }
-    $val->name('contacto_nombre')->value($datos['contacto_nombre'])->pattern('words')->required();
+    $val->name('contacto_nombre')->value($datos['contacto_nombre'])->pattern('text')->required();
     $val->name('contacto_celular')->value($datos['contacto_celular'])->pattern('tel')->required();
     $val->name('contacto_email')->value($datos['contacto_email'])->pattern('email')->required();
     $val->name('contacto_site')->value($datos['contacto_site'])->required();
     $val->name('contacto_telefono')->value($datos['contacto_telefono'])->pattern('tel')->required();
     $val->name('direccion')->value($datos['direccion'])->required();
-    $val->name('pais')->value($datos['pais'])->pattern('words')->required();
-    $val->name('ciudad')->value($datos['ciudad'])->pattern('words')->required();
+    $val->name('pais')->value($datos['pais'])->pattern('text')->required();
+    $val->name('ciudad')->value($datos['ciudad'])->pattern('text')->required();
     $val->name('reg_mercantil')->value($datos['reg_mercantil'])->required();
     $val->name('reg_fecha')->value($datos['reg_fecha'])->pattern('date_ymd')->required();
     $val->name('escritura_num')->value($datos['escritura_num'])->pattern('alphanum')->required();
@@ -269,11 +307,7 @@ class Panel1{
     if($datos['autoretenedor'] == 'SI'){
       $val->name('retenedor_res')->value($datos['retenedor_res'])->required();
     }
-    if($val->isSuccess()){
-      return true;
-    }else{
-    	return $val->getErrors();      
-    }
+    return $val->isSuccess()?true:$val->getErrors();
   }
   //
   private function prepareOptions($options,$selected){
@@ -301,6 +335,43 @@ class Panel1{
     $res['autoretenedor'] = isset($res['autoretenedor'])?$res['autoretenedor']:'NO';
     return $res;  
   }
+  private function organizarDatos($datos,$tipo = 'guardar'){    
+    $datos_organizados = [
+      $datos['nit'],
+      $datos['tipo_registro'],
+      $datos['nombre'],
+      $datos['tipo_persona'],
+      $datos['rep_legal'],
+      $datos['rep_documento'],
+      $datos['rep_email'],
+      $datos['tipo_sociedad'],
+      $datos['contacto_nombre'],
+      $datos['contacto_celular'],
+      $datos['contacto_email'],
+      $datos['contacto_site'],
+      $datos['contacto_telefono'],
+      $datos['direccion'],
+      $datos['pais'],
+      $datos['ciudad'],
+      $datos['sucursales'],
+      $datos['reg_mercantil'],
+      $datos['reg_fecha'],
+      $datos['escritura_num'],
+      $datos['escritura_fecha'],
+      $datos['escritura_notaria'],
+      $datos['escritura_ciudad'],
+      $datos['autoretenedor'],
+      $datos['retenedor_res'],
+      $_SERVER['REMOTE_ADDR'],      
+      'proveedor',//ToDo
+      date('Y-m-d'),
+    ];    
+    if($tipo == 'actualizar'){
+      $nit = array_shift($datos_organizados);
+      $datos_organizados[] = $nit;      
+    }
+    return $datos_organizados;
+  } 
 }//end class
 
 

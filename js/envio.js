@@ -25,10 +25,10 @@
         .join('&');    
 }
 
-export function setPanel(objForm,valores){
-    return new Promise(function(resolve, reject) {
+export function setPanel(objForm,panelParams){    
+    return new Promise(function(resolve, reject) {        
         const form_params = serialize(objForm)
-        const params = `tipo=${valores.tipo}&accion=${valores.accion}&tipo_registro=${valores.tipo_registro}&${form_params}`
+        const params = `${panelParams}&${form_params}`
         //Ajax request
         const req = new XMLHttpRequest();
         req.open('POST', objForm.action);
@@ -48,10 +48,8 @@ export function setPanel(objForm,valores){
     });
 };
 
-export function getPanel(valores){
-    return new Promise(function(resolve, reject) {
-        const nit = valores.nit
-        const params = `i=${valores.nit}&accion=${valores.accion}&tipo=${valores.tipo}`
+export function getPanel(parametros){
+    return new Promise(function(resolve, reject) {        
         const url = './api.php'
         //Ajax request
         const req = new XMLHttpRequest();
@@ -68,6 +66,6 @@ export function getPanel(valores){
         req.onerror = function() {
             reject();
         };        
-        req.send(params);
+        req.send(parametros);
     });
 }

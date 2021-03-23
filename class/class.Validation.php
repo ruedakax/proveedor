@@ -25,7 +25,7 @@
             'int'           => '[0-9]+',
             'float'         => '[0-9\.,]+',
             'tel'           => '[0-9+\s()-]+',
-            'text'          => '[\p{L}0-9\s-.,;:!"%&()?+\'°#\/@]+',
+            'text'          => '[\p{L}0-9\s-.,;:!"%&()?_+\'°#\/@]+',
             'file'          => '[\p{L}\s0-9-_!%&()=\[\]#@,.;+]+\.[A-Za-z0-9]{2,4}',
             'folder'        => '[\p{L}\s0-9-_!%&()=\[\]#@,.;+]+',
             'address'       => '[\p{L}0-9\s.,()°-]+',
@@ -101,7 +101,7 @@
                         }
                     break;                    
                     case 'date_ymd':
-                        $fecha = isset($this->value)?explode('-',$this->value):[0,0,0];
+                        $fecha = isset($this->value)&&!empty($this->value)?explode('-',$this->value):[0,0,0];
                         $res = checkdate($fecha[1], $fecha[2], $fecha[0]);                        
                         if(($this->value != '' && !preg_match($regex, $this->value)) || !$res){
                             $this->errors[] = array($this->name,'Formato no válido');

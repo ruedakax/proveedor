@@ -86,17 +86,19 @@
                 //inicio sucursales
                 foreach ($datos['list_sucursales'] as $key => $value) {
             ?>
-            <div class='close'><span class="x">x</span></div>
-            <div class="three-columns item-sucursal">
-                <fieldset> 
-                    <input id="dir_suc_<?php echo $key?>" class="c-form-input" type="text" name="dir_suc_<?php echo $key?>" placeholder="Dirección" value="<?php echo $value['direccion']?>">
-                </fieldset>
-                <fieldset>
-                    <input id="pais_suc_<?php echo $key?>" class="c-form-input" type="text" name="pais_suc_<?php echo $key?>" placeholder="País" value="<?php echo $value['pais']?>">
-                </fieldset>
-                <fieldset>
-                    <input id="ciudad_suc_<?php echo $key?>" class="c-form-input" type="text" name="ciudad_suc_<?php echo $key?>" placeholder="Ciudad" value="<?php echo $value['ciudad']?>">
-                </fieldset>
+            <div>
+                <div class='close'><span class="x">x</span></div>
+                <div class="three-columns item-sucursal">
+                    <fieldset> 
+                        <input id="dir_suc_<?php echo $key?>" class="c-form-input" type="text" name="dir_suc_<?php echo $key?>" placeholder="Dirección" value="<?php echo $value['direccion']?>">
+                    </fieldset>
+                    <fieldset>
+                        <input id="pais_suc_<?php echo $key?>" class="c-form-input" type="text" name="pais_suc_<?php echo $key?>" placeholder="País" value="<?php echo $value['pais']?>">
+                    </fieldset>
+                    <fieldset>
+                        <input id="ciudad_suc_<?php echo $key?>" class="c-form-input" type="text" name="ciudad_suc_<?php echo $key?>" placeholder="Ciudad" value="<?php echo $value['ciudad']?>">
+                    </fieldset>
+                </div>
             </div>        
             <?php 
                 } 
