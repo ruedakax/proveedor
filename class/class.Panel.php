@@ -27,11 +27,13 @@ class Panel{
         switch ($this->tipo) {
             case 'panel_1':
                 $this->instacia  = new Panel1();
-                $this->instacia->conn = SOConexion::conexion_db();
+                $this->instacia->conn = SOConexion::conexion_db();                
+                $this->instacia->setComplemento();
             break;
             case 'panel_2':
                 $this->instacia  = new Panel2();
                 $this->instacia->conn = SOConexion::conexion_db();
+                $this->instacia->setComplemento();
             break;
             case 'panel_3':
                 $this->instacia  = new Panel3();
@@ -44,6 +46,7 @@ class Panel{
             case 'panel_5':
                 $this->instacia  = new Panel5();
                 $this->instacia->conn = SOConexion::conexion_db();
+                $this->instacia->setComplemento();
             break;
             case 'panel_6':
                 $this->instacia  = new Panel6();

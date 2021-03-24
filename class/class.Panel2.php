@@ -2,17 +2,30 @@
 error_reporting(E_ALL);
 require_once("./class/class.Validation.php");
 require_once("./class/class.View.php");
+require_once("./class/class.RefBancarias.php");
+require_once("./class/class.RefExperiencia.php");
 
 class Panel2{
   
   const DISPLAY_NONE = 'oculto';
   //
   public $conn;
+
+  private $refBancarias;
+
+  private $refExperiencia;
+
+  function setComplemento(){
+    $this->refBancarias = new RefBancarias;
+    $this->refBancarias->conn = $this->conn;
+    $this->refExperiencia = new RefExperiencia;
+    $this->refExperiencia->conn = $this->conn;    
+  }
   
   public function preparar($datos){
-    $res = $this->consultar(array($datos['i']));    
+    $res = $this->consultar(array($datos['i']));        
     ///Preparacion de datos para la vista segun las condiciones del formulario
-    $res_preparados = $this->prepareVariables($res,$datos['i']);
+    $res_preparados = $res['res']!='error'?$this->prepareVariables($res,$datos['i']):array();
     //
     $view = new View;
     // asignar datos
@@ -23,7 +36,7 @@ class Panel2{
     return $html;    
   }
 
-  public function guardar($datos){
+  public function guardar($datos){    
     $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'panel'=>[]];  
     $datos['i2_p9_postventa'] = isset($datos['i2_p9_postventa'])?$datos['i2_p9_postventa']:'';      
     $res = $this->validar($datos);    
@@ -31,10 +44,10 @@ class Panel2{
       $res = $this->execGuardar($datos);
       if($res==FALSE){
         $nit = base64_decode($datos['nit']);
-        $refBancarias = $this->extraerRefBancarias($datos);
-        $res = $this->execActualizar($datos)!=FALSE?$this->actualizarRefBancarias($refBancarias,$nit):FALSE;
-        $refExperiencia = $this->extraerRefExperiencia($datos);
-        $res = $res!=FALSE?$this->actualizarRefExperiencia($refExperiencia,$nit):FALSE;
+        $refBancarias = $this->refBancarias->extraer($datos);
+        $res = $this->execActualizar($datos)!=FALSE?$this->refBancarias->actualizar($refBancarias,$nit):FALSE;
+        $refExperiencia = $this->refExperiencia->extraer($datos);
+        $res = $res!=FALSE?$this->refExperiencia->actualizar($refExperiencia,$nit):FALSE;
         if($res){
           $respuesta['mensaje'] = 'La Información Comercial Fue ACTUALIZADA.';
           $respuesta['validaciones'] = [];
@@ -46,10 +59,10 @@ class Panel2{
           $respuesta['res'] = "error";
         }
       }else{        
-        $refBancarias = $this->extraerRefBancarias($datos);
-        $this->guardarRefBancarias($refBancarias,$datos['nit']);
-        $refExperiencia = $this->extraerRefExperiencia($datos);
-        $this->guardarRefExperiencia($refExperiencia,$datos['nit']);
+        $refBancarias = $this->refBancarias->extraer($datos);
+        $this->refBancarias->guardar($refBancarias,$datos['nit']);
+        $refExperiencia = $this->refExperiencia->extraer($datos);
+        $this->refExperiencia->guardar($refExperiencia,$datos['nit']);
         $respuesta['mensaje'] = 'La Información Comercial Fue GUARDADA.';
         $respuesta['validaciones'] = [];
         $respuesta['res'] = "success";
@@ -61,62 +74,7 @@ class Panel2{
       $respuesta['res'] = "error";
     }
     return $respuesta;
-  }  
-
-  private function extraerRefBancarias($datos){
-
-    $suc_datos = array('banco'=>[],
-                       'sucursal'=>[],
-                       'cuenta'=>[],
-                       'telefono'=>[],
-                       'contacto'=>[],
-                      );
-    $datos_final = [];
-    //obtencion de la información desde el REQUEST
-    foreach ($datos as $key => $value){
-        if(stripos($key,'refban_banco_')!==FALSE && $value !=''){
-          array_push($suc_datos['banco'],$value);
-        }else if(stripos($key,'refban_sucursal_')!==FALSE && $value !=''){
-          array_push($suc_datos['sucursal'],$value);        
-        }else if(stripos($key,'refban_cuenta_')!==FALSE && $value !=''){
-          array_push($suc_datos['cuenta'],$value);
-        }else if(stripos($key,'refban_telefono_')!==FALSE && $value !=''){
-          array_push($suc_datos['telefono'],$value);
-        }else if(stripos($key,'refban_contacto_')!==FALSE && $value !=''){
-          array_push($suc_datos['contacto'],$value);
-        }
-    }
-    //organizar información 
-    for($i=0; $i < count($suc_datos['banco']); $i++){
-      if(isset($suc_datos['banco'][$i]) && isset($suc_datos['sucursal'][$i]) && isset($suc_datos['cuenta'][$i])&& isset($suc_datos['telefono'][$i])&& isset($suc_datos['contacto'][$i]))
-        $datos_final[$i] = ['banco'=>$suc_datos['banco'][$i],'sucursal'=>$suc_datos['sucursal'][$i],'cuenta'=>$suc_datos['cuenta'][$i],'telefono'=>$suc_datos['telefono'][$i],'contacto'=>$suc_datos['contacto'][$i]];
-    }        
-    return $datos_final;
-  }  
-
-  private function extraerRefExperiencia($datos){
-    $suc_datos = array('empresa'=>[],
-                       'contacto'=>[],
-                       'cupos'=>[],
-                      );
-    $datos_final = [];
-    //obtencion de la información desde el REQUEST
-    foreach ($datos as $key => $value){
-        if(stripos($key,'refcom_empresa_')!==FALSE && $value !=''){
-          array_push($suc_datos['empresa'],$value);
-        }else if(stripos($key,'refcom_contacto_')!==FALSE && $value !=''){
-          array_push($suc_datos['contacto'],$value);
-        }else if(stripos($key,'refcom_cupos_')!==FALSE && $value !=''){
-          array_push($suc_datos['cupos'],$value);
-        }
-    }
-    //organizar información 
-    for($i=0; $i < count($suc_datos['empresa']); $i++){
-      if(isset($suc_datos['empresa'][$i]) && isset($suc_datos['contacto'][$i]) && isset($suc_datos['cupos'][$i]))
-        $datos_final[$i] = ['empresa'=>$suc_datos['empresa'][$i],'contacto'=>$suc_datos['contacto'][$i],'cupos'=>$suc_datos['cupos'][$i]];
-    }        
-    return $datos_final;
-  }  
+  }      
 
   private function execGuardar($datos){
     //preparar datos
@@ -217,17 +175,20 @@ class Panel2{
       //odbc_close($this->conn);
       if(!$datos_panel){
         $ok['mensaje'] = "No existe";
-        $ok['datos'] = [];
+        $ok['datos'] = array('list_refBancarias' => array(),'list_refExperiencia' => array());
       }else{        
-        $datos_panel['list_refBancarias'] = $this->consultarRefBancarias($datos_panel['nit']);
-        $datos_panel['list_refExperiencia'] = $this->consultarRefExperiencia($datos_panel['nit']);
+        $datos_panel['list_refBancarias'] = $this->refBancarias->consultar($datos_panel['nit']);
+        $datos_panel['list_refExperiencia'] = $this->refExperiencia->consultar($datos_panel['nit']);
         $ok['datos'] = $datos_panel;
       }     
       $res = $ok;
     } catch (\Throwable $th) {
+      //ToDo : redireccinar a pagina de error?
+      var_dump($th);
       $error['mensaje'] = 'Error en consulta';
       $error['validaciones'] = [];
-      $res = $error;      
+      $error['datos'] = [];
+      $res = $error;
     }    
     return $res;
   }	
@@ -275,7 +236,7 @@ class Panel2{
     return $html;
   }
 
-  private function prepareVariables($datos,$nit){
+  private function prepareVariables($datos,$nit){    
     $res = $datos['datos'];
     $res['nit'] = base64_decode($nit);
     $res['clase'] = self::DISPLAY_NONE;
@@ -289,8 +250,8 @@ class Panel2{
     $res['i2_p7_check'] = isset($res['i2_p7_check'])?$res['i2_p7_check']:'NO';
     $res['i2_p8_check'] = isset($res['i2_p8_check'])?$res['i2_p8_check']:'NO';
     $res['i2_p9_check'] = isset($res['i2_p9_check'])?$res['i2_p9_check']:'NO';
-    $res['inicial_refBancarias'] = isset($res['list_refBancarias'])?'':$this->refBancariasInicial();
-    $res['inicial_refExperiencia'] = isset($res['list_refExperiencia'])?'':$this->RefExperienciaInicial();
+    $res['inicial_refBancarias'] = count($res['list_refBancarias']) < 1?$this->refBancarias->itemInicial():'';
+    $res['inicial_refExperiencia'] = count($res['list_refExperiencia']) < 1?$this->refExperiencia->itemInicial():'';
     $res['list_refBancarias'] = isset($res['list_refBancarias'])?$res['list_refBancarias']:array();
     $res['list_refExperiencia'] = isset($res['list_refExperiencia'])?$res['list_refExperiencia']:array();
     $res['i2_p9_postventa'] = isset($res['i2_p9_postventa'])?$res['i2_p9_postventa']:'';    
@@ -322,143 +283,9 @@ class Panel2{
       $datos_organizados[] = $nit;      
     }
     return $datos_organizados;
-  } 
-
-  private function guardarRefBancarias($datos,$nit){
-    $query_string = "INSERT INTO dbo.ruRefBancarias (nit,banco,sucursal,cuenta,telefono,contacto) VALUES('%s','%s','%s','%s','%s','%s')";
-    $sql;
-    try{
-      foreach ($datos as $key => $value){
-        $query = sprintf($query_string,$nit,$value['banco'],$value['sucursal'],$value['cuenta'],$value['telefono'],$value['contacto'],'proveedor');
-        $sql = odbc_exec($this->conn,$query);
-      }
-      //odbc_close($this->conn);
-    }catch (\Throwable $th){
-      $sql = false;
-    }
-    return $sql;    
-  }
-
-  private function actualizarRefBancarias($datos,$nit){
-    $query_string = "DELETE FROM  dbo.ruRefBancarias WHERE nit = '%s'";
-    $sql;
-    try{
-        $query = sprintf($query_string,$nit);        
-        $sql = odbc_exec($this->conn,$query)!=FALSE?$this->guardarRefBancarias($datos,$nit):FALSE;
-    }catch (\Throwable $th) {
-      $sql = false;
-    }
-    return $sql;    
-  }
-
-  private function consultarRefBancarias($nit){
-    $query_string = "SELECT banco,sucursal,cuenta,telefono,contacto FROM dbo.ruRefBancarias WHERE nit = '%s'";
-    $query_string = sprintf($query_string,$nit);    
-    $referencias = [];
-    try {
-      $sql = odbc_exec($this->conn,$query_string);
-      while($registro = odbc_fetch_array($sql)){
-        $referencias[] = array('banco'=>$registro['banco'],'sucursal'=>$registro['sucursal'],'cuenta'=>$registro['cuenta'],'telefono'=>$registro['telefono'],'contacto'=>$registro['contacto']);
-      }
-      //odbc_close($this->conn);
-    }catch (\Throwable $th) {
-      
-    }  
-    return $referencias;    
-  }
-
-  private function guardarRefExperiencia($datos,$nit){
-    $query_string = "INSERT INTO dbo.ruRefExperiencia (nit,empresa,contacto,cupos) VALUES('%s','%s','%s','%s')";
-    $sql;
-    try{
-      foreach ($datos as $key => $value){
-        $query = sprintf($query_string,$nit,$value['empresa'],$value['contacto'],$value['cupos'],'proveedor');
-        $sql = odbc_exec($this->conn,$query);
-      }
-      //odbc_close($this->conn);
-    }catch (\Throwable $th){
-      $sql = false;
-    }
-    return $sql;    
-  }
-
-  private function actualizarRefExperiencia($datos,$nit){
-    $query_string = "DELETE FROM  dbo.ruRefExperiencia WHERE nit = '%s'";
-    $sql;
-    try{
-        $query = sprintf($query_string,$nit);        
-        $sql = odbc_exec($this->conn,$query)!=FALSE?$this->guardarRefExperiencia($datos,$nit):FALSE;
-        odbc_close($this->conn);
-    }catch (\Throwable $th) {
-      $sql = false;
-    }
-    return $sql;    
-  }
-
-  private function consultarRefExperiencia($nit){
-    $query_string = "SELECT empresa,contacto,cupos FROM dbo.ruRefExperiencia WHERE nit = '%s'";
-    $query_string = sprintf($query_string,$nit);    
-    $referencias = [];
-    try {
-      $sql = odbc_exec($this->conn,$query_string);
-      while($registro = odbc_fetch_array($sql)){
-        $referencias[] = array('empresa'=>$registro['empresa'],'contacto'=>$registro['contacto'],'cupos'=>$registro['cupos']);
-      }
-      odbc_close($this->conn);
-    }catch (\Throwable $th) {
-      
-    }  
-    return $referencias;    
-  }
-
-  private function refBancariasInicial(){
-    $item = '<div>     
-              <div class="five-columns">
-                <fieldset>
-                    <label class="c-form-label negrita" for="refban_banco_0">Banco<span class="c-form-required"> *</span></label>
-                    <input id="refban_banco_0" class="c-form-input" type="text" name="refban_banco_0" placeholder="Banco" value="">
-                </fieldset>
-                <fieldset>
-                    <label class="c-form-label negrita" for="refban_sucursal_0">Sucursal<span class="c-form-required"> *</span></label>
-                    <input id="refban_sucursal_0" class="c-form-input" type="text" name="refban_sucursal_0" placeholder="Sucursal" value="">
-                </fieldset>
-                <fieldset>
-                    <label class="c-form-label negrita" for="refban_cuenta_0">Nro. Cuenta<span class="c-form-required"> *</span></label>
-                    <input id="refban_cuenta_0" class="c-form-input" type="text" name="refban_cuenta_0" placeholder="Número de cuenta" value="">
-                </fieldset>
-                <fieldset>
-                    <label class="c-form-label negrita" for="refban_telefono_0">Teléfono<span class="c-form-required"> *</span></label>
-                    <input id="refban_telefono_0" class="c-form-input" type="text" name="refban_telefono_0" placeholder="Teléfono" value="">
-                </fieldset>
-                <fieldset>
-                    <label class="c-form-label negrita" for="refban_contacto_0">Persona Contacto<span class="c-form-required"> *</span></label>
-                    <input id="refban_contacto_0" class="c-form-input" type="text" name="refban_contacto_0" placeholder="Nombre del contacto" value="">
-                </fieldset>
-              </div>
-            </div>';
-    return $item;
-  }
-
-  private function RefExperienciaInicial(){
-    $item = '<div>     
-                <div class="three-columns">
-                    <fieldset>
-                        <label class="c-form-label negrita" for="refcom_empresa_0">Empresa<span class="c-form-required"> *</span></label>
-                        <input id="refcom_empresa_0" class="c-form-input" type="text" name="refcom_empresa_0" placeholder="Banco" value="">
-                    </fieldset>
-                    <fieldset>
-                        <label class="c-form-label negrita" for="refcom_contacto_0">Contacto<span class="c-form-required"> *</span></label>
-                        <input id="refcom_contacto_0" class="c-form-input" type="text" name="refcom_contacto_0" placeholder="Sucursal" value="">
-                    </fieldset>
-                    <fieldset>
-                        <label class="c-form-label negrita" for="refban_cuenta_0">Cupos<span class="c-form-required"> *</span></label>
-                        <input id="refcom_cupos_0" class="c-form-input" type="text" name="refcom_cupos_0" placeholder="Cupos" value="">
-                    </fieldset>
-                </div>
-            </div>';
-    return $item;
-  }
+  }  
 }//end class
+
 
 
 

@@ -14,7 +14,13 @@ async function preparePanel5(objeto){
 }
 
 function savePanel5(){
-
+  const objForm = document.querySelector('#c-form')
+  const nit = document.querySelector('#enviar').dataset.nit
+  const tipoRegistro = document.querySelector('#enviar').dataset.tipoRegistro
+  const tipoPersona = document.querySelector('#enviar').dataset.tipoPersona
+  const parametros = `tipo=panel_2&accion=guardar&tipo_registro=${tipoRegistro}&nit=${nit}&tipo_persona=${tipoPersona}`
+  /////PROMESA
+  return setPanel(objForm,parametros)
 }
 
 function asociarEventosP5(){

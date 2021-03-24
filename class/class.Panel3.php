@@ -4,7 +4,7 @@ require_once("./class/class.Validation.php");
 require_once("./class/class.View.php");
 
 class Panel3{
-  
+   
   const DISPLAY_NONE = 'oculto';
   //
   public $conn;
@@ -12,7 +12,7 @@ class Panel3{
   public function preparar($datos){
     $res = $this->consultar(array($datos['i']));    
     ///Preparacion de datos para la vista segun las condiciones del formulario
-    $res_preparados = $this->prepareVariables($res,$datos['i']);
+    $res_preparados = $res['res']!='error'?$this->prepareVariables($res,$datos['i']):array();
     //
     $view = new View;
     // asignar datos
