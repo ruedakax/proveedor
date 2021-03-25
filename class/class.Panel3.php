@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 require_once("./class/class.Validation.php");
 require_once("./class/class.View.php");
 
@@ -12,7 +12,7 @@ class Panel3{
   public function preparar($datos){
     $res = $this->consultar(array($datos['i']));    
     ///Preparacion de datos para la vista segun las condiciones del formulario
-    $res_preparados = $res['res']!='error'?$this->prepareVariables($res,$datos['i']):array();
+    $res_preparados = $res['res']!='error'?$this->prepareVariables($res,$datos['i'],$datos['tipoPersona']):array();
     //
     $view = new View;
     // asignar datos
@@ -32,7 +32,7 @@ class Panel3{
       if($res==FALSE){ 
         $res = $this->execActualizar($datos);       
         if($res){
-          $respuesta['mensaje'] = 'La Información Comercial Fue ACTUALIZADA.';
+          $respuesta['mensaje'] = 'La Sección Tres Fue ACTUALIZADA.';
           $respuesta['validaciones'] = [];
           $respuesta['res'] = "success";
         }else{
@@ -42,7 +42,7 @@ class Panel3{
           $respuesta['res'] = "error";
         }
       }else{                
-        $respuesta['mensaje'] = 'La Información Comercial Fue GUARDADA.';
+        $respuesta['mensaje'] = 'La Sección Tres Fue GUARDADA.';
         $respuesta['validaciones'] = [];
         $respuesta['res'] = "success";
       }
@@ -203,8 +203,9 @@ class Panel3{
     return $val->isSuccess()?true:$val->getErrors();
   }  
 
-  private function prepareVariables($datos,$nit){
+  private function prepareVariables($datos,$nit,$tipoPersona){
     $res = $datos['datos'];
+    $res['tipoPersona'] = $tipoPersona;
     $res['nit'] = base64_decode($nit);
     $res['clase'] = self::DISPLAY_NONE;    
     $res['i3_p1_check'] = isset($res['i3_p1_check'])?$res['i3_p1_check']:'NO';

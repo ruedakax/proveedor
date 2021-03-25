@@ -26,7 +26,12 @@ async function savePanel1(){
 function asociarEventos(){
     window.tipo_persona.selectedIndex = 0;
 
-    window.tipo_persona.addEventListener('change', () => showHide('juridica'),false)
+    window.tipo_persona.addEventListener('change', () => {
+      showHide('juridica')
+      document.querySelector('#rep_legal').value = ""
+      document.querySelector('#rep_documento').value = ""
+      document.querySelector('#rep_email').value = ""
+    })
 
     document.querySelectorAll('input').forEach(item => {
       item.addEventListener('focusin', () => {

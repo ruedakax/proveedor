@@ -52,7 +52,7 @@ export function getIndex(){
 
 export function start(){
     //elminar la opcion inicial
-    window.overlay.classList.add('oculto')
+    //window.overlay.classList.add('oculto')
     window.buttonPanel.classList.remove('oculto')
     window.inicio.innerHTML = ""
     window.inicio.classList.add('oculto')

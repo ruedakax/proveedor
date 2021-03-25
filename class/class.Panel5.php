@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 require_once("./class/class.Validation.php");
 require_once("./class/class.View.php");
 require_once("./class/class.ComAccionaria.php");
@@ -19,9 +19,9 @@ class Panel5{
   private $contacto;
 
   function setComplemento(){
-    $this->comAccionaria = new RefBancarias;
+    $this->comAccionaria = new comAccionaria;
     $this->comAccionaria->conn = $this->conn;
-    $this->comSociedad = new RefExperiencia;
+    $this->comSociedad = new comSociedad;
     $this->comSociedad->conn = $this->conn;    
     $this->proContacto = new ProContacto;
     $this->proContacto->conn = $this->conn;
@@ -32,8 +32,7 @@ class Panel5{
   public function preparar($datos){
     $res = $this->consultar(array($datos['i']));    
     ///Preparacion de datos para la vista segun las condiciones del formulario    
-    $res_preparados = $res['res']!='error'?$this->prepareVariables($res,$datos['i']):array();
-    
+    $res_preparados = $res['res']!='error'?$this->prepareVariables($res,$datos['i']):array();    
     //
     $view = new View;
     // asignar datos
@@ -55,14 +54,14 @@ class Panel5{
           $comAccionaria = $this->comAccionaria->extraer($datos);
           $res = $this->execActualizar($datos)!=FALSE?$this->comAccionaria->actualizar($comAccionaria,$nit):FALSE;
           $comSociedad = $this->comSociedad->extraer($datos);
-          $res = $res!=FALSE?$this->comSociedad->actualizar($comAccionaria,$nit):FALSE;
+          $res = $res!=FALSE?$this->comSociedad->actualizar($comSociedad,$nit):FALSE;
         }        
         $proContacto = $this->proContacto->extraer($datos);
         $res = $res!=FALSE?$this->proContacto->actualizar($proContacto,$nit):FALSE;
         $contacto = $this->contacto->extraer($datos);
         $res = $res!=FALSE?$this->contacto->actualizar($contacto,$nit):FALSE;
         if($res){
-          $respuesta['mensaje'] = 'La Información Comercial Fue ACTUALIZADA.';
+          $respuesta['mensaje'] = 'La Sección Cinco Ha Sido ACTUALIZADA.';
           $respuesta['validaciones'] = [];
           $respuesta['res'] = "success";
         }else{
@@ -74,15 +73,15 @@ class Panel5{
       }else{
         if($datos['tipoPersona']==='juridica'){
           $comAccionaria = $this->comAccionaria->extraer($datos);
-          $this->comAccionaria->guardar($refBancarias,$datos['nit']);
+          $this->comAccionaria->guardar($comAccionaria,$datos['nit']);
           $comSociedad = $this->comSociedad->extraer($datos);
-          $this->comSociedad->guardar($refExperiencia,$datos['nit']);
+          $this->comSociedad->guardar($comSociedad,$datos['nit']);
         }        
-        $proContacto = $this->proContacto->comAccionaria->extraer($datos);
+        $proContacto = $this->proContacto->extraer($datos);
         $this->proContacto->guardar($proContacto,$datos['nit']);
         $contacto = $this->contacto->extraer($datos);
         $this->contacto->guardar($contacto,$datos['nit']);
-        $respuesta['mensaje'] = 'La Información Comercial Fue GUARDADA.';
+        $respuesta['mensaje'] = 'La Sección Cinco Ha Sido GUARDADA.';
         $respuesta['validaciones'] = [];
         $respuesta['res'] = "success";
       }
@@ -99,25 +98,17 @@ class Panel5{
     //preparar datos
     $datos_organizados = $this->organizarDatos($datos);    
     //
-    $query_string = "INSERT INTO dbo.registroUnicoP2
-    (nit    
-    ,tipo_actividad
-    ,nro_empleados    
-    ,regimen
-    ,cuenta_banco
-    ,cuenta
-    ,cuenta_tipo
-    ,i2_p6_check
-    ,i2_p6_empresas
-    ,i2_p7_check
-    ,i2_p7_plazo
-    ,i2_p8_check
-    ,i2_p9_check
-    ,i2_p9_postventa	
-    ,ip_origen
-    ,usuarioCrea
-    ,fechaCrea)
-    VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')";    
+    $query_string = "INSERT INTO dbo.registroUnicoP5
+    ([nit]
+      ,[i5_p1_check]
+      ,[i5_p2_check]
+      ,[i5_p3_representante]
+      ,[i5_p3_representado]
+      ,[i5_p4_fuentes]
+      ,[ip_origen]
+      ,[usuarioCrea]
+      ,[fechaCrea])
+    VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s')";    
     $query_string = vsprintf($query_string,$datos_organizados);
     //echo $query_string;
     $sql;
@@ -134,19 +125,11 @@ class Panel5{
     //preparar datos
     $datos_organizados = $this->organizarDatos($datos,'actualizar');
     //
-    $query_string = "UPDATE dbo.registroUnicoP2 SET tipo_actividad = '%s'    
-    ,nro_empleados = '%s'
-    ,regimen = '%s'
-    ,cuenta_banco = '%s'
-    ,cuenta = '%s'
-    ,cuenta_tipo = '%s'
-    ,i2_p6_check = '%s'
-    ,i2_p6_empresas = '%s'
-    ,i2_p7_check = '%s'
-    ,i2_p7_plazo = '%s'
-    ,i2_p8_check = '%s'
-    ,i2_p9_check = '%s'
-    ,i2_p9_postventa = '%s'    
+    $query_string = "UPDATE dbo.registroUnicoP5 SET i5_p1_check = '%s'
+    ,i5_p2_check = '%s'
+    ,i5_p3_representante = '%s'
+    ,i5_p3_representado = '%s'
+    ,i5_p4_fuentes = '%s'
     ,ip_origen = '%s'
     ,usuarioCrea = '%s'
     ,fechaCrea = %s
@@ -192,8 +175,7 @@ class Panel5{
         $datos_panel['list_comSociedad'] = $this->comSociedad->consultar($datos_panel['nit']);
         $datos_panel['list_proContacto'] = $this->proContacto->consultar($datos_panel['nit']);
         $datos_panel['list_contacto'] = $this->contacto->consultar($datos_panel['nit']);
-        $ok['datos'] = $datos_panel;
-        var_dump($datos_panel);
+        $ok['datos'] = $datos_panel;        
       }     
       $res = $ok;
     } catch (\Throwable $th) {
@@ -214,21 +196,26 @@ class Panel5{
     $val->name('i5_p3_representado')->value($datos['i5_p3_representado'])->pattern('text')->required();
     $val->name('i5_p4_fuentes')->value($datos['i5_p4_fuentes'])->pattern('text')->required();    
     if($datos['tipoPersona'] == 'juridica'){
-      $val->name('refban_sucursal_0')->value($datos['refban_sucursal_0'])->pattern('text')->required();
-      $val->name('refban_banco_0')->value($datos['refban_banco_0'])->pattern('text')->required();
-      $val->name('refban_cuenta_0')->value($datos['refban_cuenta_0'])->pattern('text')->required();
-      $val->name('refban_telefono_0')->value($datos['refban_telefono_0'])->pattern('tel')->required();
-      $val->name('refban_contacto_0')->value($datos['refban_contacto_0'])->pattern('text')->required();
-      $val->name('refcom_empresa_0')->value($datos['refcom_empresa_0'])->pattern('text')->required();
-      $val->name('refcom_contacto_0')->value($datos['refcom_contacto_0'])->pattern('text')->required();
-      $val->name('refcom_cupos_0')->value($datos['refcom_cupos_0'])->pattern('text')->required();
-    }
-    if($datos['i2_p7_check'] == 'SI'){
-      $val->name('i2_p7_plazo')->value($datos['i2_p7_plazo'])->pattern('int')->required();      
-    }
-    if($datos['i2_p9_check'] == 'SI'){
-      $val->name('i2_p9_postventa')->value($datos['i2_p9_postventa'])->required();
-    }
+      $val->name('acci_nombre_0')->value($datos['acci_nombre_0'])->pattern('text')->required();
+      $val->name('acci_nit_0')->value($datos['acci_nit_0'])->pattern('alphanum')->required();
+      $val->name('acci_porcentaje_0')->value($datos['acci_porcentaje_0'])->pattern('text')->required();
+      $val->name('acci_vinculado_0')->value($datos['acci_vinculado_0'])->pattern('text')->required();
+      //
+      $val->name('socied_nombre_0')->value($datos['socied_nombre_0'])->pattern('text')->required();
+      $val->name('socied_identificacion_0')->value($datos['socied_identificacion_0'])->pattern('text')->required();
+      $val->name('socied_empresa_0')->value($datos['socied_empresa_0'])->pattern('text')->required();
+      $val->name('socied_porcentaje_0')->value($datos['socied_porcentaje_0'])->pattern('text')->required();      
+      ///
+      $val->name('contacpro_nombre_0')->value($datos['contacpro_nombre_0'])->pattern('text')->required();
+      $val->name('contacpro_identificacion_0')->value($datos['contacpro_identificacion_0'])->pattern('text')->required();
+      $val->name('contacpro_telefono_0')->value($datos['contacpro_telefono_0'])->pattern('tel')->required();
+      $val->name('contacpro_email_0')->value($datos['contacpro_email_0'])->pattern('email')->required();
+      //
+      $val->name('contacto_nombre_0')->value($datos['contacto_nombre_0'])->pattern('text')->required();
+      $val->name('contacto_identificacion_0')->value($datos['contacto_identificacion_0'])->pattern('text')->required();
+      $val->name('contacto_telefono_0')->value($datos['contacto_telefono_0'])->pattern('tel')->required();
+      $val->name('contacto_email_0')->value($datos['contacto_email_0'])->pattern('email')->required();      
+    }    
     //
     return $val->isSuccess()?true:$val->getErrors();    
   }
@@ -254,19 +241,11 @@ class Panel5{
   private function organizarDatos($datos,$tipo = 'guardar'){    
     $datos_organizados = [
       $datos['nit'] = base64_decode($datos['nit']),
-      $datos['tipo_actividad'],
-      $datos['nro_empleados'],
-      $datos['regimen'],
-      $datos['cuenta_banco'],
-      $datos['cuenta'],
-      $datos['cuenta_tipo'],
-      $datos['i2_p6_check'],
-      $datos['i2_p6_empresas'],
-      $datos['i2_p7_check'],
-      $datos['i2_p7_plazo'],
-      $datos['i2_p8_check'],
-      $datos['i2_p9_check'],
-      $datos['i2_p9_postventa'],
+      $datos['i5_p1_check'],
+      $datos['i5_p2_check'],
+      $datos['i5_p3_representante'],
+      $datos['i5_p3_representado'],
+      $datos['i5_p4_fuentes'],      
       $_SERVER['REMOTE_ADDR'],      
       'proveedor',//ToDo
       date('Y-m-d'),

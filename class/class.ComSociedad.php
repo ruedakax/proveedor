@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 //
 class Comsociedad{
     public $conn;
@@ -67,7 +67,7 @@ class Comsociedad{
         try{
             $query = sprintf($query_string,$nit);        
             $sql = odbc_exec($this->conn,$query)!=FALSE?$this->guardar($datos,$nit):FALSE;
-            odbc_close($this->conn);
+            //odbc_close($this->conn);
         }catch (\Throwable $th) {
           $sql = false;
         }

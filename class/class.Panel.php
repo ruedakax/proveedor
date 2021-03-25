@@ -1,14 +1,14 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(E_ERROR | E_PARSE);
 require_once("./class/class.SOConexion.php");
 require_once("./class/class.Panel1.php");
 require_once("./class/class.Panel2.php");
 require_once("./class/class.Panel3.php");
 // require_once("./class/class.Panel4.php");
 require_once("./class/class.Panel5.php");
-// require_once("./class/class.Panel6.php");
-// require_once("./class/class.Panel7.php");
-// require_once("./class/class.Panel8.php");
+require_once("./class/class.Panel6.php");
+require_once("./class/class.Panel7.php");
+require_once("./class/class.Panel8.php");
 
 class Panel{
 
@@ -61,7 +61,7 @@ class Panel{
                 $this->instacia->conn = SOConexion::conexion_db();
             break;
             default:
-                echo "¡ERROR!: CONSULTA AL ADMON";
+                echo "¡ERROR!: CONSULTE AL ADMON";
                 die;
             break;
         }
@@ -82,7 +82,7 @@ class Panel{
                 return $this->instacia->preparar($datos);
             break;
             default:
-                echo "ERROR CONSULTA AL ADMON";
+                echo "ERROR CONSULTE AL ADMON";
                 die;
             break;
         }

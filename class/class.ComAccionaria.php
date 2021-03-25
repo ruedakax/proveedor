@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 //
 class ComAccionaria{
     public $conn;
@@ -69,14 +69,15 @@ class ComAccionaria{
         try{
             $query = sprintf($query_string,$nit);        
             $sql = odbc_exec($this->conn,$query)!=FALSE?$this->guardar($datos,$nit):FALSE;
-            odbc_close($this->conn);
+            //odbc_close($this->conn);
         }catch (\Throwable $th) {
           $sql = false;
         }
         return $sql;    
     }
     
-    private function itemInicial(){
+    
+    public function itemInicial(){
         $item = '<div>              
                   <div class="four-columns">
                     <fieldset>
@@ -93,7 +94,7 @@ class ComAccionaria{
                     </fieldset>
                     <fieldset>
                       <label class="c-form-label negrita" for="acci_vinculado_0">Es Persona Públicamente Expuesta o Vinculada con una de Ellas<span class="c-form-required"> *</span></label>
-                      <input id="acci_vinculado_0" class="c-form-input" type="text" name="acci_vinculado_0" placeholder="escriba SI ó NO y NOMBRE DEL VINCULADO" value="">
+                      <input id="acci_vinculado_0" class="c-form-input" type="text" name="acci_vinculado_0" placeholder="escriba NO ó SI y NOMBRE DEL VINCULADO" value="">
                     </fieldset>                    
                   </div>
                 </div>';

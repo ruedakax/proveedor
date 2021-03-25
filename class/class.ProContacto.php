@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 //
 class ProContacto{
     public $conn;
@@ -48,11 +48,11 @@ class ProContacto{
     }
 
     public function guardar($datos,$nit){
-        $query_string = "INSERT INTO dbo.[ruProContacto] (nit,contacpro_nombre,contacpro_identificacion,contacpro_telefono,contacpro_mail) VALUES('%s','%s','%s','%s','%s')";
+        $query_string = "INSERT INTO dbo.[ruProContacto] (nit,contacpro_nombre,contacpro_identificacion,contacpro_telefono,contacpro_email) VALUES('%s','%s','%s','%s','%s')";
         $sql;
         try{
           foreach ($datos as $key => $value){
-            $query = sprintf($query_string,$nit,$value['contacpro_nombre'],$value['contacpro_identificacion'],$value['contacpro_telefono'],$value['contacpro_mail']);
+            $query = sprintf($query_string,$nit,$value['contacpro_nombre'],$value['contacpro_identificacion'],$value['contacpro_telefono'],$value['contacpro_email']);
             $sql = odbc_exec($this->conn,$query);
           }
           //odbc_close($this->conn);
@@ -68,7 +68,7 @@ class ProContacto{
         try{
             $query = sprintf($query_string,$nit);        
             $sql = odbc_exec($this->conn,$query)!=FALSE?$this->guardar($datos,$nit):FALSE;
-            odbc_close($this->conn);
+            //odbc_close($this->conn);
         }catch (\Throwable $th) {
           $sql = false;
         }

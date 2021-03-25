@@ -18,7 +18,7 @@ function savePanel5(){
   const nit = document.querySelector('#enviar').dataset.nit
   const tipoRegistro = document.querySelector('#enviar').dataset.tipoRegistro
   const tipoPersona = document.querySelector('#enviar').dataset.tipoPersona
-  const parametros = `tipo=panel_2&accion=guardar&tipo_registro=${tipoRegistro}&nit=${nit}&tipo_persona=${tipoPersona}`
+  const parametros = `tipo=panel_5&accion=guardar&tipo_registro=${tipoRegistro}&nit=${nit}&tipoPersona=${tipoPersona}`
   /////PROMESA
   return setPanel(objForm,parametros)
 }

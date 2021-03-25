@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 //
 class Contacto {
     public $conn;
@@ -40,7 +40,7 @@ class Contacto {
           while($registro = odbc_fetch_array($sql)){
             $referencias[] = array('contacto_nombre'=>$registro['contacto_nombre'],'contacto_identificacion'=>$registro['contacto_identificacion'],'contacto_telefono'=>$registro['contacto_telefono'],'contacto_email'=>$registro['contacto_email']);
           }
-          //odbc_close($this->conn);
+          odbc_close($this->conn);
         }catch (\Throwable $th) {
           
         }  
@@ -55,7 +55,7 @@ class Contacto {
             $query = sprintf($query_string,$nit,$value['contacto_nombre'],$value['contacto_identificacion'],$value['contacto_telefono'],$value['contacto_email']);
             $sql = odbc_exec($this->conn,$query);
           }
-          //odbc_close($this->conn);
+          odbc_close($this->conn);
         }catch (\Throwable $th){
           $sql = false;
         }
@@ -68,7 +68,7 @@ class Contacto {
         try{
             $query = sprintf($query_string,$nit);
             $sql = odbc_exec($this->conn,$query)!=FALSE?$this->guardar($datos,$nit):FALSE;
-            odbc_close($this->conn);
+            //odbc_close($this->conn);
         }catch (\Throwable $th) {
           $sql = false;
         }

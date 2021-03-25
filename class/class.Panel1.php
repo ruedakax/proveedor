@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 require_once("./class/class.Sucursales.php");
 require_once("./class/class.Validation.php");
 require_once("./class/class.View.php");
@@ -45,7 +45,7 @@ class Panel1{
           $res = $this->sucursales->actualizar($sucursales,$datos['nit']);
         }
         if($res){
-          $respuesta['mensaje'] = 'La Información General Fue ACTUALIZADA.';
+          $respuesta['mensaje'] = 'La Sección Uno Ha Sido ACTUALIZADA.';
           $respuesta['validaciones'] = [];
           $respuesta['res'] = "success";
         }else{
@@ -59,7 +59,7 @@ class Panel1{
           $sucursales = $this->sucursales->extraer($datos);
           $this->sucursales->guardar($sucursales,$datos['nit']);
         }
-        $respuesta['mensaje'] = 'La Información General Fue GUARDADA.';
+        $respuesta['mensaje'] = 'La Sección Uno Ha Sido GUARDADA.';
         $respuesta['validaciones'] = [];
         $respuesta['res'] = "success";
       }
@@ -113,7 +113,7 @@ class Panel1{
       $sql = @odbc_exec($this->conn,$query_string);
       //odbc_close($this->conn);
     } catch (\Throwable $th) {
-      $sql = false;
+      $sql = false;      
     }
     return $sql;
   }    

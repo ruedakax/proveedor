@@ -63,7 +63,7 @@
                       </fieldset>
                       <fieldset>
                         <label class="c-form-label negrita" for="acci_vinculado_<?php echo ($key)?>">Es Persona Públicamente Expuesta o Vinculada con una de Ellas<span class="c-form-required"> *</span></label>
-                        <input id="acci_vinculado_<?php echo ($key)?>" class="c-form-input" type="text" name="acci_vinculado_<?php echo ($key)?>" placeholder="escriba SI ó NO y NOMBRE DEL VINCULADO" value="<?php echo $value['acci_vinculado']?>">
+                        <input id="acci_vinculado_<?php echo ($key)?>" class="c-form-input" type="text" name="acci_vinculado_<?php echo ($key)?>" placeholder="escriba NO ó SI y NOMBRE DEL VINCULADO" value="<?php echo $value['acci_vinculado']?>">
                       </fieldset>                    
                     </div>
                   </div>
@@ -192,7 +192,7 @@
                     ?>                       
                     <div>
                       <?php echo $aclose?>                      
-                      <div class="four-columns" <?php echo $aclass?>>
+                      <div class="four-columns <?php echo $aclass?>">
                         <fieldset>
                           <label class="c-form-label negrita" for="contacto_nombre_<?php echo ($key)?>">Nombre<span class="c-form-required"> *</span></label>
                           <input id="contacto_nombre_<?php echo ($key)?>" class="c-form-input" type="text" name="contacto_nombre_<?php echo ($key)?>" placeholder="Nombre Completo" value="<?php echo $value['contacto_nombre']?>">

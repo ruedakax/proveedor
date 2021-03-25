@@ -3,7 +3,8 @@ import {setPanel,getPanel} from './envio.js'
 
 async function preparePanel3(){
   const nit = document.querySelector('#enviar').dataset.nit
-  const parametros = `i=${nit}&accion=preparar&tipo=panel_3`
+  const tipoPersona = document.querySelector('#enviar').dataset.tipoPersona
+  const parametros = `i=${nit}&accion=preparar&tipo=panel_3&tipoPersona=${tipoPersona}`
   const response = await getPanel(parametros)
   //se despliega el panel en el documento  
   document['c-form'].innerHTML = JSON.parse(response)
@@ -21,7 +22,8 @@ function savePanel3(){
   return setPanel(objForm,parametros)
 }
 
-function showGestion(item,tipoPersona){
+function showGestion(item){
+  let tipoPersona = document.querySelector('#enviar').dataset.tipoPersona    
   if(item.value === 'NO' && tipoPersona ==='juridica'){
     window.conGestion.classList.remove('oculto')
     window.sinGestion.classList.remove('oculto')
@@ -41,12 +43,10 @@ function asociarEventosP3(){
     })
   });
   
-  document.querySelectorAll('#i3_p1_check').forEach(item => {
-    let tipoPersona = document.querySelector('#enviar').dataset.tipoPersona
-    showGestion(item,tipoPersona)
+  document.querySelectorAll('#i3_p1_check').forEach(item => {      
       item.addEventListener('change', () => {
         showHideByCheck(item,'i3_p1')
-        showGestion(item,tipoPersona)
+        showGestion(item)
         if(item.value==='NO'){
           document.querySelector('#i3_p1_ec_asesora').value = ""
           document.querySelectorAll('.certi').forEach(elemento=> {

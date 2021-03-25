@@ -1,9 +1,21 @@
+<?php
+$oculto_gestion;
+$oculto_sin_gestion;
+if($datos['i3_p1_check'] === 'NO' && $datos['tipoPersona'] ==='juridica'){
+  $oculto_gestion ='';
+  $oculto_sin_gestion ='';
+}elseif($datos['i3_p1_check'] === 'SI' && $datos['tipoPersona'] ==='juridica'){
+  $oculto_sin_gestion =$datos['clase'];  
+}else{
+  $oculto_gestion = $datos['clase'];    
+}
+?>
 <!-- INCIO -  C A B E C E R A   I N F O R M A C I O N   S I S T E M A S   G E S T I O N-->
 <div class="form-box panel_3"><h3>3. Información de Sistemas de Gestión<i class="arrow down"></i></h3></div>
 <div class="form-box panel_3" id="panel_3">
   <div class="c-form">
     <div class="break">
-      <fieldset id="conGestion">
+      <fieldset id="conGestion" class="<?php echo $oculto_gestion?>">
         <label class="c-form-label negrita" for="i3_p1_check">¿Posee certificado de Sistema de Gestión?<span class="c-form-required"> *</span></label><br/>
         <label class="alt_label c-form-label"><input type="radio" name="i3_p1_check" id="i3_p1_check" value="SI" <?php echo @$datos['i3_p1_check']=="SI"?'checked':''?>>SI</label>
         <label class="alt_label c-form-label"><input type="radio" name="i3_p1_check" id="i3_p1_check" value="NO" <?php echo @$datos['i3_p1_check']=="NO"?'checked':''?>>NO</label><br/>
@@ -18,7 +30,7 @@
         <input id="i3_p1_ec_asesora" class="c-form-input" type="text" name="i3_p1_ec_asesora" placeholder="firma asesora" value="<?=@$datos['i3_p1_ec_asesora']?>">
       </fieldset>
     </div>
-    <div id="sinGestion" class="<?php echo @$datos['i3_p1_check']=="SI"?@$datos['clase']:''?>">
+    <div id="sinGestion" class="<?php echo $oculto_sin_gestion?>">
       <fieldset>
         <label class="c-form-label negrita item-sucursal" for="sucursales">SOLO  PARA PRODUCTORES, DISTRIBUIDORES O PRESTADORES DE SERVICIOS</label><br/>
       </fieldset>

@@ -22,19 +22,34 @@ const funciones = {
                 }
 
 export function showSection(){
-    window.overlay.classList.remove('oculto')
     //obtiene el indice del panel a mostrar
-    const index = getIndex()        
+    const index = getIndex()
+    //
+    const limite_sup = JSON.parse(document.querySelector('#buttonPanel').dataset.paneles).length    
+    let actual = parseInt(document.querySelector('#buttonPanel').dataset.current)
+    const volver = actual > 0?window.volver.classList.remove('oculto'):window.volver.classList.add('oculto')
+    const enviar = actual === limite_sup-1?window.enviar.classList.add('oculto'):window.enviar.classList.remove('oculto')        
     //llamado dinamico de funciones según el panel
-    funciones[index].prepare()    
+    funciones[index].prepare()
+
 }
 
-export function moveSection(tipo){        
-    if(tipo==="adelante"){
-        adelantarSeccion(tipo)
-    }else{
-        //ToDo:cuando va atrás
-    }        
+export function moveSection(tipo){
+    window.overlay.classList.remove('oculto')
+    let res = funciones[getIndex()].save()
+    //promesa
+    res.then(function(response){        
+        const respuesta = JSON.parse(response)
+        let ans = displayErrors(respuesta)
+        if(ans){
+            mover(tipo)        
+            showSection()
+            showModal(respuesta.res,respuesta.mensaje)            
+        }
+    })
+    .catch(function(response){
+        console.log(response)   
+    });            
 }
 
 /*señala los input que no pasaron la validacion según la respuesta del servidor*/
@@ -51,29 +66,3 @@ function displayErrors(respuesta){
       return true
     }
 }
-
-function adelantarSeccion(tipo){
-    let res = funciones[getIndex()].save()
-    //promesa
-    res.then(function(response){
-        const respuesta = JSON.parse(response)
-        let ans = displayErrors(respuesta)        
-        if(ans){
-            mover(tipo)            
-            showSection()
-            showModal(respuesta.res,respuesta.mensaje)
-            let actual = parseInt(document.querySelector('#buttonPanel').dataset.current)
-            if(actual > 0){
-                window.volver.classList.remove('oculto')
-            }else{
-                window.volver.classList.add('oculto')
-            }            
-        }else{
-
-        }           
-    })
-    .catch(function(response){
-        console.log(response)   
-    });
-}
-

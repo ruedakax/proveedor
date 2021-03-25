@@ -114,27 +114,27 @@ function addNodo(contenedor,texto_id,inicio,nodo){
                             </fieldset>
                             <fieldset>
                             <label class="c-form-label negrita" for="contacpro_email_1">Correo Electrónico<span class="c-form-required"> *</span></label>
-                            <input id="contacpro_email_1" class="c-form-input" type="text" name="contacpro_email_1" placeholder="%">
+                            <input id="contacpro_email_1" class="c-form-input" type="text" name="contacpro_email_1" placeholder="email">
                             </fieldset>                    
                            </div>`,
         'nodoContactos':`<div class='close'><span class="x">x</span></div>
                         <div id="areaContactos" class="">                  
                         <div class="four-columns item-banref">                   
                         <fieldset>
-                            <label class="c-form-label negrita" for="contacpro_nombre_1">Nombre<span class="c-form-required"> *</span></label>
-                            <input id="contacpro_nombre_1" class="c-form-input" type="text" name="contacpro_nombre_1" placeholder="Nombre Completo">
+                            <label class="c-form-label negrita" for="contacto_nombre_1">Nombre<span class="c-form-required"> *</span></label>
+                            <input id="contacto_nombre_1" class="c-form-input" type="text" name="contacto_nombre_1" placeholder="Nombre Completo">
                         </fieldset>
                         <fieldset>
-                            <label class="c-form-label negrita" for="contacpro_identificacion_1">No. de Identificación<span class="c-form-required"> *</span></label>
-                            <input id="contacpro_identificacion_1" class="c-form-input" type="text" name="contacpro_identificacion_1" placeholder="Número Nit/CC">
+                            <label class="c-form-label negrita" for="contacto_identificacion_1">No. de Identificación<span class="c-form-required"> *</span></label>
+                            <input id="contacto_identificacion_1" class="c-form-input" type="text" name="contacto_identificacion_1" placeholder="Número Nit/CC">
                         </fieldset>
                         <fieldset>
-                            <label class="c-form-label negrita" for="contacpro_telefono_1">Teléfono<span class="c-form-required"> *</span></label>
-                            <input id="contacpro_telefono_1" class="c-form-input" type="text" name="contacpro_telefono_1" placeholder="Teléfono">
+                            <label class="c-form-label negrita" for="contacto_telefono_1">Teléfono<span class="c-form-required"> *</span></label>
+                            <input id="contacto_telefono_1" class="c-form-input" type="text" name="contacto_telefono_1" placeholder="Teléfono">
                         </fieldset>
                         <fieldset>
-                            <label class="c-form-label negrita" for="contacpro_email_1">Correo Electrónico<span class="c-form-required"> *</span></label>
-                            <input id="contacpro_email_1" class="c-form-input" type="text" name="contacpro_email_1" placeholder="%">
+                            <label class="c-form-label negrita" for="contacto_email_1">Correo Electrónico<span class="c-form-required"> *</span></label>
+                            <input id="contacto_email_1" class="c-form-input" type="text" name="contacto_email_1" placeholder="email">
                         </fieldset>                   
                         </div>
                     </div>`,

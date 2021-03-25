@@ -16,7 +16,8 @@ export function showModal(clase,texto){
     document.querySelectorAll('.modal-close').forEach(item => {
         item.addEventListener('click', () =>  {
             window.overlay.classList.add('oculto')
-            window.overlay.innerHTML = ''
+            //retorna el loader
+            window.overlay.innerHTML = '<div class="loader__element"></div>'
         })        
     })
 }

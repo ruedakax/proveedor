@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 require_once("./class/class.Validation.php");
 require_once("./class/class.View.php");
 require_once("./class/class.RefBancarias.php");
@@ -39,17 +39,17 @@ class Panel2{
   public function guardar($datos){    
     $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'panel'=>[]];  
     $datos['i2_p9_postventa'] = isset($datos['i2_p9_postventa'])?$datos['i2_p9_postventa']:'';      
-    $res = $this->validar($datos);    
+    $res = $this->validar($datos);        
     if(!is_array($res)){
       $res = $this->execGuardar($datos);
-      if($res==FALSE){
-        $nit = base64_decode($datos['nit']);
+      $nit = base64_decode($datos['nit']);
+      if($res==FALSE){                
         $refBancarias = $this->refBancarias->extraer($datos);
         $res = $this->execActualizar($datos)!=FALSE?$this->refBancarias->actualizar($refBancarias,$nit):FALSE;
         $refExperiencia = $this->refExperiencia->extraer($datos);
         $res = $res!=FALSE?$this->refExperiencia->actualizar($refExperiencia,$nit):FALSE;
         if($res){
-          $respuesta['mensaje'] = 'La Información Comercial Fue ACTUALIZADA.';
+          $respuesta['mensaje'] = 'La Sección dos Ha sido ACTUALIZADA.';
           $respuesta['validaciones'] = [];
           $respuesta['res'] = "success";
         }else{
@@ -63,7 +63,7 @@ class Panel2{
         $this->refBancarias->guardar($refBancarias,$datos['nit']);
         $refExperiencia = $this->refExperiencia->extraer($datos);
         $this->refExperiencia->guardar($refExperiencia,$datos['nit']);
-        $respuesta['mensaje'] = 'La Información Comercial Fue GUARDADA.';
+        $respuesta['mensaje'] = 'La Sección dos Ha sido GUARDADA.';
         $respuesta['validaciones'] = [];
         $respuesta['res'] = "success";
       }
