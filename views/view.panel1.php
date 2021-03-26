@@ -8,7 +8,7 @@
             </fieldset>
             <fieldset>
             <label class="c-form-label negrita" for="nit">NIT/CC<span class="c-form-required"> *</span></label>
-            <input id="nit" class="c-form-input" type="text" name="nit" placeholder="Nit/CC" value="<?=@$datos['nit']?>">
+            <input id="nit" class="c-form-input" type="text" name="nit" placeholder="Nit/CC" value="<?=@$datos['nit']?>" readonly>
             </fieldset>
             <fieldset>
                 <label class="c-form-label negrita" for="tipo_persona">Tipo Persona<span class="c-form-required"> *</span></label>

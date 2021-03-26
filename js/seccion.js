@@ -7,6 +7,7 @@ import {preparePanel5,savePanel5} from './panel_5.js'
 import {preparePanel6,savePanel6} from './panel_6.js'
 import {preparePanel7,savePanel7} from './panel_7.js'
 import {preparePanel8,savePanel8} from './panel_8.js'
+import {preparePanel9,savePanel9} from './panel_9.js'
 //alerts
 import {showModal} from './modal.js' 
 
@@ -18,37 +19,38 @@ const funciones = {
                    5:{prepare:preparePanel5,save:savePanel5},
                    6:{prepare:preparePanel6,save:savePanel6},
                    7:{prepare:preparePanel7,save:savePanel7},
-                   8:{prepare:preparePanel8,save:savePanel8}
+                   8:{prepare:preparePanel8,save:savePanel8},
+                   9:{prepare:preparePanel9,save:savePanel9}
                 }
 
 export function showSection(){
     //obtiene el indice del panel a mostrar
     const index = getIndex()
     //
-    const limite_sup = JSON.parse(document.querySelector('#buttonPanel').dataset.paneles).length    
+    const limite_sup = JSON.parse(document.querySelector('#buttonPanel').dataset.paneles).length
     let actual = parseInt(document.querySelector('#buttonPanel').dataset.current)
     const volver = actual > 0?window.volver.classList.remove('oculto'):window.volver.classList.add('oculto')
-    const enviar = actual === limite_sup-1?window.enviar.classList.add('oculto'):window.enviar.classList.remove('oculto')        
+    //const enviar = actual === limite_sup-1?window.enviar.classList.add('oculto'):window.enviar.classList.remove('oculto')        
+    window.enviar.innerHTML = actual === limite_sup-1?"FINALIZAR":"SIGUIENTE"
     //llamado dinamico de funciones según el panel
     funciones[index].prepare()
-
 }
 
 export function moveSection(tipo){
     window.overlay.classList.remove('oculto')
     let res = funciones[getIndex()].save()
     //promesa
-    res.then(function(response){        
+    res.then(function(response){
         const respuesta = JSON.parse(response)
         let ans = displayErrors(respuesta)
         if(ans){
             mover(tipo)        
             showSection()
-            showModal(respuesta.res,respuesta.mensaje)            
+            showModal(respuesta.res,respuesta.mensaje)
         }
     })
     .catch(function(response){
-        console.log(response)   
+        console.log(response)
     });            
 }
 

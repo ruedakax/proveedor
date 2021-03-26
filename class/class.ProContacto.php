@@ -52,7 +52,7 @@ class ProContacto{
         $sql;
         try{
           foreach ($datos as $key => $value){
-            $query = sprintf($query_string,$nit,$value['contacpro_nombre'],$value['contacpro_identificacion'],$value['contacpro_telefono'],$value['contacpro_email']);
+            $query = sprintf($query_string,$nit,$value['contacpro_nombre'],$value['contacpro_identificacion'],$value['contacpro_telefono'],$value['contacpro_email']);            
             $sql = odbc_exec($this->conn,$query);
           }
           //odbc_close($this->conn);

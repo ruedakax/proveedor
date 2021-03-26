@@ -439,6 +439,15 @@ h3{
 .modal-warning{
   background-color: #dad625;
 }
+
+.status-nofile{
+  color: #ad6f6f;
+}
+
+.status-saved{
+  color: #6fad6f;
+}
+
 .pequena{
   font-size: 14px;
 }

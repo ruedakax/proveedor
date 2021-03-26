@@ -36,7 +36,7 @@ class Panel2{
     return $html;    
   }
 
-  public function guardar($datos){    
+  public function guardar($datos){
     $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'panel'=>[]];  
     $datos['i2_p9_postventa'] = isset($datos['i2_p9_postventa'])?$datos['i2_p9_postventa']:'';      
     $res = $this->validar($datos);        
@@ -60,9 +60,9 @@ class Panel2{
         }
       }else{        
         $refBancarias = $this->refBancarias->extraer($datos);
-        $this->refBancarias->guardar($refBancarias,$datos['nit']);
+        $this->refBancarias->guardar($refBancarias,$nit);
         $refExperiencia = $this->refExperiencia->extraer($datos);
-        $this->refExperiencia->guardar($refExperiencia,$datos['nit']);
+        $this->refExperiencia->guardar($refExperiencia,$nit);
         $respuesta['mensaje'] = 'La Sección dos Ha sido GUARDADA.';
         $respuesta['validaciones'] = [];
         $respuesta['res'] = "success";

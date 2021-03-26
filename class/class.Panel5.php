@@ -1,5 +1,5 @@
 <?php
-//error_reporting(E_ALL);
+error_reporting(E_ALL);
 require_once("./class/class.Validation.php");
 require_once("./class/class.View.php");
 require_once("./class/class.ComAccionaria.php");
@@ -48,18 +48,20 @@ class Panel5{
     $res = $this->validar($datos);
     if(!is_array($res)){
       $res = $this->execGuardar($datos);
+      $nit = base64_decode($datos['nit']);      
       if($res==FALSE){
-        $nit = base64_decode($datos['nit']);
         if($datos['tipoPersona']==='juridica'){
           $comAccionaria = $this->comAccionaria->extraer($datos);
           $res = $this->execActualizar($datos)!=FALSE?$this->comAccionaria->actualizar($comAccionaria,$nit):FALSE;
           $comSociedad = $this->comSociedad->extraer($datos);
           $res = $res!=FALSE?$this->comSociedad->actualizar($comSociedad,$nit):FALSE;
-        }        
+        }else{
+          $res=TRUE;
+        }
         $proContacto = $this->proContacto->extraer($datos);
-        $res = $res!=FALSE?$this->proContacto->actualizar($proContacto,$nit):FALSE;
+        $res = $res!=FALSE?$this->proContacto->actualizar($proContacto,$nit):FALSE;        
         $contacto = $this->contacto->extraer($datos);
-        $res = $res!=FALSE?$this->contacto->actualizar($contacto,$nit):FALSE;
+        $res = $res!=FALSE?$this->contacto->actualizar($contacto,$nit):FALSE;        
         if($res){
           $respuesta['mensaje'] = 'La Sección Cinco Ha Sido ACTUALIZADA.';
           $respuesta['validaciones'] = [];
@@ -73,14 +75,14 @@ class Panel5{
       }else{
         if($datos['tipoPersona']==='juridica'){
           $comAccionaria = $this->comAccionaria->extraer($datos);
-          $this->comAccionaria->guardar($comAccionaria,$datos['nit']);
+          $this->comAccionaria->guardar($comAccionaria,$nit);
           $comSociedad = $this->comSociedad->extraer($datos);
-          $this->comSociedad->guardar($comSociedad,$datos['nit']);
+          $this->comSociedad->guardar($comSociedad,$nit);
         }        
         $proContacto = $this->proContacto->extraer($datos);
-        $this->proContacto->guardar($proContacto,$datos['nit']);
+        $this->proContacto->guardar($proContacto,$nit);
         $contacto = $this->contacto->extraer($datos);
-        $this->contacto->guardar($contacto,$datos['nit']);
+        $this->contacto->guardar($contacto,$nit);
         $respuesta['mensaje'] = 'La Sección Cinco Ha Sido GUARDADA.';
         $respuesta['validaciones'] = [];
         $respuesta['res'] = "success";
@@ -189,13 +191,15 @@ class Panel5{
   
   private function validar($datos){    
     $val = new Validation();
-    $val->name('nit')->value($datos['nit'])->required();
+    $val->name('nit')->value($datos['nit'])->required();    
     $val->name('i5_p1_check')->value($datos['i5_p1_check'])->pattern('alpha')->required();
-    $val->name('i5_p2_check')->value($datos['i5_p2_check'])->pattern('alpha')->required();
-    $val->name('i5_p3_representante')->value($datos['i5_p3_representante'])->pattern('text')->required();
-    $val->name('i5_p3_representado')->value($datos['i5_p3_representado'])->pattern('text')->required();
-    $val->name('i5_p4_fuentes')->value($datos['i5_p4_fuentes'])->pattern('text')->required();    
     if($datos['tipoPersona'] == 'juridica'){
+      //      
+      $val->name('i5_p2_check')->value($datos['i5_p2_check'])->pattern('alpha')->required();
+      $val->name('i5_p3_representante')->value($datos['i5_p3_representante'])->pattern('text')->required();
+      $val->name('i5_p3_representado')->value($datos['i5_p3_representado'])->pattern('text')->required();
+      $val->name('i5_p4_fuentes')->value($datos['i5_p4_fuentes'])->pattern('text')->required();    
+      //
       $val->name('acci_nombre_0')->value($datos['acci_nombre_0'])->pattern('text')->required();
       $val->name('acci_nit_0')->value($datos['acci_nit_0'])->pattern('alphanum')->required();
       $val->name('acci_porcentaje_0')->value($datos['acci_porcentaje_0'])->pattern('text')->required();
@@ -205,17 +209,17 @@ class Panel5{
       $val->name('socied_identificacion_0')->value($datos['socied_identificacion_0'])->pattern('text')->required();
       $val->name('socied_empresa_0')->value($datos['socied_empresa_0'])->pattern('text')->required();
       $val->name('socied_porcentaje_0')->value($datos['socied_porcentaje_0'])->pattern('text')->required();      
-      ///
-      $val->name('contacpro_nombre_0')->value($datos['contacpro_nombre_0'])->pattern('text')->required();
-      $val->name('contacpro_identificacion_0')->value($datos['contacpro_identificacion_0'])->pattern('text')->required();
-      $val->name('contacpro_telefono_0')->value($datos['contacpro_telefono_0'])->pattern('tel')->required();
-      $val->name('contacpro_email_0')->value($datos['contacpro_email_0'])->pattern('email')->required();
-      //
-      $val->name('contacto_nombre_0')->value($datos['contacto_nombre_0'])->pattern('text')->required();
-      $val->name('contacto_identificacion_0')->value($datos['contacto_identificacion_0'])->pattern('text')->required();
-      $val->name('contacto_telefono_0')->value($datos['contacto_telefono_0'])->pattern('tel')->required();
-      $val->name('contacto_email_0')->value($datos['contacto_email_0'])->pattern('email')->required();      
-    }    
+      ///      
+    }
+    $val->name('contacpro_nombre_0')->value($datos['contacpro_nombre_0'])->pattern('text')->required();
+    $val->name('contacpro_identificacion_0')->value($datos['contacpro_identificacion_0'])->pattern('text')->required();
+    $val->name('contacpro_telefono_0')->value($datos['contacpro_telefono_0'])->pattern('tel')->required();
+    $val->name('contacpro_email_0')->value($datos['contacpro_email_0'])->pattern('email')->required();
+    //
+    $val->name('contacto_nombre_0')->value($datos['contacto_nombre_0'])->pattern('text')->required();
+    $val->name('contacto_identificacion_0')->value($datos['contacto_identificacion_0'])->pattern('text')->required();
+    $val->name('contacto_telefono_0')->value($datos['contacto_telefono_0'])->pattern('tel')->required();
+    $val->name('contacto_email_0')->value($datos['contacto_email_0'])->pattern('email')->required();          
     //
     return $val->isSuccess()?true:$val->getErrors();    
   }

@@ -1,10 +1,8 @@
 //Se encarga de la funcionalidad de las secciones
 import {showSection,moveSection} from './seccion.js'
-    
-//window.onunload = () => true
 
 //const opciones_tipo = {'cliente':[1,5,6,8],'proveedor':[1,2,3,4,5,6,7,8],'contratista':[1,2,3,4,5,6,7,8]}
-const opciones_tipo = {'cliente':[1,5,6,7,8],'proveedor':[1,2,3,5,6,7,8],'contratista':[1,2,3,4,5,6,7,8]}
+const opciones_tipo = {'cliente':[1,9,5,6,8],'proveedor':[1,2,3,5,6,7,8],'contratista':[1,2,3,5,6,7,8]}
 
 document.querySelectorAll('.tipo_registro').forEach(item => {
     item.addEventListener('change', () => {
@@ -15,7 +13,7 @@ document.querySelectorAll('.tipo_registro').forEach(item => {
 });
 
 document.querySelectorAll('.tipo_registro').forEach(item => {
-    item.removeAttribute('checked');           
+    item.removeAttribute('checked');
 })
 
 document.querySelector('#enviar').addEventListener('click', () => {

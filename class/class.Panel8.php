@@ -31,7 +31,7 @@ class Panel8{
       if($res==FALSE){ 
         $res = $this->execActualizar($datos);       
         if($res){
-          $respuesta['mensaje'] = 'La Sección Ocho Ha Sido ACTUALIZADA.';
+          $respuesta['mensaje'] = '<p>La Sección Ocho Ha Sido Actualizada.</p><p>Usted Ha Completado La Información Requerida Y Será Direccionado A La Primera Sección.</p>';
           $respuesta['validaciones'] = [];
           $respuesta['res'] = "success";
         }else{
@@ -41,7 +41,7 @@ class Panel8{
           $respuesta['res'] = "error";
         }
       }else{                
-        $respuesta['mensaje'] = 'La Sección Ocho Ha Sido GUARDADA.';
+        $respuesta['mensaje'] = '<p>La Sección Ocho Ha Sido Guardada.</p><p>Usted Ha Completado La Información Requerida Y Será Direccionado A La Primera Sección.</p>';
         $respuesta['validaciones'] = [];
         $respuesta['res'] = "success";
       }
