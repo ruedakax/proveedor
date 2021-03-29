@@ -17,9 +17,12 @@
             </fieldset>
             <fieldset>
                 <label class="c-form-label" for="fecha_mercantil">Documento Actual<span class="c-form-required"></span></label>
-                <p class="status-nofile" id="status_cedula">Sin Asociar</p>
-            </fieldset>             
-            <embed id="visor"></embed>
+                <p class="<?php echo isset($datos['file_cedula']['nit'])?'status-saved':'status-nofile'?>" id="status_file_cedula">
+                    <?php                         
+                        echo isset($datos['file_cedula']['nit'])?'<a target="_blank" href="'.$datos['file_cedula']['ruta'].'">Ver</a>':'Sin Asociar';
+                    ?>
+                </p>
+            </fieldset>                         
         </div>                
     </div>
 </div>

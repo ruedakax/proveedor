@@ -73,7 +73,7 @@ class Panel{
         }
     }
 
-    public function callAccion($datos){
+    public function callAccion($datos,$archivos = array()){
         //
         $datos = SOConexion::stripInput($datos);
         //
@@ -82,7 +82,7 @@ class Panel{
                 return $this->instacia->consultar($datos);
             break;
             case 'guardar':                                
-                return $this->instacia->guardar($datos);
+                return $this->tipo=='panel_9'?$this->instacia->guardar($datos,$archivos):$this->instacia->guardar($datos);
             break;
             case 'preparar':                                
                 return $this->instacia->preparar($datos);

@@ -69,3 +69,25 @@ export function getPanel(parametros){
         req.send(parametros);
     });
 }
+
+export function sendFile(formData){
+    return new Promise(function(resolve, reject){
+    const url = './api.php'
+    //Ajax request
+    const req = new XMLHttpRequest();
+    req.open('POST', url);
+    //req.setRequestHeader('Content-type','multipart/form-data');
+    // Handle the events
+    req.onload = function() {
+        if (req.status >= 200 && req.status < 400) {
+            resolve(req.responseText);
+        }else{
+            reject();    
+        }
+    };
+    req.onerror = function() {
+        reject();
+    };        
+    req.send(formData);
+});
+}
