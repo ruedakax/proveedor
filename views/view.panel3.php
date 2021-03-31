@@ -12,6 +12,7 @@ if($datos['i3_p1_check'] === 'NO' && $datos['tipoPersona'] ==='juridica'){
 ?>
 <!-- INCIO -  C A B E C E R A   I N F O R M A C I O N   S I S T E M A S   G E S T I O N-->
 <div class="form-box panel_3"><h3>3. Información de Sistemas de Gestión<i class="arrow down"></i></h3></div>
+<div class="form-box panel_1 pequena  item-sucursal">&nbsp;* Oprima el botón&nbsp;<i>Siguiente</i>&nbsp; de la parte inferior para guardar la información del presente formulario y continuar con el proceso</div>
 <div class="form-box panel_3" id="panel_3">
   <div class="c-form">
     <div class="break">

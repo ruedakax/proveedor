@@ -28,10 +28,10 @@ class Panel8{
     $res = $this->validar($datos);    
     if(!is_array($res)){
       $res = $this->execGuardar($datos);
-      if($res==FALSE){ 
+      if($res==FALSE){
         $res = $this->execActualizar($datos);       
         if($res){
-          $respuesta['mensaje'] = '<p>La Sección Ocho Ha Sido Actualizada.</p><p>Usted Ha Completado La Información Requerida Y Será Direccionado A La Primera Sección.</p>';
+          $respuesta['mensaje'] = '<p>La sección ocho ha sido actualizada.</p><p>Usted ha completado la información requerida y será direccionado a la  sección de anexos.</p>';
           $respuesta['validaciones'] = [];
           $respuesta['res'] = "success";
         }else{
@@ -40,8 +40,8 @@ class Panel8{
           $respuesta['panel'] = $datos;
           $respuesta['res'] = "error";
         }
-      }else{                
-        $respuesta['mensaje'] = '<p>La Sección Ocho Ha Sido Guardada.</p><p>Usted Ha Completado La Información Requerida Y Será Direccionado A La Primera Sección.</p>';
+      }else{              
+        $respuesta['mensaje'] = '<p>La sección ocho ha sido guardada.</p><p>Usted ha completado la información requerida y será direccionado a la  sección de anexos.</p>';
         $respuesta['validaciones'] = [];
         $respuesta['res'] = "success";
       }

@@ -28,7 +28,7 @@ export function showSection(){
     const index = getIndex()
     //
     const limite_sup = JSON.parse(document.querySelector('#buttonPanel').dataset.paneles).length
-    let actual = parseInt(document.querySelector('#buttonPanel').dataset.current)
+    let actual = parseInt(document.querySelector('#buttonPanel').dataset.current)    
     const volver = actual > 0?window.volver.classList.remove('oculto'):window.volver.classList.add('oculto')
     //const enviar = actual === limite_sup-1?window.enviar.classList.add('oculto'):window.enviar.classList.remove('oculto')        
     window.enviar.innerHTML = actual === limite_sup-1?"FINALIZAR":"SIGUIENTE"
@@ -58,7 +58,7 @@ export function moveSection(tipo){
 function displayErrors(respuesta){
     if(respuesta.res==='error'){
       showModal(respuesta.res,respuesta.mensaje)
-      respuesta.validaciones.forEach(element => {        
+      respuesta.validaciones.forEach(element => {
         //objeto = document.querySelector(`#${element[0]}`)
         //objeto.setAttribute('required', '')
         window[element[0]].setAttribute('required', '')

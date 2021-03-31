@@ -1,5 +1,6 @@
 <!-- INCIO -  C A B E C E R A   I N F O R M A C I O N-->
-<div class="form-box panel_8"><h3>8. Prohibición Trabajo Infantil<i class="arrow down"></i></h3></div>
+<div class="form-box panel_8"><h3>8. Prohibición Trabajo Infantil &nbsp;(Oprima el botón <i>Siguiente</i> para guardar la información de este formulario)<i class="arrow down"></i></h3></div>
+<div class="form-box panel_1 pequena  item-sucursal">&nbsp;* Oprima el botón&nbsp;<i>Siguiente</i>&nbsp; de la parte inferior para guardar la información del presente formulario y continuar con el proceso</div>
 <div class="form-box panel_8 " id="panel_8">
     <div class="c-form">
         <div>

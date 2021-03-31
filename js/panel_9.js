@@ -4,7 +4,9 @@ import {showModal} from './modal.js'
 
 async function preparePanel9(){
   const nit = document.querySelector('#enviar').dataset.nit
-  const parametros = `i=${nit}&accion=preparar&tipo=panel_9`
+  const tipoRegistro = document.querySelector('#enviar').dataset.tipoRegistro
+  const tipoPersona = document.querySelector('#enviar').dataset.tipoPersona  
+  const parametros = `i=${nit}&accion=preparar&tipo=panel_9&tipoPersona=${tipoPersona}&tipoRegistro=${tipoRegistro}`
   const response = await getPanel(parametros)
   //se despliega el panel en el documento  
   document['c-form'].innerHTML = JSON.parse(response)
@@ -12,6 +14,13 @@ async function preparePanel9(){
   document.querySelectorAll('.myButton').forEach(item => {
     item.addEventListener('click', () => {
        savePanel9(item.value)
+    })
+  });
+
+  document.querySelectorAll('.view').forEach(item => {
+    item.addEventListener('click', () => {
+      const url = item.dataset.url
+      displayView(url)
     })
   });
   //
@@ -57,12 +66,52 @@ function displayResponse(respuesta){
   }
 }
 
-function createLink(archivo){  
-  const link = `<a href="./uploads/${archivo.nit}/${archivo.source}.${archivo.extension}">Ver</a>`
+function createLink(archivo){
+  const link = `<span class="view" data-url="./uploads/${archivo.nit}/${archivo.source}.${archivo.extension}">Ver</span>`
   const banner = document.querySelector(`#status_${archivo.source}`)
   banner.classList.remove('status-nofile')
   banner.classList.add('status-saved')
   banner.innerHTML = link
+  document.querySelectorAll('.view').forEach(item => {
+    item.addEventListener('click', () => {
+      const url = item.dataset.url
+      displayView(url)
+    })
+  });  
+}
+
+function displayView(url){
+  const  w=window
+  const d=document
+  const e=d.documentElement
+  const g=d.getElementsByTagName('body')[0]
+  let x = w.innerWidth||e.clientWidth||g.clientWidth
+  let y = w.innerHeight||e.clientHeight||g.clientHeight
+  x = x * 0.80
+  y = y * 0.80
+  const contentImg = `<img src="${url}">`
+  const contentPdf = `<embed src="${url}" width="${x}px" height="${y}px" type="application/pdf">`
+  //const contentPdf = `<iframe src="https://docs.google.com/viewer?url=${url}&embedded=true" frameborder="0" height="500px" width="100%"></iframe></div>`    
+  const type = url.slice(url.length - 3)!="pdf"?'imagen':'pdf'
+  const contenido = type === 'pdf'?contentPdf:contentImg
+  const layout = `<div class="modal-content-display">
+                      <div class="modal-header modal-success">
+                        <div class="modal-close">&times;</div>
+                        <div class="modal-title">Visor</div>
+                      </div>
+                      <div class="modal-body">           
+                          <p>${contenido}</p> 
+                      </div>        
+                  </div>`
+  window.overlay.classList.remove('oculto')
+  window.overlay.innerHTML = layout
+  document.querySelectorAll('.modal-close').forEach(item => {
+    item.addEventListener('click', () =>  {
+        window.overlay.classList.add('oculto')
+        //retorna el loader
+        window.overlay.innerHTML = '<div class="loader__element"></div>'
+    })        
+  })
 }
 
 export  {preparePanel9,savePanel9}

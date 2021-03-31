@@ -13,10 +13,14 @@ class Panel9{
   
   public function preparar($datos){
     $res = $this->consultar($datos);
+    $info = $this->consultarGeneral($datos);    
     //
     $view = new View;
-    // asignar datos    
+    // asignar datos
     $view->data['datos'] = $res['datos'];
+    $view->data['general'] = $info;
+    $view->data['tipoPersona'] = isset($datos['tipoPersona'])?$datos['tipoPersona']:NULL;
+    $view->data['tipoRegistro'] = isset($datos['tipoRegistro'])?$datos['tipoRegistro']:NULL;
     // render
     $html = $view->render('./views/view.panel9.php');
     //
@@ -24,7 +28,7 @@ class Panel9{
   }
   
   public function guardar($datos,$archivos){
-    $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'panel'=>[]];
+    $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'archivo'=>[]];
     //    
     $nit = base64_decode($datos['nit']);
     $folder = self::TARGET_DIR.$nit;
@@ -53,6 +57,7 @@ class Panel9{
         $respuesta['mensaje'] = 'El Archivo Ha Sido Guardado';
         $respuesta['validaciones'] = [];
         $respuesta['res'] = "success";
+        $respuesta['archivo'] = $myFile;
       } 
     }else{
       $respuesta['mensaje'] = '<strong>El archivo cargado presenta dificultades:</strong>';
@@ -161,6 +166,28 @@ class Panel9{
       $error['validaciones'] = [];
       $res = $error;      
     }    
+    return $res;
+  }	
+
+  public function consultarGeneral($parametros){
+    $query_string = "SELECT *
+    FROM dbo.registroUnicoP1  A 
+    LEFT JOIN dbo.registroUnicoP2  C ON (A.nit = C.nit) 
+    LEFT JOIN dbo.registroUnicoP3  D ON (A.nit = D.nit) 
+    LEFT JOIN dbo.registroUnicoP5  E ON (A.nit = E.nit) 
+    LEFT JOIN dbo.registroUnicoP6  F ON (A.nit = F.nit) 
+    LEFT JOIN dbo.registroUnicoP7  G ON (A.nit = G.nit) 
+    LEFT JOIN dbo.registroUnicoP8  H ON (A.nit = H.nit)     
+    WHERE A.nit = '%s'";
+    $query_string = sprintf($query_string,base64_decode($parametros['i']));
+    $res;    
+    try{
+      $sql = odbc_exec($this->conn,$query_string);
+      $res = odbc_fetch_array($sql);
+      //odbc_close($this->conn);      
+    }catch (\Throwable $th){
+      $res = [];      
+    }
     return $res;
   }	
 }//end class

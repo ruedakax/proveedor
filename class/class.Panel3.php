@@ -176,7 +176,7 @@ class Panel3{
     $val = new Validation();
     $val->name('nit')->value($datos['nit'])->required();
     $val->name('i3_p1_check')->value($datos['i3_p1_check'])->pattern('alpha')->required();
-    if($datos['i3_p1_check'] == 'SI'){
+    if($datos['i3_p1_check'] == 'SI'){      
       $val->name('i3_p1_certificados')->value($datos['i3_p1_certificados'])->pattern('text')->required();
       if(strpos($datos['i3_p1_certificados'],'enCertificacion')!==FALSE){
         $val->name('i3_p1_ec_asesora')->value($datos['i3_p1_ec_asesora'])->pattern('text')->required();    

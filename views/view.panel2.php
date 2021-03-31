@@ -1,5 +1,6 @@
 <!-- I N I C I O  -  C A B E C E R A   I N F O R M A C I O N   COMERCIAL-->
 <div class="form-box panel_2"><h3>2. Información Comercial<i class="arrow up"></i></h3></div>
+<div class="form-box panel_1 pequena  item-sucursal">&nbsp;* Oprima el botón&nbsp;<i>Siguiente</i>&nbsp; de la parte inferior para guardar la información del presente formulario y continuar con el proceso</div>
 <div class="form-box panel_2" id="panel_2">
     <div class="c-form">
         <div>
