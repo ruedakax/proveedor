@@ -6,15 +6,11 @@ const opciones_tipo = {'cliente':[1,5,6,8,9],'proveedor':[1,2,3,5,6,7,8,9],'cont
 
 document.querySelectorAll('.tipo_registro').forEach(item => {
     item.addEventListener('click', () => {
-        document.querySelector('#buttonPanel').dataset.paneles = JSON.stringify(opciones_tipo[item.value])        
-        document.querySelector('#enviar').dataset.tipoRegistro = item.value 
+        document.querySelector('#buttonPanel').dataset.paneles = JSON.stringify(opciones_tipo[item.value])
+        document.querySelector('#enviar').dataset.tipoRegistro = item.value
         showSection()
     })
 });
-
-document.querySelectorAll('.tipo_registro').forEach(item => {
-    item.removeAttribute('checked');
-})
 
 document.querySelector('#enviar').addEventListener('click', (event) => {
     const mensaje = '<p>¡Gracias por completar el registro!</p><p>Desde SP Ingenieros se verificará la información.</p><p>Pronto le haremos saber el resultado del mismo.</p>'

@@ -87,6 +87,9 @@ class Panel{
             case 'preparar':                                
                 return $this->instacia->preparar($datos);
             break;
+            case 'mostrar':                                
+                return $this->instacia->preparar($datos,TRUE);
+            break;
             default:
                 echo "ERROR CONSULTE AL ADMON";
                 die;

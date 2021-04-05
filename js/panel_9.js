@@ -80,7 +80,7 @@ function createLink(archivo){
   });  
 }
 
-function displayView(url){
+export function displayView(url){
   const  w=window
   const d=document
   const e=d.documentElement
@@ -90,8 +90,7 @@ function displayView(url){
   x = x * 0.80
   y = y * 0.80
   const contentImg = `<img src="${url}">`
-  const contentPdf = `<embed src="${url}" width="${x}px" height="${y}px" type="application/pdf">`
-  //const contentPdf = `<iframe src="https://docs.google.com/viewer?url=${url}&embedded=true" frameborder="0" height="500px" width="100%"></iframe></div>`    
+  const contentPdf = `<embed src="${url}" width="${x}px" height="${y}px" type="application/pdf">`  
   const type = url.slice(url.length - 3)!="pdf"?'imagen':'pdf'
   const contenido = type === 'pdf'?contentPdf:contentImg
   const layout = `<div class="modal-content-display">

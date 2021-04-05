@@ -1,15 +1,14 @@
 <?php
-  error_reporting(E_ALL);
+  error_reporting(E_ALL);  
   require_once("./class/class.Panel.php");
-  //NDIzNDIzNDIzNDQ%3D
-  //NzUwMDAwMDA%3D
+  //
   $panel   = new Panel('panel_1','consultar');
   $panel->callPanel();
-  $panelToShow = $panel->callAccion(array($_GET['i']));
-  //  
+  $datos = $panel->callAccion(array($_GET['i']));  
+  //
   $inscrito = 'Usted está inscrito como %s. Marque la misma opción si desea mantenerla, de lo contrario marque su preferencia.';
   $no_inscrito = '¿Cómo desea inscribirse en el registro?';  
-  $mensajeInicio = isset($panelToShow['datos']['tipo_registro'])?sprintf($inscrito,strtoupper($panelToShow['datos']['tipo_registro'])):$no_inscrito;
+  $mensajeInicio = isset($datos['datos']['tipo_registro'])?sprintf($inscrito,strtoupper($datos['datos']['tipo_registro'])):$no_inscrito;
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,8 +18,7 @@
     <meta name="robots" content="noindex">
     <link rel="icon" type="image/png" sizes="32x32" href="./images/icon/icon32X32.png">
     <title>SP - Registro &Uacute;nico Clientes, Proveedores Y Contratistas.</title>
-    <link rel="stylesheet" type="text/css" href="./css/proveedor.css">    
-    <!--script src="js/datosProveedor.js"></script-->
+    <link rel="stylesheet" type="text/css" href="./css/proveedor.css">
   </head>
   <body>
     <noscript>
@@ -49,11 +47,7 @@
           </fieldset>  
         </div>
       </div>
-      <form class="all-form" name="c-form" action="./api.php" method="post" id="c-form">
-<?php if(!$panelToShow){ ?>
-        
-<?php } ?>      
-      </form>
+      <form class="all-form" name="c-form" action="./api.php" method="post" id="c-form"></form>
       <!-- INCIO -  C A B E C E R A   I N F O R M A C I O N   -->      
       <div id="buttonPanel" class="form-box bottom oculto" data-current="0" data-paneles="{}">
         <div class="c-form">

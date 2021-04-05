@@ -9,7 +9,7 @@ class Panel3{
   //
   public $conn;
   
-  public function preparar($datos){
+  public function preparar($datos,$soloMostrar=FALSE){
     $res = $this->consultar(array($datos['i']));    
     ///Preparacion de datos para la vista segun las condiciones del formulario
     $res_preparados = $res['res']!='error'?$this->prepareVariables($res,$datos['i'],$datos['tipoPersona']):array();
@@ -18,7 +18,8 @@ class Panel3{
     // asignar datos
     $view->data['datos'] = $res_preparados;
     // render
-    $html = $view->render('./views/view.panel3.php');
+    $template = $soloMostrar==FALSE?'./views/view.panel3.php':'./views/view.displayPanel3.php';
+    $html = $view->render($template);
     //
     return $html;    
   }

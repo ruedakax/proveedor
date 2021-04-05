@@ -11,7 +11,7 @@ class Panel9{
   //
   public $conn;
   
-  public function preparar($datos){
+  public function preparar($datos,$soloMostrar=FALSE){
     $res = $this->consultar($datos);
     $info = $this->consultarGeneral($datos);    
     //
@@ -22,7 +22,8 @@ class Panel9{
     $view->data['tipoPersona'] = isset($datos['tipoPersona'])?$datos['tipoPersona']:NULL;
     $view->data['tipoRegistro'] = isset($datos['tipoRegistro'])?$datos['tipoRegistro']:NULL;
     // render
-    $html = $view->render('./views/view.panel9.php');
+    $template = $soloMostrar==FALSE?'./views/view.panel9.php':'./views/view.displayPanel9.php';
+    $html = $view->render($template);
     //
     return $html;    
   }
