@@ -1,3 +1,5 @@
+import {showModal} from './modal.js' 
+
 export function showHide(idElementToHide) {
     const id =`#${idElementToHide}`
     const element = document.querySelector(id)
@@ -76,3 +78,23 @@ export function saveData(currentPanel){
         console.log("saveData no match:"+error)
     }
 }
+
+/*señala los input que no pasaron la validacion según la respuesta del servidor*/
+export function displayErrors(respuesta){
+    if(respuesta.res==='error'){
+      showModal(respuesta.res,respuesta.mensaje)
+      respuesta.validaciones.forEach(element => {        
+        let objeto = document.querySelector(`#${element[0]}`)        
+        objeto.setAttribute('required', '')
+        //window[element[0]].setAttribute('required', '')
+      });
+      return false
+    }else{
+      return true
+    }
+}
+
+/*document.querySelectorAll('.item-list').forEach(elemento=>{
+        console.log(elemento.getAttribute('id'))
+        console.log(item.getAttribute('id'))
+})*/

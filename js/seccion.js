@@ -1,4 +1,4 @@
-import {mover,getIndex} from './general.js'
+import {mover,getIndex,displayErrors} from './general.js'
 import {preparePanel1,savePanel1} from './panel_1.js'
 import {preparePanel2,savePanel2} from './panel_2.js'
 import {preparePanel3,savePanel3} from './panel_3.js'
@@ -9,7 +9,7 @@ import {preparePanel7,savePanel7} from './panel_7.js'
 import {preparePanel8,savePanel8} from './panel_8.js'
 import {preparePanel9,savePanel9} from './panel_9.js'
 //alerts
-import {showModal} from './modal.js' 
+
 
 const funciones = {
                    1:{prepare:preparePanel1,save:savePanel1},
@@ -54,17 +54,3 @@ export function moveSection(tipo){
     });            
 }
 
-/*señala los input que no pasaron la validacion según la respuesta del servidor*/
-function displayErrors(respuesta){
-    if(respuesta.res==='error'){
-      showModal(respuesta.res,respuesta.mensaje)
-      respuesta.validaciones.forEach(element => {
-        //objeto = document.querySelector(`#${element[0]}`)
-        //objeto.setAttribute('required', '')
-        window[element[0]].setAttribute('required', '')
-      });
-      return false
-    }else{
-      return true
-    }
-}

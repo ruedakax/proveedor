@@ -11,6 +11,7 @@ require_once("./class/class.Panel6.php");
 require_once("./class/class.Panel7.php");
 require_once("./class/class.Panel8.php");
 require_once("./class/class.Panel9.php");
+require_once("./class/class.Admin.php");
 
 class Panel{
 
@@ -20,7 +21,7 @@ class Panel{
 
     public $instacia;    
 
-    function __construct($tipo,$accion){
+    function __construct($tipo=NULL,$accion=NULL){
         $this->tipo = $tipo;
         $this->accion = $accion;
     }
@@ -71,7 +72,7 @@ class Panel{
                 die;
             break;
         }
-    }
+    }    
 
     public function callAccion($datos,$archivos = array()){
         //
@@ -93,6 +94,33 @@ class Panel{
             default:
                 echo "ERROR CONSULTE AL ADMON";
                 die;
+            break;
+        }
+    }
+
+    public function callMethod($datos){
+        $datos = SOConexion::stripInput($datos);
+        $registro = new Admin();
+        $registro->conn = SOConexion::conexion_db();
+        $metodo = $datos['accion'];
+        switch ($metodo) {
+            case 'agregar':
+                return $registro->agregar($datos);
+            break;
+            case 'listar':
+                return $registro->listar();
+            break;
+            case 'mostrar':
+                return $registro->mostrar();
+            break;            
+            case 'aprobar':
+                return $registro->aprobar($datos);
+            break;            
+            case 'revisar':
+                return $registro->revisar($datos);
+            break;            
+            default:
+                # code...
             break;
         }
     }    

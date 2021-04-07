@@ -2,9 +2,10 @@
   error_reporting(E_ALL);
   require_once("./class/class.Panel.php");  
   //
+  $nit = isset($_GET['i'])?$_GET['i']:NULL;
   $panel   = new Panel('panel_1','consultar');
   $panel->callPanel();
-  $datos = $panel->callAccion(array($_GET['i']))['datos'];  
+  $datos = $panel->callAccion(array($nit))['datos'];  
   $panel = NULL;
   if(!isset($datos['tipo_registro'])){
     echo "<p>¡Error!</p>";
@@ -45,8 +46,8 @@
           <div id="titulo">Visualización de registro :&nbsp;<?php echo strtoupper($datos['tipo_registro'])?></div>
         </div>
       </div>
-      <div class="form-box">        
-          <div id="tabs" class="tab" data-tipo-persona="<?php echo $_GET['tipo_persona']?>" data-tipo-registro="<?php echo $_GET['tipo_registro']?>" data-nit="<?php echo $_GET['i']?>">
+      <div class="form-box">
+          <div id="tabs" class="tab" data-tipo-persona="<?php echo $datos['tipo_persona']?>" data-tipo-registro="<?php echo $datos['tipo_registro']?>" data-nit="<?php echo $_GET['i']?>">
             <button class="tablinks" id='panel_1'>Sección Uno</button>
             <button class="tablinks" id='panel_2'>Sección Dos</button>
             <button class="tablinks" id='panel_3'>Sección Tres</button>
@@ -55,7 +56,8 @@
             <button class="tablinks" id='panel_7'>Sección Siete</button>
             <button class="tablinks" id='panel_8'>Sección Ocho</button>
             <button class="tablinks" id='panel_9'>Sección Anexos</button>
-          </div>                  
+            <button class="tablinks" id='aprobacion'>Revisión</button>
+          </div>
       </div>
       <form class="all-form" name="c-form" action="./api.php" method="post" id="c-form">
         <?php 
@@ -69,6 +71,6 @@
         </div>
       </div>
     </div>
-    <script type="module" src="./js/visualizacion.js"></script>
+    <script type="module" src="./js/visualizar.js"></script>
   </body>
 </html>

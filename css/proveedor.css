@@ -280,6 +280,11 @@ h3{
 	text-decoration:none;
 	text-shadow:0px 1px 0px #cc9f52;
 }
+
+.button-martop {
+  margin-top: 30px;
+}
+
 .myButton:hover {
 	background:linear-gradient(to bottom, rgb(250, 158, 13) 5%, #ffc477 100%);
 	background-color:#fb9e25;
@@ -518,3 +523,11 @@ h3{
   border-top: none;
 }
 /**/
+
+.textinput { 
+  width: 100%;
+  min-height: 75px;
+  outline: none;
+  resize: none;
+  border: 1px solid grey;
+}

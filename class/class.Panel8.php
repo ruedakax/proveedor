@@ -24,9 +24,9 @@ class Panel8{
     return $html;    
   }
 
-  public function guardar($datos){        
-    $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'panel'=>[]];    
-    $res = $this->validar($datos);    
+  public function guardar($datos){
+    $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'panel'=>[]];
+    $res = $this->validar($datos);
     if(!is_array($res)){
       $res = $this->execGuardar($datos);
       if($res==FALSE){
