@@ -1,6 +1,6 @@
 <!-- INCIO -  C A B E C E R A   I N F O R M A C I O N-->
 <div class="form-box panel_8"><h3>ANEXOS<i class="arrow down"></i></h3></div>
-<div class="form-box panel_1 pequena  item-sucursal error">&nbsp;*Cada anexo se guarda de manera individual y puede ser modificado cuantas veces sea necesario.  Una vez haya anexado los documentos según su criterio, oprima el botón Finalizar para dar inicio a la revisión del registro por parte de SP Ingenieros.</div>
+<div class="form-box panel_1 pequena  item-sucursal error"><p>&nbsp;*Cada anexo se guarda de manera individual y puede ser modificado cuantas veces sea necesario.  Una vez haya anexado los documentos según su criterio, oprima el botón Finalizar para dar inicio a la revisión del registro por parte de SP Ingenieros.</p></div>
 <div class="form-box panel_8 " id="panel_8">
     <div class="c-form">
         <!--DOC -->

@@ -1,6 +1,6 @@
 <!-- INCIO -  C A B E C E R A   I N F O R M A C I O N  -->
 <div class="form-box panel_5"><h3>5. Control Lavado de Activos y Financiación del Terrorismo (LA/FT)<i class="arrow down"></i></h3></div>
-<div class="form-box panel_1 pequena  item-sucursal">&nbsp;* Oprima el botón&nbsp;<i>Siguiente</i>&nbsp; de la parte inferior para guardar la información del presente formulario y continuar con el proceso</div>
+<div class="form-box panel_1 pequena  item-sucursal"><p>&nbsp;* Oprima el botón&nbsp;<i>Siguiente</i>&nbsp; de la parte inferior para guardar la información del presente formulario y continuar con el proceso</p></div>
 <div class="form-box panel_5" id="panel_5">
   <div class="c-form">
     <div>

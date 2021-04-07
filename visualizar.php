@@ -24,7 +24,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="robots" content="noindex">
     <link rel="icon" type="image/png" sizes="32x32" href="./images/icon/icon32X32.png">
-    <title>SP - Registro &Uacute;nico Clientes, Proveedores Y Contratistas.</title>
+    <title>SP - Visualización de Registro</title>
     <link rel="stylesheet" type="text/css" href="./css/proveedor.css">    
     <!--script src="js/datosProveedor.js"></script-->
   </head>
@@ -48,15 +48,16 @@
       </div>
       <div class="form-box">
           <div id="tabs" class="tab" data-tipo-persona="<?php echo $datos['tipo_persona']?>" data-tipo-registro="<?php echo $datos['tipo_registro']?>" data-nit="<?php echo $_GET['i']?>">
-            <button class="tablinks" id='panel_1'>Sección Uno</button>
-            <button class="tablinks" id='panel_2'>Sección Dos</button>
-            <button class="tablinks" id='panel_3'>Sección Tres</button>
-            <button class="tablinks" id='panel_5'>Sección Cinco</button>
-            <button class="tablinks" id='panel_6'>Sección Seis</button>
-            <button class="tablinks" id='panel_7'>Sección Siete</button>
-            <button class="tablinks" id='panel_8'>Sección Ocho</button>
-            <button class="tablinks" id='panel_9'>Sección Anexos</button>
+            <button class="tablinks" id='panel_1'>Secc. Uno</button>
+            <button class="tablinks" id='panel_2'>Secc. Dos</button>
+            <button class="tablinks" id='panel_3'>Secc. Tres</button>
+            <button class="tablinks" id='panel_5'>Secc. Cinco</button>
+            <button class="tablinks" id='panel_6'>Secc. Seis</button>
+            <button class="tablinks" id='panel_7'>Secc. Siete</button>
+            <button class="tablinks" id='panel_8'>Secc. Ocho</button>
+            <button class="tablinks" id='panel_9'>Secc. Anexos</button>
             <button class="tablinks" id='aprobacion'>Revisión</button>
+            <button class="tablinks" id='administracion'>Administrar</button>
           </div>
       </div>
       <form class="all-form" name="c-form" action="./api.php" method="post" id="c-form">

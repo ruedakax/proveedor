@@ -1,6 +1,7 @@
 //Se encarga de la funcionalidad de las secciones
 import {getPanel,sendAdmin} from './envio.js'
 import {displayView} from './panel_9.js'
+import {showModal} from './modal.js'
 
 
 document.querySelectorAll('.tablinks').forEach(item => {    
@@ -8,7 +9,12 @@ document.querySelectorAll('.tablinks').forEach(item => {
         window.overlay.classList.remove('oculto')
         document.querySelectorAll('.tablinks').forEach(tab => {  tab.classList.remove('active') })
         item.classList.add('active')
-        visualizar(item.id)
+        if(item.id==="administracion"){
+          window.location.replace("./administrar.php")
+        }else{
+          visualizar(item.id)
+        }
+        
     })
 });
 async function visualizar(panel){    
@@ -46,10 +52,20 @@ async function visualizar(panel){
 }
 
 async function ejecutar(nit,accion){
+  let observaciones = document.querySelector('#observaciones').value  
+  if(accion ==='revisar' && observaciones ==''){
+    showModal('error','Debe completar las observaciones')
+    return false
+  }
   let formdata = new FormData()
   formdata.append('i',nit)
   formdata.append('accion',accion)
-  response = await sendAdmin(formdata)
-  console.log(response)
+  formdata.append('observaciones',observaciones)
+  await sendAdmin(formdata).then((response)=>{
+    let respuesta = JSON.parse(response)
+    showModal(respuesta.res,respuesta.mensaje)
+    document.querySelector('#observaciones').value = respuesta.res !='error'?'':observaciones
+  })
+  
 }
 

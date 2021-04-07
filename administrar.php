@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="robots" content="noindex">
     <link rel="icon" type="image/png" sizes="32x32" href="./images/icon/icon32X32.png">
-    <title>SP - Administración del Registro de Proveedores.</title>
+    <title>SP - Administración del Registro.</title>
     <link rel="stylesheet" type="text/css" href="./css/proveedor.css">    
     <!--script src="js/datosProveedor.js"></script-->
   </head>
@@ -33,7 +33,7 @@
       <div class="form-box">
         <div id="top_menu">
           <div id="logo"></div>
-          <div id="titulo">Administración del Registro de Proveedores.&nbsp;</div>
+          <div id="titulo">Administración del Registro.&nbsp;</div>
         </div>
       </div>
       <div class="form-box">

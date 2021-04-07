@@ -16,10 +16,7 @@ export function showHideSection(idElementToHide,arrowElement) {
 export function uncheck(name,value){    
     const fullName = `input[name="${name.replaceAll('[]','')}"]`    
     console.log(fullName)
-    document.querySelectorAll(fullName).forEach(item => {
-        console.log(item.checked)
-        console.log(item.value)
-        console.log(value)
+    document.querySelectorAll(fullName).forEach(item => {        
         item.checked = item.value === value?true:false
     });
 }

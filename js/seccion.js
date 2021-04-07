@@ -1,4 +1,5 @@
 import {mover,getIndex,displayErrors} from './general.js'
+import {showModal} from './modal.js' 
 import {preparePanel1,savePanel1} from './panel_1.js'
 import {preparePanel2,savePanel2} from './panel_2.js'
 import {preparePanel3,savePanel3} from './panel_3.js'
@@ -7,7 +8,7 @@ import {preparePanel5,savePanel5} from './panel_5.js'
 import {preparePanel6,savePanel6} from './panel_6.js'
 import {preparePanel7,savePanel7} from './panel_7.js'
 import {preparePanel8,savePanel8} from './panel_8.js'
-import {preparePanel9,savePanel9} from './panel_9.js'
+import {preparePanel9,savePanel9,finalizar} from './panel_9.js'
 //alerts
 
 
@@ -53,4 +54,15 @@ export function moveSection(tipo){
         console.log(response)
     });            
 }
+
+export async function finalSection(){
+    const nit = document.querySelector('#enviar').dataset.nit  
+    await finalizar(nit).then((response)=>{
+        let respuesta = JSON.parse(response)
+        showModal(respuesta.res,respuesta.mensaje)
+        setTimeout(()=>window.location.replace("http://www.sp.com.co/"), 4000);        
+    })
+}
+
+
 

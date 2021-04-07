@@ -1,5 +1,5 @@
 <div class="form-box panel_1"><h3>1. Información General</h3></div>
-<div class="form-box panel_1 pequena  item-sucursal">&nbsp;* Oprima el botón&nbsp;<i>Siguiente</i>&nbsp; de la parte inferior para guardar la información del presente formulario y continuar con el proceso</div>
+<div class="form-box panel_1 pequena  item-sucursal"><p>&nbsp;* Oprima el botón&nbsp;<i>Siguiente</i>&nbsp; de la parte inferior para guardar la información del presente formulario y continuar con el proceso</p></div>
 <div class="form-box panel_1" id="panel_1">
     <div class="c-form">
         <div class="two-columns">

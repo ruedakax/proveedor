@@ -119,6 +119,9 @@ class Panel{
             case 'revisar':
                 return $registro->revisar($datos);
             break;            
+            case 'finalizar':
+                return $registro->finalizar($datos);
+            break;            
             default:
                 # code...
             break;

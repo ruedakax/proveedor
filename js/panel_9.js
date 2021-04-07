@@ -1,4 +1,4 @@
-import {getPanel,sendFile} from './envio.js'
+import {getPanel,sendFile,sendAdmin} from './envio.js'
 import {start} from './general.js'
 import {showModal} from './modal.js' 
 
@@ -111,6 +111,14 @@ export function displayView(url){
         window.overlay.innerHTML = '<div class="loader__element"></div>'
     })        
   })
+}
+
+export function finalizar(nit){      
+    let accion = 'finalizar'
+    let formdata = new FormData()
+    formdata.append('i',nit)
+    formdata.append('accion',accion)
+    return sendAdmin(formdata)
 }
 
 export  {preparePanel9,savePanel9}
