@@ -1,5 +1,5 @@
 <?php
-  error_reporting(E_ALL);  
+  error_reporting(E_ALL);
   require_once("./class/class.Panel.php");
   require_once("./class/class.Admin.php");
 
@@ -14,7 +14,7 @@
   //
   $panel   = new Panel('panel_1','consultar');
   $panel->callPanel();
-  $datos = $panel->callAccion(array($_GET['i']));  
+  $datos = $panel->callAccion(array($_GET['i']));
   //
   $inscrito = 'Usted está inscrito como %s. Marque la misma opción si desea mantenerla, de lo contrario marque su preferencia.';
   $no_inscrito = '¿Cómo desea inscribirse en el registro?';  

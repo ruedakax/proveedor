@@ -13,13 +13,14 @@ document.querySelector('#programar').addEventListener('click',()=>{
 eventoRadios()
 
 async function agregar(nit,email){
+  window.overlay.classList.remove('oculto')
   let formdata = new FormData()
   formdata.append('nit',nit)
   formdata.append('email',email)
-  formdata.append('accion','agregar')  
+  formdata.append('accion','agregar')
   /////PROMESA
   let respuesta = await sendAdmin(formdata)
-  respuesta = JSON.parse(respuesta)  
+  respuesta = JSON.parse(respuesta)
   let ans = displayErrors(respuesta)
   if(ans){
     listar()

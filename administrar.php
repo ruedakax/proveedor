@@ -42,11 +42,11 @@
             <div class="three-columns">
               <fieldset>
                   <label class="c-form-label negrita" for="nit">NIT<span class="c-form-required"> *</span></label>
-                  <input id="nit" class="c-form-input" type="text" name="nit" placeholder="Digite el número" value="1234567">
+                  <input id="nit" class="c-form-input" type="text" name="nit" placeholder="Digite el número sin espacios ni puntos" value="">
               </fieldset>
               <fieldset>
                   <label class="c-form-label negrita" for="email">Email<span class="c-form-required"> *</span></label>
-                  <input id="email" class="c-form-input" type="text" name="email" placeholder="Email" value="prueba">
+                  <input id="email" class="c-form-input" type="text" name="email" placeholder="Email" value="">
               </fieldset>              
               <fieldset>
                 <label class="c-form-label negrita" for="email">&nbsp;</label>

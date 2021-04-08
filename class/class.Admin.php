@@ -12,8 +12,6 @@ class Admin{
     // email del revisor
     const EMAIL_REVISOR = 'desarrollo.tics@sp.com.co';
 
-
-
     public function agregar($datos){
         $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'panel'=>[]];
         //        
@@ -53,7 +51,9 @@ class Admin{
     }
 
     public function consultar($nit){
-        $query_string = "SELECT nit,estado,email,fase,fecha_expira FROM dbo.ruAdmin WHERE nit = '%s'";
+        $query_string = "SELECT nit,estado,email,fase,fecha_expira
+                         FROM dbo.ruAdmin 
+                         WHERE nit = '%s'";
         $query_string = sprintf($query_string,$nit);
         $registro = NULL;
         try {
@@ -67,21 +67,24 @@ class Admin{
     }
 
     public function listar(){
-        $query_string = "SELECT nit,estado,email,fase,fecha_expira FROM dbo.ruAdmin ORDER BY nit";
+        $query_string = "SELECT a.nit,estado,email,fase,fecha_expira,b.nombre
+                         FROM dbo.ruAdmin a
+                         LEFT JOIN dbo.[registroUnicoP1] b ON (a.nit = b.nit)   
+                         ORDER BY a.nit";
         $registros = '';
         try {
             $sql = odbc_exec($this->conn,$query_string);
             while($registro = odbc_fetch_array($sql)){
               //$registros[] = array('nit'=>$registro['nit'],'estado'=>$registro['estado'],'email'=>$registro['email'],'fase'=>$registro['fase'],'fecha_expira'=>$registro['fecha_expira']);
               $registros .= $this->setItem($registro);
-            }          
+            }         
         }catch (\Throwable $th) {
             var_dump($th);
         }
         return $registros;
     }
 
-    public function guardar($datos){        
+    public function guardar($datos){
         $query = "INSERT INTO dbo.ruAdmin (nit, estado, email, fase, fecha_expira, usuarioCrea) VALUES('%s','%s','%s','%s','%s','%s')";
         $query_string = vsprintf($query,$datos);
         //echo $query_string;
@@ -89,10 +92,10 @@ class Admin{
         try {
             $sql = odbc_exec($this->conn,$query_string);
             //odbc_close($this->conn);
-          } catch (\Throwable $th) {
-            $sql = false;      
-          }
-          return $sql;
+        } catch (\Throwable $th) {
+            $sql = false;
+        }
+        return $sql;
     }
 
     public function actualizar($datos,$nit){        
@@ -111,7 +114,7 @@ class Admin{
     
     private function validar($datos){
         $val = new Validation();
-        $val->name('nit')->value($datos['nit'])->required();
+        $val->name('nit')->value($datos['nit'])->pattern('tel')->required();
         $val->name('email')->value($datos['email'])->pattern('email')->required();
         //
         return $val->isSuccess()?true:$val->getErrors();
@@ -332,11 +335,12 @@ class Admin{
     }
 
     private function setItem($registro){
-        $nit_encoded = base64_encode($registro['nit']);        
+        $nit_encoded = base64_encode($registro['nit']);
+        $nombre = isset($registro['nombre'])?$registro['nombre']:$registro['nit'];        
         $link = $registro['fase']==='revisor'?'&nbsp;<a class="status-saved" href="./visualizar.php?i='.$nit_encoded.'">(Revisar)</a>':'';
         $item = '<div class="four-columns">
                     <fieldset>
-                        <input class="item-list" name="nits" type="radio" id="'.$registro['nit'].'" value="'.$registro['email'].'">&nbsp;<label class="c-form-label">'.$registro['nit'].'</label>
+                        <input class="item-list" name="nits" type="radio" id="'.$registro['nit'].'" value="'.$registro['email'].'">&nbsp;<label class="c-form-label">'.$nombre.'</label>
                     </fieldset>
                     <fieldset>
                         <label class="c-form-label">'.$registro['email'].'</label>
