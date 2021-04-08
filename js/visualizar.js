@@ -52,6 +52,7 @@ async function visualizar(panel){
 }
 
 async function ejecutar(nit,accion){
+  window.overlay.classList.remove('oculto') 
   let observaciones = document.querySelector('#observaciones').value  
   if(accion ==='revisar' && observaciones ==''){
     showModal('error','Debe completar las observaciones')

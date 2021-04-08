@@ -7,7 +7,10 @@ require_once("./class/PhpMailer/class.smtp.php");
 
 class Admin{
    
+    //variable que espera el objeto conexion de base de datos
     public $conn;
+    // email del revisor
+    const EMAIL_REVISOR = 'desarrollo.tics@sp.com.co';
 
 
 
@@ -27,9 +30,9 @@ class Admin{
                 $asunto = "Solicitud registro para clientes, proveedores o contratistas";
                 $mensaje = "<p>Saludos,</p>
                             <p>SP Ingenieros amablemente le solicita completar el formulario de registro único para clientes, proveedores o contratistas que encontrará en el siguiente enlace:</p>
-                            <p><a href='http://192.168.10.39:8080/cotizaciones_ayl/proveedor/registro.php?i=".$nit."'>Click Aquí</a></p>
-                            <p>Tambien puede copiar y pegar la siguiene ruta en su navegador:</p>
-                            <p>http://192.168.10.39:8080/cotizaciones_ayl/proveedor/registro.php?i=".base64_encode($datos['nit'])."</p>
+                            <p><a href='http://sw.sp.com.co:8080/cotizaciones_ayl/proveedor/registro.php?i=".$nit."'>Click Aquí</a></p>
+                            <p>Tambien puede copiar y pegar la siguiente ruta en su navegador:</p>
+                            <p>http://sw.sp.com.co:8080/cotizaciones_ayl/proveedor/registro.php?i=".base64_encode($datos['nit'])."</p>
                             <p>Gracias,</p>";
                 $this->envioEmail($nit,$address,$desc_address,$asunto,$mensaje);
                 //
@@ -144,6 +147,17 @@ class Admin{
         $registro = $this->consultar($nit);        
         $res = $registro?$this->execAprobar($nit):FALSE;        
         if($res){
+            //enviar correo al responsable
+            $nit = base64_encode($datos['nit']);
+            $address = $datos['email'];
+            $desc_address = "";
+            $asunto = "Aprobación registro para clientes, proveedores o contratistas";
+            $mensaje = "<p>Saludos,</p>
+                        <p>SP Ingenieros amablemente le informa que su registro único para clientes, proveedores o contratistas, fue <strong>aprobado</strong>.</p>
+                        <p>&nbsp;</p>                        
+                        <p>Gracias,</p>";
+            $this->envioEmail($nit,$address,$desc_address,$asunto,$mensaje);
+            //
             $respuesta['mensaje'] = '<p>Se ha aprobado el proceso de registro.</p>';
             $respuesta['validaciones'] = [];
             $respuesta['res'] = "success";
@@ -185,6 +199,22 @@ class Admin{
         $res = $this->execRevisar($parametros);
         
         if($res && isset($observaciones)){
+             //enviar correo al responsable           
+             $registro = $this->consultar($nit);
+             $address = $registro['email']; 
+             $desc_address = "";
+             $asunto = "Solicitud: revisar y actualizar registro para clientes, proveedores o contratistas";
+             $mensaje = "<p>Saludos,</p>
+                         <p>SP Ingenieros amablemente le solicita revisar la información ingresada en el registro único para clientes, proveedores o contratistas, basado en las siguientes observaciones:</p>
+                         <p>".$observaciones."</p>
+                         <p>&nbsp;</p>
+                         <p>Recuerde que para actualizar la información puede ingresar en el siguiente enlace:</p>
+                         <p><a href='http://sw.sp.com.co:8080/cotizaciones_ayl/proveedor/registro.php?i=".$nit."'>Click Aquí</a></p>
+                         <p>Tambien puede copiar y pegar la siguiente ruta en su navegador:</p>
+                         <p>http://sw.sp.com.co:8080/cotizaciones_ayl/proveedor/registro.php?i=".base64_encode($nit)."</p>
+                         <p>Gracias,</p>";
+             $this->envioEmail($nit,$address,$desc_address,$asunto,$mensaje);
+             //
             $respuesta['mensaje'] = '<p>Se han enviado las observaciones al proveedor.</p>';
             $respuesta['validaciones'] = [];
             $respuesta['res'] = "success";
@@ -223,8 +253,8 @@ class Admin{
         //
         if($res){
             //enviar correo al responsable
-            $address = "desarrollo.tics@sp.com.co";
-            $desc_address = "Desarrollo TICS SP Ingenieros";
+            $address = self::EMAIL_REVISOR;
+            $desc_address = "SP Ingenieros";
             $asunto = "Registro Finalizado (AYL-F-017)";
             $mensaje = "<p>Saludos,</p>
                         <p>El usuario identificado con el número : <strong>".$nit."</strong>, ha finalizado su registro.
@@ -289,7 +319,7 @@ class Admin{
         ## INDICO USUARIO Y CONTRASEÑA PARA LOS DATOS DEL CORREO DE DONDE SE VA A ENVIAR EL MENSAJE.
         $mail->Username = "spwebservices@sp.com.co";
         $mail->Password = "spweb9876543210";        
-        $mail->SetFrom("spwebservices@sp.com.co", utf8_decode("Notificación SP ingenieros"));
+        $mail->SetFrom("spwebservices@sp.com.co", utf8_encode("SP ingenieros notifica."));
         $mail->AddReplyTo($address, $desc_address);
         $mail->IsHTML(true);
         $mail->Subject = $asunto;
@@ -321,16 +351,11 @@ class Admin{
         return $item;
     }
 
-    private function checkDate($fecha){
-        //$check = checkDate($datos['fecha_expira']);
-            // if($check===FALSE){
-            //     $respuesta['mensaje'] = '<p></p>';                
-            //     $respuesta['res'] = "success";
-            // }
+    public function checkDate($fecha){
         $start_date = date("Y-m-d");
         $actual = strtotime($start_date);
-        $fecha = strtotime($start_date);
-        return $actual < $fecha?FALSE:TRUE;
+        $fecha = strtotime($fecha);        
+        return $actual > $fecha?FALSE:TRUE;
     }
 }//end class
 

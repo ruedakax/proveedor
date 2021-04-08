@@ -55,7 +55,8 @@ export function moveSection(tipo){
     });            
 }
 
-export async function finalSection(){
+export async function finalSection(){    
+    window.overlay.classList.remove('oculto')
     const nit = document.querySelector('#enviar').dataset.nit  
     await finalizar(nit).then((response)=>{
         let respuesta = JSON.parse(response)

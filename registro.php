@@ -1,6 +1,16 @@
 <?php
   error_reporting(E_ALL);  
   require_once("./class/class.Panel.php");
+  require_once("./class/class.Admin.php");
+
+  $admin = new Admin();
+  $admin->conn = SOConexion::conexion_db();
+  $res = $admin->consultar(base64_decode($_GET['i']));
+  //
+  if($res === FALSE || $res['estado'] === 'D' || $admin->checkDate($res['fecha_expira'])===FALSE){
+    echo "<p>ERROR : ¡No existe una programación para este enlace o el enlace ya expiró!</p>";
+    die;
+  }
   //
   $panel   = new Panel('panel_1','consultar');
   $panel->callPanel();

@@ -1,6 +1,6 @@
 <!-- INCIO -  C A B E C E R A   I N F O R M A C I O N-->
 <div class="form-box"><h3>Aprobacion.</h3></div>
-<div class="form-box pequena item-sucursal"><p>* Si el proceso de revisión finalizó con éxito oprima el botón <i>Aprobar</i>&nbsp; de la parte inferior. En su defecto complete las observaciones y oprima el botón <i>Rchazar</i> para dar aviso al cliente via email.</p></div>
+<div class="form-box pequena item-sucursal"><p>* Si el proceso de revisión finalizó con éxito oprima el botón <i>Aprobar</i>&nbsp; de la parte inferior. En su defecto complete las observaciones y oprima el botón <i>Rechazar</i> para dar aviso al cliente via email.</p></div>
 <div class="form-box" id="aprobar">
     <div class="c-form">
         <div>
