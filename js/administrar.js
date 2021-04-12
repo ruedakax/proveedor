@@ -3,11 +3,10 @@ import {sendAdmin} from './envio.js'
 import {displayErrors} from './general.js'
 import {showModal} from './modal.js'
 
-document.querySelector('#programar').addEventListener('click',()=>{
-  email = document.querySelector('#email').value
-  nit = document.querySelector('#nit').value  
-  let llamado = email!=='' && nit!==''?agregar(nit,email):showModal('error',"No ha completado los datos")
-  //agregar()*/
+document.querySelector('#programar').addEventListener('click',()=>{  
+  let email = document.querySelector('#email').value
+  let nit = document.querySelector('#nit').value  
+  let llamado = email!=='' && nit!==''?agregar(nit,email):showModal('error',"No ha completado los datos")  
 })
 
 eventoRadios()

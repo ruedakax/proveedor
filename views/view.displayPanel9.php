@@ -327,7 +327,7 @@
                 </p>
             </fieldset>                         
         </div>
-        <?php if(strpos($datos['i3_p1_certificados'],'calidad')!==FALSE){?>
+        <?php if(strpos(@$datos['i3_p1_certificados'],'calidad')!==FALSE){?>
         <!--DOC -->
         <div class="two-columns">
             <fieldset>
@@ -347,7 +347,7 @@
             </fieldset>                         
         </div>
         <?php } ?>
-        <?php if(strpos($datos['i3_p1_certificados'],'ambiental')!==FALSE){?>
+        <?php if(strpos(@$datos['i3_p1_certificados'],'ambiental')!==FALSE){?>
         <!--DOC -->
         <div class="two-columns">
             <fieldset>
@@ -367,7 +367,7 @@
             </fieldset>                         
         </div>
         <?php } ?>
-        <?php if(strpos($datos['i3_p1_certificados'],'SST')!==FALSE){ ?>
+        <?php if(strpos(@$datos['i3_p1_certificados'],'SST')!==FALSE){ ?>
         <!--DOC -->
         <div class="two-columns">
             <fieldset>
