@@ -10,7 +10,9 @@ class Admin{
     //variable que espera el objeto conexion de base de datos
     public $conn;
     // email del revisor
-    const EMAIL_REVISOR = 'desarrollo.tics@sp.com.co';
+    const EMAIL_REVISOR = 'jhonnathan.marin@sp.com.co';
+	//
+	const EMAIL_VERIFICACION = 'desarrollo.tics@sp.com.co';
 
     public function agregar($datos){
         $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'panel'=>[]];
@@ -81,6 +83,30 @@ class Admin{
         }catch (\Throwable $th) {
             var_dump($th);
         }
+        return $registros;
+    }
+
+    public function buscar($datos){
+        $registros = '';
+        if(empty($datos['busqueda']) || ctype_space($datos['busqueda'])){
+            $registros = $this->listar();
+        }else{            
+            $indicioBusqueda = $datos['busqueda'];
+            $query_string = "SELECT a.nit,estado,email,fase,fecha_expira,b.nombre
+                            FROM dbo.ruAdmin a
+                            LEFT JOIN dbo.[registroUnicoP1] b ON (a.nit = b.nit) 
+                            WHERE b.nit like '%".$indicioBusqueda."%' OR b.nombre like '%".$indicioBusqueda."%'
+                            ORDER BY a.nit";        
+            //var_dump($query_string);
+            try {
+                $sql = odbc_exec($this->conn,$query_string);
+                while($registro = odbc_fetch_array($sql)){                
+                    $registros .= $this->setItem($registro);
+                }         
+            }catch (\Throwable $th) {
+                var_dump($th);
+            }
+        }        
         return $registros;
     }
 

@@ -110,6 +110,9 @@ class Panel{
             case 'listar':
                 return $registro->listar();
             break;
+            case 'buscar':
+                return $registro->buscar($datos);
+            break;
             case 'mostrar':
                 return $registro->mostrar();
             break;            

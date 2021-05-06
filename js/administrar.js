@@ -9,6 +9,19 @@ document.querySelector('#programar').addEventListener('click',()=>{
   let llamado = email!=='' && nit!==''?agregar(nit,email):showModal('error',"No ha completado los datos")  
 })
 
+/*document.querySelector('#buscar').addEventListener('click',()=>{  
+  let busqueda = document.querySelector('#busqueda').value  
+  let llamado = =='' && nit!==''?buscar(nit,email):showModal('error',"No ha completado los datos")  
+})*/
+
+document.querySelector('#buscar').addEventListener('click',(event)=>{  
+  document.querySelector('#load_search').classList.remove('oculto')
+  let busqueda = document.querySelector('#busqueda').value
+  buscar(busqueda).then(()=>{
+    document.querySelector('#load_search').classList.add('oculto')
+  })  
+})
+
 eventoRadios()
 
 async function agregar(nit,email){
@@ -30,6 +43,17 @@ async function agregar(nit,email){
 async function listar(){
   let formdata = new FormData()
   formdata.append('accion','listar')
+  /////PROMESA  
+  let respuesta = await sendAdmin(formdata)
+  respuesta = JSON.parse(respuesta)
+  document.querySelector('#lista').innerHTML = respuesta;
+  eventoRadios()
+}
+
+async function buscar(busqueda){
+  let formdata = new FormData()
+  formdata.append('accion','buscar')
+  formdata.append('busqueda',busqueda)
   /////PROMESA  
   let respuesta = await sendAdmin(formdata)
   respuesta = JSON.parse(respuesta)

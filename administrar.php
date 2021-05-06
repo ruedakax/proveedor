@@ -55,6 +55,21 @@
             </div>
           </form>
         </div>
+      </div>
+      <div class="form-box"><h3>Búsqueda&nbsp;<span id="load_search" class="oculto"><img src="./images/loading.gif" width="20px" height="20px"></span></h3></div>
+      <div class="form-box">
+        <div class="c-form">          
+            <div class="two-columns">              
+              <fieldset>                  
+                  <label class="c-form-label negrita" for="email">&nbsp;</label> 
+                  <input id="busqueda" class="c-form-input" type="text" name="busqueda" placeholder="Indicio de búsqueda (NIT ó nombre)" value="">
+              </fieldset>              
+              <fieldset>                
+                <label class="c-form-label negrita" for="email">&nbsp;</label>
+                <button class="myButton button-martop" type="button" id="buscar">Buscar</button>
+              </fieldset>            
+            </div>          
+        </div>
       </div>            
       <div class="form-box"><h3>Listado de Proveedores</h3></div>
       <div class="form-box">
@@ -74,7 +89,7 @@
               </fieldset>              
             </div>
         </div>
-      </div>
+      </div>      
       <div class="form-box">
         <div class="c-form" id="lista">
             <?php 
