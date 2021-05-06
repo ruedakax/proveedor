@@ -95,9 +95,8 @@ class Admin{
             $query_string = "SELECT a.nit,estado,email,fase,fecha_expira,b.nombre
                             FROM dbo.ruAdmin a
                             LEFT JOIN dbo.[registroUnicoP1] b ON (a.nit = b.nit) 
-                            WHERE b.nit like '%".$indicioBusqueda."%' OR b.nombre like '%".$indicioBusqueda."%'
-                            ORDER BY a.nit";        
-            //var_dump($query_string);
+                            WHERE a.nit like '%".$indicioBusqueda."%' OR b.nombre like '%".$indicioBusqueda."%'
+                            ORDER BY a.nit";                    
             try {
                 $sql = odbc_exec($this->conn,$query_string);
                 while($registro = odbc_fetch_array($sql)){                

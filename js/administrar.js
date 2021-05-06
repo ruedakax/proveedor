@@ -17,7 +17,8 @@ document.querySelector('#programar').addEventListener('click',()=>{
 document.querySelector('#buscar').addEventListener('click',(event)=>{  
   document.querySelector('#load_search').classList.remove('oculto')
   let busqueda = document.querySelector('#busqueda').value
-  buscar(busqueda).then(()=>{
+  buscar(busqueda).then((res)=>{
+    console.log(res)
     document.querySelector('#load_search').classList.add('oculto')
   })  
 })
