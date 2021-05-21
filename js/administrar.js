@@ -64,7 +64,7 @@ async function buscar(busqueda){
 
 function eventoRadios(){
   document.querySelectorAll('.item-list').forEach(item=>{
-    item.addEventListener('click',()=>{
+     item.addEventListener('click',()=>{
       document.querySelector('#nit').setAttribute('value',item.getAttribute('id'))
       document.querySelector('#email').setAttribute('value',item.getAttribute('value'))            
     })   
