@@ -236,16 +236,16 @@ class Panel1{
     $val->name('contacto_celular')->value($datos['contacto_celular'])->pattern('tel')->required();
     $val->name('contacto_email')->value($datos['contacto_email'])->pattern('email')->required();
     $val->name('contacto_site')->value($datos['contacto_site'])->required();
-    $val->name('contacto_telefono')->value($datos['contacto_telefono'])->pattern('tel')->required();
+    $val->name('contacto_telefono')->value($datos['contacto_telefono'])->pattern('text')->required();
     $val->name('direccion')->value($datos['direccion'])->required();
     $val->name('pais')->value($datos['pais'])->pattern('text')->required();
     $val->name('ciudad')->value($datos['ciudad'])->pattern('text')->required();
     $val->name('reg_mercantil')->value($datos['reg_mercantil'])->required();
     $val->name('reg_fecha')->value($datos['reg_fecha'])->pattern('date_ymd')->required();
-    $val->name('escritura_num')->value($datos['escritura_num'])->pattern('alphanum')->required();
-    $val->name('escritura_fecha')->value($datos['escritura_fecha'])->pattern('date_ymd')->required();
-    $val->name('escritura_notaria')->value($datos['escritura_notaria'])->required();
-    $val->name('escritura_ciudad')->value($datos['escritura_ciudad'])->required();
+    //$val->name('escritura_num')->value($datos['escritura_num'])->pattern('alphanum')->required();
+    //$val->name('escritura_fecha')->value($datos['escritura_fecha'])->pattern('date_ymd')->required();
+    //$val->name('escritura_notaria')->value($datos['escritura_notaria'])->required();
+    //$val->name('escritura_ciudad')->value($datos['escritura_ciudad'])->required();
     $val->name('autoretenedor')->value($datos['autoretenedor'])->pattern('alpha')->required();
     if($datos['autoretenedor'] == 'SI'){
       $val->name('retenedor_res')->value($datos['retenedor_res'])->required();

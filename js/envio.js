@@ -92,9 +92,9 @@ export function sendFile(formData){
     });
 }
 
-export function sendAdmin(formData){
+export function sendAdmin(formData,enlace='./api_admin.php'){
     return new Promise(function(resolve, reject){
-        const url = './api_admin.php'
+        const url = enlace
         //Ajax request
         const req = new XMLHttpRequest();
         req.open('POST', url);
@@ -113,3 +113,4 @@ export function sendAdmin(formData){
         req.send(formData);
     });
 }
+

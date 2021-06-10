@@ -3,8 +3,13 @@
   require_once("./class/class.Panel.php");
   //
   $panel = new Panel();
+  $datos['accion'] = 'listarUsuarios';
+  $datos['tipo_bd'] = 'bmps';
+  $listaUsuarios = $panel->callMethodRol($datos);
+  //
   $datos['accion'] = 'listar';
-  $lista = $panel->callMethod($datos);
+  $datos['tipo_bd'] = '';
+  $lista = $panel->callMethodRol($datos);
   //
 ?>
 <!DOCTYPE html>
@@ -14,7 +19,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="robots" content="noindex">
     <link rel="icon" type="image/png" sizes="32x32" href="./images/icon/icon32X32.png">
-    <title>SP - Administración del Registro.</title>
+    <title>SP - Administración de Roles.</title>
     <link rel="stylesheet" type="text/css" href="./css/proveedor.css">
   </head>
   <body>
@@ -32,7 +37,7 @@
       <div class="form-box">
         <div id="top_menu">
           <div id="logo"></div>
-          <div id="titulo">Administración del Registro.&nbsp;</div>
+          <div id="titulo">Administración de Roles.&nbsp;</div>
         </div>
       </div>
       <div class="form-box">
@@ -43,19 +48,30 @@
       </div>
       <div class="form-box">
         <div class="c-form">
-          <form class="" name="c-form" action="" method="post" id="">
+          <form class="" name="c-form" action="" method="post" id="roles">
             <div class="three-columns">
               <fieldset>
-                  <label class="c-form-label negrita" for="nit">NIT<span class="c-form-required"> *</span></label>
-                  <input id="nit" class="c-form-input" type="text" name="nit" placeholder="Digite el número sin espacios ni puntos" value="">
+                  <label class="c-form-label negrita" for="usuario">Usuario<span class="c-form-required"> *</span></label>
+                  <input list="nombres" id="usuario" class="c-form-input" name="usuario" value="">
+                  <datalist id="nombres">
+                    <?php echo $listaUsuarios?>
+                  </datalist>
               </fieldset>
               <fieldset>
-                  <label class="c-form-label negrita" for="email">Email<span class="c-form-required"> *</span></label>
-                  <input id="email" class="c-form-input" type="text" name="email" placeholder="Email" value="">
+                  <label class="c-form-label negrita" for="secciones">Accesso a:<span class="c-form-required"> *</span></label><br/>
+                  <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="panel_1">Panel Uno.</label>
+                  <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="panel_2">Panel Dos.</label>
+                  <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="panel_3">Panel Tres.</label><br/>
+                  <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="panel_5">Panel Cinco.</label>
+                  <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="panel_6">Panel Seis.</label>
+                  <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="panel_7">Panel Siete.</label><br/>
+                  <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="panel_8">Panel Ocho.</label>
+                  <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="panel_9">Panel Nueve.</label>
+                  <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="administracion"><u>Administración.</u></label>
               </fieldset>              
               <fieldset>
                 <label class="c-form-label negrita" for="email">&nbsp;</label>
-                <button class="myButton button-martop" type="button" id="programar">Programar</button>
+                <button class="myButton button-martop" type="button" id="otorgar">Otorgar Permisos</button>
               </fieldset>            
             </div>
           </form>
@@ -75,23 +91,26 @@
               </fieldset>            
             </div>          
         </div>
-      </div>            
-      <div class="form-box"><h3>Listado de Proveedores</h3></div>
+      </div>
+      <div class="form-box"><h3>Listado de Verificadores</h3></div>
       <div class="form-box">
         <div class="c-form">
-            <div class="four-columns">
+            <div class="five-columns">
               <fieldset>
-                  <label class="c-form-label negrita">NIT</label>                
+                  <label class="c-form-label negrita">Usuario</label>                
               </fieldset>
+              <fieldset>
+                <label class="c-form-label negrita">Nombre</label>
+              </fieldset>              
               <fieldset>
                 <label class="c-form-label negrita">Email</label>
-              </fieldset>              
-              <fieldset>
-                <label class="c-form-label negrita">Fase</label>
               </fieldset>
               <fieldset>
-              <label class="c-form-label negrita">Fecha Expira</label>
-              </fieldset>              
+               <label class="c-form-label negrita">Permisos</label>
+              </fieldset>
+              <fieldset>
+               <label class="c-form-label negrita">Eliminar</label>
+              </fieldset>
             </div>
         </div>
       </div>      
@@ -108,6 +127,6 @@
         </div>
       </div>
     </div>
-    <script type="module" src="./js/administrar.js"></script>
+    <script type="module" src="./js/roles.js"></script>
   </body>
 </html>

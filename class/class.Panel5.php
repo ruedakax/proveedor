@@ -214,12 +214,12 @@ class Panel5{
     }
     $val->name('contacpro_nombre_0')->value($datos['contacpro_nombre_0'])->pattern('text')->required();
     $val->name('contacpro_identificacion_0')->value($datos['contacpro_identificacion_0'])->pattern('text')->required();
-    $val->name('contacpro_telefono_0')->value($datos['contacpro_telefono_0'])->pattern('tel')->required();
+    $val->name('contacpro_telefono_0')->value($datos['contacpro_telefono_0'])->pattern('text')->required();
     $val->name('contacpro_email_0')->value($datos['contacpro_email_0'])->pattern('email')->required();
     //
     $val->name('contacto_nombre_0')->value($datos['contacto_nombre_0'])->pattern('text')->required();
     $val->name('contacto_identificacion_0')->value($datos['contacto_identificacion_0'])->pattern('text')->required();
-    $val->name('contacto_telefono_0')->value($datos['contacto_telefono_0'])->pattern('tel')->required();
+    $val->name('contacto_telefono_0')->value($datos['contacto_telefono_0'])->pattern('text')->required();
     $val->name('contacto_email_0')->value($datos['contacto_email_0'])->pattern('email')->required();          
     //
     return $val->isSuccess()?true:$val->getErrors();    

@@ -37,6 +37,7 @@ function showGestion(item){
 }
 
 function asociarEventosP3(){
+  
   document.querySelectorAll('input').forEach(item => {
     item.addEventListener('focusin', () => {
         item.removeAttribute('required')

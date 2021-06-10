@@ -45,7 +45,7 @@ export function moveSection(tipo){
         const respuesta = JSON.parse(response)
         let ans = displayErrors(respuesta)
         if(ans){
-            mover(tipo)
+            mover(tipo)        
             showSection()
             showModal(respuesta.res,respuesta.mensaje)
         }
@@ -61,7 +61,7 @@ export async function finalSection(){
     await finalizar(nit).then((response)=>{
         let respuesta = JSON.parse(response)
         showModal(respuesta.res,respuesta.mensaje)
-        setTimeout(()=>window.location.replace("http://www.sp.com.co/"), 4000);
+        setTimeout(()=>window.location.replace("http://www.sp.com.co/"), 4000);        
     })
 }
 

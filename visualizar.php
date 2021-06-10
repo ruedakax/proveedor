@@ -48,14 +48,14 @@
       </div>
       <div class="form-box">
           <div id="tabs" class="tab" data-tipo-persona="<?php echo $datos['tipo_persona']?>" data-tipo-registro="<?php echo $datos['tipo_registro']?>" data-nit="<?php echo $_GET['i']?>">
-            <button class="tablinks" id='panel_1'>Secc. Uno</button>
-            <button class="tablinks" id='panel_2'>Secc. Dos</button>
-            <button class="tablinks" id='panel_3'>Secc. Tres</button>
-            <button class="tablinks" id='panel_5'>Secc. Cinco</button>
-            <button class="tablinks" id='panel_6'>Secc. Seis</button>
-            <button class="tablinks" id='panel_7'>Secc. Siete</button>
-            <button class="tablinks" id='panel_8'>Secc. Ocho</button>
-            <button class="tablinks" id='panel_9'>Secc. Anexos</button>
+            <button class="tablinks" id='panel_1'>Panel Uno</button>
+            <button class="tablinks" id='panel_2'>Panel Dos</button>
+            <button class="tablinks" id='panel_3'>Panel Tres</button>
+            <button class="tablinks" id='panel_5'>Panel Cinco</button>
+            <button class="tablinks" id='panel_6'>Panel Seis</button>
+            <button class="tablinks" id='panel_7'>Panel Siete</button>
+            <button class="tablinks" id='panel_8'>Panel Ocho</button>
+            <button class="tablinks" id='panel_9'>Panel Anexos</button>
             <button class="tablinks" id='aprobacion'>Revisión</button>
             <button class="tablinks" id='administracion'>Administrar</button>
           </div>

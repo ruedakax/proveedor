@@ -12,6 +12,7 @@ require_once("./class/class.Panel7.php");
 require_once("./class/class.Panel8.php");
 require_once("./class/class.Panel9.php");
 require_once("./class/class.Admin.php");
+require_once("./class/class.Rol.php");
 
 class Panel{
 
@@ -129,5 +130,33 @@ class Panel{
                 # code...
             break;
         }
-    }    
+    }
+    
+    public function callMethodRol($datos){
+        $datos = SOConexion::stripInput($datos);
+        $rol = new Rol();
+        $tipo_bd = isset($datos['tipo_bd'])?$datos['tipo_bd']:'';                
+        $rol->conn = $tipo_bd==='bpms'?SOConexion::conexion_db('c29mdGxhbmQ=','U3BhZG1pbjEzNQ==','BPMS'):SOConexion::conexion_db();
+        $metodo = $datos['accion'];
+        switch ($metodo) {
+            case 'listarUsuarios':
+                return $rol->listarUsuarios();
+            break;
+            case 'listar':
+                return $rol->listar($datos);
+            break;            
+            case 'agregar':
+                return $rol->agregar($datos);
+            break;            
+            case 'eliminar':
+                return $rol->eliminar($datos);
+            break;            
+            case 'buscar':
+                return $rol->buscar($datos);
+            break;            
+            default:
+                # code...
+            break;
+        }
+    }
 }

@@ -3,6 +3,16 @@ import {sendAdmin} from './envio.js'
 import {displayErrors} from './general.js'
 import {showModal} from './modal.js'
 
+document.querySelectorAll('.tablinks').forEach(item => {
+  item.addEventListener('click', () => {
+      if(item.id==="administracion"){
+        window.location.replace("./administrar.php")
+      }else{
+        window.location.replace("./roles.php")
+      }      
+  })
+});
+
 document.querySelector('#programar').addEventListener('click',()=>{  
   let email = document.querySelector('#email').value
   let nit = document.querySelector('#nit').value  
@@ -64,7 +74,7 @@ async function buscar(busqueda){
 
 function eventoRadios(){
   document.querySelectorAll('.item-list').forEach(item=>{
-     item.addEventListener('click',()=>{
+    item.addEventListener('click',()=>{
       document.querySelector('#nit').setAttribute('value',item.getAttribute('id'))
       document.querySelector('#email').setAttribute('value',item.getAttribute('value'))            
     })   
