@@ -103,10 +103,10 @@ async function buscar(busqueda){
 
 function eventoRadios(){
   document.querySelectorAll('.item-list').forEach(item=>{
-    item.addEventListener('click',()=>{      
+    item.addEventListener('click',()=>{            
       document.querySelector('#usuario').setAttribute('value',item.getAttribute('id'))
-      let permisos = item.getAttribute('value')
-      setChecks(permisos)      
+      let permisos = item.getAttribute('value')      
+      setChecks(permisos)
     })   
   })
 }
