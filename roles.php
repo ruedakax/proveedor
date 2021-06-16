@@ -67,6 +67,7 @@
                   <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="panel_7">Panel Siete.</label><br/>
                   <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="panel_8">Panel Ocho.</label>
                   <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="panel_9">Panel Nueve.</label>
+                  <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="evidencias">Evidencias.</label>
                   <label class="alt_label c-form-label"><input type="checkbox" name="secciones[]" class="secciones" value="administracion"><u>Administración.</u></label>
               </fieldset>              
               <fieldset>

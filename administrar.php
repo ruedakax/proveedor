@@ -1,8 +1,14 @@
 <?php
+  session_start();
   error_reporting(E_ALL);
   require_once("./class/class.Panel.php");
-  //
   $panel = new Panel();
+  //
+  $datos['accion'] = 'consultar';
+  $datos['usuario'] = isset($_SESSION['USUARIO'])?$_SESSION['USUARIO']:'';
+  $roles = $panel->callMethodRol($datos);
+  $roles['res']?'':die("¡No cuenta con permisos para esta aplicación!");
+  //
   $datos['accion'] = 'listar';
   $lista = $panel->callMethod($datos);
   //
@@ -38,9 +44,18 @@
       <div class="form-box">
           <div id="tabs" class="tab">
             <button class="tablinks" id='administracion'>Panel de registros</button>
-            <button class="tablinks" id='usuarios'>Panel de permisos</button>
+            <?php 
+              if(strpos($roles['datos']['permisos'],'administracion')!==FALSE){
+            ?>
+              <button class="tablinks" id='usuarios'>Panel de permisos</button>
+            <?php 
+              }
+            ?>
           </div>
       </div>
+      <?php
+        if(strpos($roles['datos']['permisos'],'administracion')!==FALSE){
+      ?>
       <div class="form-box">
         <div class="c-form">
           <form class="" name="c-form" action="" method="post" id="">
@@ -61,6 +76,9 @@
           </form>
         </div>
       </div>
+      <?php
+        }
+      ?>
       <div class="form-box"><h3>Búsqueda&nbsp;<span id="load_search" class="oculto"><img src="./images/loading.gif" width="20px" height="20px"></span></h3></div>
       <div class="form-box">
         <div class="c-form">          

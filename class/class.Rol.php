@@ -9,6 +9,18 @@ class Rol{
     //variable que espera el objeto conexion de base de datos
     public $conn;
 
+    private $menu = array('panel_1'=>'Panel Uno',
+                        'panel_2'=>'Panel Dos',
+                        'panel_3'=>'Panel Tres',
+                        'panel_5'=>'Panel Cinco',
+                        'panel_6'=>'Panel Seis',
+                        'panel_7'=>'Panel Siete',
+                        'panel_8'=>'Panel Ocho',
+                        'panel_9'=>'Panel Nueve',
+                        'evidencias'=>'Evidencias',
+                        'administracion'=>'Administración',
+    );
+
     public function listar(){
         $query_string = "SELECT username,nombre,email,permisos
                          FROM dbo.ruRol
@@ -84,7 +96,7 @@ class Rol{
         $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'panel'=>[]];
         //        
         $res = $this->validar($datos);
-        $usuarioExiste = $this->getUsuarioBMPS($datos['usuario']);        
+        $usuarioExiste = $this->getUsuarioBMPS($datos['usuario']);
         //
         if(!is_array($res) && $usuarioExiste !==false){
             $datos_organizados = $this->organizarDatos($datos,$usuarioExiste);
@@ -145,11 +157,12 @@ class Rol{
         $registro = NULL;
         try {
           $sql = odbc_exec($this->conn,$query_string);
-          $registro = odbc_fetch_array($sql);
+          $registro = odbc_fetch_array($sql);          
           //odbc_close($this->conn);
         }catch (\Throwable $th) {
             var_dump($th);
         }
+        return $registro;
     }
 
     public function guardar($datos){
@@ -220,6 +233,16 @@ class Rol{
             }
         }        
         return $registros;
+    }
+
+    public function menu($permisos){
+        $menu ='';
+        $items = explode(',',$permisos['permisos']);        
+        foreach($items as $valor){
+           $menu .= $valor!='administracion'?'<button class="tablinks" id="'.$valor.'">'.$this->menu[$valor].'</button>':'<button class="tablinks" id="aprobacion">Revisión</button>';           
+        }        
+        $menu .= '<button class="tablinks" id="administracion">Administrar</button>';
+        return $menu;
     }
 }//end class
 

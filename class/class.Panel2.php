@@ -203,14 +203,14 @@ class Panel2{
     $val->name('cuenta_banco')->value($datos['cuenta_banco'])->pattern('text')->required();
     $val->name('cuenta')->value($datos['cuenta'])->pattern('text')->required();
     $val->name('cuenta_tipo')->value($datos['cuenta_tipo'])->pattern('alpha')->required();
-    $val->name('refban_sucursal_0')->value($datos['refban_sucursal_0'])->pattern('text')->required();
+    /*$val->name('refban_sucursal_0')->value($datos['refban_sucursal_0'])->pattern('text')->required();
     $val->name('refban_banco_0')->value($datos['refban_banco_0'])->pattern('text')->required();
     $val->name('refban_cuenta_0')->value($datos['refban_cuenta_0'])->pattern('text')->required();
     $val->name('refban_telefono_0')->value($datos['refban_telefono_0'])->pattern('tel')->required();
     $val->name('refban_contacto_0')->value($datos['refban_contacto_0'])->pattern('text')->required();
     $val->name('refcom_empresa_0')->value($datos['refcom_empresa_0'])->pattern('text')->required();
     $val->name('refcom_contacto_0')->value($datos['refcom_contacto_0'])->pattern('text')->required();
-    $val->name('refcom_cupos_0')->value($datos['refcom_cupos_0'])->pattern('text')->required();
+    $val->name('refcom_cupos_0')->value($datos['refcom_cupos_0'])->pattern('text')->required();*/ 
     if($datos['i2_p6_check'] == 'SI'){
       $val->name('i2_p6_empresas')->value($datos['i2_p6_empresas'])->pattern('text')->required();      
     }

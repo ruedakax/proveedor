@@ -361,7 +361,8 @@ class Admin{
 
     private function setItem($registro){
         $nit_encoded = base64_encode($registro['nit']);
-        $nombre = isset($registro['nombre'])?$registro['nombre']:$registro['nit'];        
+        $sep = !isset($registro['nombre']) && strpos($registro['nit'],'-')!==FALSE?'-':'';
+        $nombre = isset($registro['nombre'])?$registro['nombre']:number_format(explode('-',$registro['nit'])[0],0,'.',',').$sep.@explode('-',$registro['nit'])[1];
         $link = $registro['fase']==='revisor'?'&nbsp;<a class="status-saved" href="./visualizar.php?i='.$nit_encoded.'">(Revisar)</a>':'';
         $item = '<div class="four-columns">
                     <fieldset>

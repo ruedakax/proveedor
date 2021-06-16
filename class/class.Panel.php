@@ -11,6 +11,7 @@ require_once("./class/class.Panel6.php");
 require_once("./class/class.Panel7.php");
 require_once("./class/class.Panel8.php");
 require_once("./class/class.Panel9.php");
+require_once("./class/class.Evidencias.php");
 require_once("./class/class.Admin.php");
 require_once("./class/class.Rol.php");
 
@@ -22,10 +23,13 @@ class Panel{
 
     public $instacia;    
 
+    //se configuran los paneles que tienen envio de archivo
+    private $panelArchivos = array('panel_9','evidencias');
+
     function __construct($tipo=NULL,$accion=NULL){
         $this->tipo = $tipo;
         $this->accion = $accion;
-    }
+    }    
 
     public function callPanel(){
         switch ($this->tipo) {
@@ -68,6 +72,10 @@ class Panel{
                 $this->instacia  = new Panel9();
                 $this->instacia->conn = SOConexion::conexion_db();
             break;
+            case 'evidencias':
+                $this->instacia  = new Evidencias();
+                $this->instacia->conn = SOConexion::conexion_db();
+            break;
             default:
                 echo "¡ERROR!: CONSULTE AL ADMON";
                 die;
@@ -84,7 +92,7 @@ class Panel{
                 return $this->instacia->consultar($datos);
             break;
             case 'guardar':                                
-                return $this->tipo=='panel_9'?$this->instacia->guardar($datos,$archivos):$this->instacia->guardar($datos);
+                return in_array($this->tipo,$this->panelArchivos)?$this->instacia->guardar($datos,$archivos):$this->instacia->guardar($datos);
             break;
             case 'preparar':                                
                 return $this->instacia->preparar($datos);
@@ -154,6 +162,18 @@ class Panel{
             case 'buscar':
                 return $rol->buscar($datos);
             break;            
+            case 'menu':
+                return $rol->menu($datos);
+            break;            
+            case 'consultar':
+                $respuesta = array('res'=>FALSE,'datos'=>array());
+                $usuario = $rol->consultar($datos['usuario']);                
+                if(!empty($usuario['username'])){
+                    $respuesta['datos'] = $usuario;
+                    $respuesta['res'] = TRUE;
+                }
+                return $respuesta;
+            break;
             default:
                 # code...
             break;

@@ -1,9 +1,21 @@
 <?php
+  session_start();
   error_reporting(E_ALL);
   require_once("./class/class.Panel.php");  
   //
   $nit = isset($_GET['i'])?$_GET['i']:NULL;
-  $panel   = new Panel('panel_1','consultar');
+  $panel  = new Panel();
+  //
+  $datos['accion'] = 'consultar';
+  $datos['usuario'] = isset($_SESSION['USUARIO'])?$_SESSION['USUARIO']:'';
+  $roles = $panel->callMethodRol($datos);
+  $roles['res']||!empty($roles['datos']['permisos'])?'':die("¡No cuenta con permisos para esta aplicación!");
+  //armado de menu segun permisos
+  $datos['accion'] = 'menu';
+  $datos['permisos'] = $roles['datos']['permisos'];
+  $menu = $panel->callMethodRol($datos);
+  //  
+  $panel  = new Panel('panel_1','consultar');
   $panel->callPanel();
   $datos = $panel->callAccion(array($nit))['datos'];  
   $panel = NULL;
@@ -48,16 +60,9 @@
       </div>
       <div class="form-box">
           <div id="tabs" class="tab" data-tipo-persona="<?php echo $datos['tipo_persona']?>" data-tipo-registro="<?php echo $datos['tipo_registro']?>" data-nit="<?php echo $_GET['i']?>">
-            <button class="tablinks" id='panel_1'>Panel Uno</button>
-            <button class="tablinks" id='panel_2'>Panel Dos</button>
-            <button class="tablinks" id='panel_3'>Panel Tres</button>
-            <button class="tablinks" id='panel_5'>Panel Cinco</button>
-            <button class="tablinks" id='panel_6'>Panel Seis</button>
-            <button class="tablinks" id='panel_7'>Panel Siete</button>
-            <button class="tablinks" id='panel_8'>Panel Ocho</button>
-            <button class="tablinks" id='panel_9'>Panel Anexos</button>
-            <button class="tablinks" id='aprobacion'>Revisión</button>
-            <button class="tablinks" id='administracion'>Administrar</button>
+            <?php
+              echo $menu;
+            ?>
           </div>
       </div>
       <form class="all-form" name="c-form" action="./api.php" method="post" id="c-form">

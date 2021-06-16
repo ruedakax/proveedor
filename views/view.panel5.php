@@ -1,8 +1,13 @@
 <!-- INCIO -  C A B E C E R A   I N F O R M A C I O N  -->
 <div class="form-box panel_5"><h3>5. Control Lavado de Activos y Financiación del Terrorismo (LA/FT)<i class="arrow down"></i></h3></div>
-<div class="form-box panel_1 pequena  item-sucursal"><p>&nbsp;* Oprima el botón&nbsp;<i>Siguiente</i>&nbsp; de la parte inferior para guardar la información del presente formulario y continuar con el proceso</p></div>
+<div class="form-box panel_5 pequena  item-sucursal"><p>&nbsp;* Oprima el botón&nbsp;<i>Siguiente</i>&nbsp; de la parte inferior para guardar la información del presente formulario y continuar con el proceso</p></div>
 <div class="form-box panel_5" id="panel_5">
   <div class="c-form">
+    <div>
+      <fieldset>
+        <label class="c-form-label negrita" for="">Para todos los efectos, la aceptación del documento se entenderá como la firma del mismo.</label><br/>        
+      </fieldset>
+    </div>
     <div>
       <fieldset>
         <label class="c-form-label negrita" for="i5_p1_check">¿La empresa se encuentra obligada a cumplir normas de prevención de lavado de activos y finaciación del terrorismo? (Ingresos operacionales del año inmediatamente anterior > 160.000 SMMLV)<span class="c-form-required"> *</span></label><br/>

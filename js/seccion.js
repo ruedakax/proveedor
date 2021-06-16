@@ -38,21 +38,30 @@ export function showSection(){
 }
 
 export function moveSection(tipo){
-    window.overlay.classList.remove('oculto')
-    let res = funciones[getIndex()].save()
-    //promesa
-    res.then(function(response){
-        const respuesta = JSON.parse(response)
-        let ans = displayErrors(respuesta)
-        if(ans){
-            mover(tipo)        
-            showSection()
-            showModal(respuesta.res,respuesta.mensaje)
-        }
-    })
-    .catch(function(response){
-        console.log(response)
-    });            
+    let actual = parseInt(document.querySelector('#buttonPanel').dataset.current)    
+    const limite_sup = JSON.parse(document.querySelector('#buttonPanel').dataset.paneles).length
+    window.overlay.classList.remove('oculto')    
+    if(actual < limite_sup-1){
+        let res = funciones[getIndex()].save()
+        //promesa
+        res.then(function(response){
+            const respuesta = JSON.parse(response)
+            let ans = displayErrors(respuesta)
+            if(ans){
+                mover(tipo)        
+                showSection()
+                showModal(respuesta.res,respuesta.mensaje)
+            }
+        })
+        .catch(function(response){
+            console.log(response)
+        });            
+    }else{
+        console.log("seccion")
+        mover(tipo)        
+        showSection()
+        window.overlay.classList.add('oculto')
+    }    
 }
 
 export async function finalSection(){    

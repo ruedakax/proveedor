@@ -169,6 +169,7 @@
                 <label class="alt_label c-form-label"><input type="checkbox" name="i2_p9_postventa[]" value="asesoria" <?php echo strpos($datos['i2_p9_postventa'],'asesoria')!==FALSE?'checked':''?>>Asesoria</label>
                 <label class="alt_label c-form-label"><input type="checkbox" name="i2_p9_postventa[]" value="asistencia tecnica" <?php echo strpos($datos['i2_p9_postventa'],'asistencia tecnica')!==FALSE?'checked':''?>>Asistencia Técnica</label>
                 <label class="alt_label c-form-label"><input type="checkbox" name="i2_p9_postventa[]" value="devolucion" <?php echo strpos($datos['i2_p9_postventa'],'devolucion')!==FALSE?'checked':''?>>Devolución</label>
+                <label class="alt_label c-form-label"><input type="checkbox" name="i2_p9_postventa[]" value="otros" <?php echo strpos($datos['i2_p9_postventa'],'otros')!==FALSE?'checked':''?>>Otros</label>
             </fieldset>
         </div>              
     </div>

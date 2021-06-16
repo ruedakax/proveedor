@@ -201,7 +201,7 @@ class Panel5{
       $val->name('i5_p3_representado')->value($datos['i5_p3_representado'])->pattern('text')->required();
       $val->name('i5_p4_fuentes')->value($datos['i5_p4_fuentes'])->pattern('text')->required();    
       //
-      $val->name('acci_nombre_0')->value($datos['acci_nombre_0'])->pattern('text')->required();
+      /*$val->name('acci_nombre_0')->value($datos['acci_nombre_0'])->pattern('text')->required();
       $val->name('acci_nit_0')->value($datos['acci_nit_0'])->pattern('alphanum')->required();
       $val->name('acci_porcentaje_0')->value($datos['acci_porcentaje_0'])->pattern('text')->required();
       $val->name('acci_vinculado_0')->value($datos['acci_vinculado_0'])->pattern('text')->required();
@@ -209,13 +209,13 @@ class Panel5{
       $val->name('socied_nombre_0')->value($datos['socied_nombre_0'])->pattern('text')->required();
       $val->name('socied_identificacion_0')->value($datos['socied_identificacion_0'])->pattern('text')->required();
       $val->name('socied_empresa_0')->value($datos['socied_empresa_0'])->pattern('text')->required();
-      $val->name('socied_porcentaje_0')->value($datos['socied_porcentaje_0'])->pattern('text')->required();      
+      $val->name('socied_porcentaje_0')->value($datos['socied_porcentaje_0'])->pattern('text')->required();      */
       ///      
     }
-    $val->name('contacpro_nombre_0')->value($datos['contacpro_nombre_0'])->pattern('text')->required();
+    /*$val->name('contacpro_nombre_0')->value($datos['contacpro_nombre_0'])->pattern('text')->required();
     $val->name('contacpro_identificacion_0')->value($datos['contacpro_identificacion_0'])->pattern('text')->required();
     $val->name('contacpro_telefono_0')->value($datos['contacpro_telefono_0'])->pattern('text')->required();
-    $val->name('contacpro_email_0')->value($datos['contacpro_email_0'])->pattern('email')->required();
+    $val->name('contacpro_email_0')->value($datos['contacpro_email_0'])->pattern('email')->required();*/
     //
     $val->name('contacto_nombre_0')->value($datos['contacto_nombre_0'])->pattern('text')->required();
     $val->name('contacto_identificacion_0')->value($datos['contacto_identificacion_0'])->pattern('text')->required();

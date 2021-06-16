@@ -1,6 +1,6 @@
 import {getPanel,sendFile,sendAdmin} from './envio.js'
 import {start} from './general.js'
-import {showModal} from './modal.js' 
+import {showModal} from './modal.js'
 
 async function preparePanel9(){
   const nit = document.querySelector('#enviar').dataset.nit
@@ -119,6 +119,53 @@ export function finalizar(nit){
     formdata.append('i',nit)
     formdata.append('accion',accion)
     return sendAdmin(formdata)
+}
+
+export  function addEvidencia(id,idContenedor) {
+  let nodoEvidencia = `
+  <div class="four-columns">
+    <fieldset>
+        <label class="c-form-label negrita">Archivo<span class="c-form-required"> *</span></label><br/>
+        <input id="file_${id}" class="c-form-input" type="file" name="file_${id}" accept="image/jpeg, image/png, application/pdf">
+    </fieldset>            
+    <fieldset>
+        <label class="c-form-label negrita">Descripcion<span class="c-form-required"> *</span></label><br/>
+        <input id="desc_${id}" class="c-form-input" type="text" name="desc_${id}" value="">
+    </fieldset>            
+    <fieldset>
+        <label class="c-form-label">Una vez elegido el archivo, oprima enviar para guardarlo</label><br/>
+        <button class="myButton" type="button" id="boton_${id}" value="file_${id}">Enviar</button>
+    </fieldset>
+    <fieldset>
+        <label class="c-form-label" for="fecha_mercantil">Documento Actual<span class="c-form-required"></span></label>
+        <p class="status-nofile" id="status_${id}">Sin Asociar</p>
+    </fieldset>                         
+  </div>`  
+  const wrapper = document.createElement('div')
+  let contenedor = document.querySelector(`#${idContenedor}`)
+  wrapper.innerHTML = nodoEvidencia
+  contenedor.appendChild(wrapper)
+}
+
+export async function guardarEvidencia(id){        
+    const tipo = 'evidencias'
+    const nit = document.querySelector('#nueva').dataset.nit
+    const file = document.querySelector(`#file_${id}`).files[0]
+    const descripcion = document.querySelector(`#desc_${id}`).value
+    if(file && descripcion.trim()!==''){
+      var formdata = new FormData()
+      formdata.append('accion','guardar')
+      formdata.append('nit',nit)
+      formdata.append('source',id)
+      formdata.append('descripcion',descripcion)
+      formdata.append('tipo',tipo)
+      console.log(formdata)      
+      /////PROMESA
+      let respuesta = await sendFile(formdata)
+      //displayResponse(JSON.parse(respuesta))
+    }else{
+      showModal('error','¡Debe cargar un archivo y debe tener una descripción!')
+    }    
 }
 
 export  {preparePanel9,savePanel9}

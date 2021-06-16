@@ -37,7 +37,7 @@ export function mover(tipo){
     const paneles = JSON.parse(document.querySelector('#buttonPanel').dataset.paneles)
     let actual = parseInt(document.querySelector('#buttonPanel').dataset.current)    
     saveData(paneles[actual])
-    const step = actual < paneles.length - 1?actual:-1    
+    const step = actual //< paneles.length - 1?actual:-1    
     document.querySelector('#buttonPanel').dataset.current = tipo==='adelante'?step + 1:step - 1    
 }
 
