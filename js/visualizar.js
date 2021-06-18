@@ -40,14 +40,14 @@ async function visualizar(panel){
       })
     })
     //asocia el evento especifico para la sección de anexos
-    if(panel === 'panel_9')  {
+    //if(panel === 'panel_9')  {
         document.querySelectorAll('.view').forEach(item => {
             item.addEventListener('click', () => {
               const url = item.dataset.url
               displayView(url)
             })
-          });
-    }
+        });
+    //}
     //asocia evento especifico a los botones de enviar 
     //cuando son del panel de evidencias
     let res1 = panel==='evidencias'?eventoBtnEvidencia():''

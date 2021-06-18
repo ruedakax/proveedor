@@ -9,7 +9,7 @@
   $datos['accion'] = 'consultar';
   $datos['usuario'] = isset($_SESSION['USUARIO'])?$_SESSION['USUARIO']:'';
   $roles = $panel->callMethodRol($datos);
-  $roles['res']||!empty($roles['datos']['permisos'])?'':die("¡No cuenta con permisos para esta aplicación!");
+  $roles['res']||!empty($roles['datos']['permisos'])?'':die("¡La sesión expiró ó no cuenta con permisos para esta aplicación!");
   //armado de menu segun permisos
   $datos['accion'] = 'menu';
   $datos['permisos'] = $roles['datos']['permisos'];
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="form-box">
-          <div id="tabs" class="tab" data-tipo-persona="<?php echo $datos['tipo_persona']?>" data-tipo-registro="<?php echo $datos['tipo_registro']?>" data-nit="<?php echo $_GET['i']?>">
+          <div id="tabs" class="tab" data-usuario="<?php echo $_SESSION['USUARIO']?>"  data-nit="<?php echo $_GET['i']?>">
             <?php
               echo $menu;
             ?>

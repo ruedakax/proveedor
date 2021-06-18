@@ -18,6 +18,7 @@ async function preparePanel9(){
   });
 
   document.querySelectorAll('.view').forEach(item => {
+    console.log(item)
     item.addEventListener('click', () => {
       const url = item.dataset.url
       displayView(url)
@@ -52,7 +53,7 @@ async function savePanel9(file_id){
   }   
 }
 
-function displayResponse(respuesta){
+function displayResponse(respuesta,evidencia){
   if(respuesta.res==='error'){
     let texto = '<p>' + respuesta.mensaje + '</p>'
     respuesta.validaciones.forEach(element => {
@@ -61,14 +62,16 @@ function displayResponse(respuesta){
     showModal(respuesta.res,texto)
   }else{    
     let archivo = respuesta.archivo
-    createLink(archivo)
+    createLink(archivo,evidencia)
     showModal(respuesta.res,respuesta.mensaje)
   }
 }
 
-function createLink(archivo){
-  const link = `<span class="view" data-url="./uploads/${archivo.nit}/${archivo.source}.${archivo.extension}">Ver</span>`
-  const banner = document.querySelector(`#status_${archivo.source}`)
+function createLink(archivo,evidencia = ''){  
+  const raiz = evidencia===''?'uploads':'uploads/evidencias'
+  const status = evidencia===''?`#status_${archivo.source}`:`#status_${archivo.source.split('_')[1]}`  
+  const link = `<span class="view" data-url="./${raiz}/${archivo.nit}/${archivo.source}.${archivo.extension}">Ver</span>`
+  const banner = document.querySelector(status)
   banner.classList.remove('status-nofile')
   banner.classList.add('status-saved')
   banner.innerHTML = link
@@ -147,11 +150,12 @@ export  function addEvidencia(id,idContenedor) {
   contenedor.appendChild(wrapper)
 }
 
-export async function guardarEvidencia(id){        
+export async function guardarEvidencia(id){
     const tipo = 'evidencias'
     const nit = document.querySelector('#nueva').dataset.nit
-    const file = document.querySelector(`#file_${id}`).files[0]
+    const file = document.querySelector(`#file_${id}`).files[0]    
     const descripcion = document.querySelector(`#desc_${id}`).value
+    const usuario = document.querySelector('#tabs').dataset.usuario
     if(file && descripcion.trim()!==''){
       var formdata = new FormData()
       formdata.append('accion','guardar')
@@ -159,10 +163,12 @@ export async function guardarEvidencia(id){
       formdata.append('source',id)
       formdata.append('descripcion',descripcion)
       formdata.append('tipo',tipo)
+      formdata.append('usuario',usuario)
       console.log(formdata)      
+      formdata.append(`file_${id}`,file);
       /////PROMESA
-      let respuesta = await sendFile(formdata)
-      //displayResponse(JSON.parse(respuesta))
+      let respuesta = await sendFile(formdata)      
+      displayResponse(JSON.parse(respuesta),tipo)
     }else{
       showModal('error','¡Debe cargar un archivo y debe tener una descripción!')
     }    

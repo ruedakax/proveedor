@@ -7,7 +7,7 @@
   $datos['accion'] = 'consultar';
   $datos['usuario'] = isset($_SESSION['USUARIO'])?$_SESSION['USUARIO']:'';
   $roles = $panel->callMethodRol($datos);
-  $roles['res']?'':die("¡No cuenta con permisos para esta aplicación!");
+  $roles['res']?'':die("¡La sesión expiró ó no cuenta con permisos para esta aplicación!");
   //
   $datos['accion'] = 'listar';
   $lista = $panel->callMethod($datos);

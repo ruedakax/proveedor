@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 //error_reporting(E_ALL);
 require_once("./class/class.Validation.php");
 require_once("./class/class.View.php");
@@ -8,20 +8,17 @@ require_once("./class/class.Archivo.php");
 class Evidencias{
 
   const DISPLAY_NONE = 'oculto';
-  const TARGET_DIR = "./uploads/%/evidencias";
+  const TARGET_DIR = "./uploads/evidencias/";
   //
   public $conn;
   
   public function preparar($datos,$soloMostrar=FALSE){
-    /*$res = $this->consultar($datos);
-    $info = $this->consultarGeneral($datos);
-    //*/
+    $res = $this->consultar($datos);    
+    //    
     $view = new View;
     // asignar datos
+    $view->data['datos'] = $res['datos'];
     $view->data['nit'] = base64_decode($datos['i']);
-    /*$view->data['general'] = $info;
-    $view->data['tipoPersona'] = isset($datos['tipoPersona'])?$datos['tipoPersona']:NULL;
-    $view->data['tipoRegistro'] = isset($datos['tipoRegistro'])?$datos['tipoRegistro']:NULL;*/
     // render
     $template = $soloMostrar==FALSE?'./views/view.evidencias.php':'./views/view.evidencias.php';
     $html = $view->render($template);
@@ -32,17 +29,19 @@ class Evidencias{
   public function guardar($datos,$archivos){
     $respuesta = ['res'=>'','mensaje'=>'','validaciones'=>[],'archivo'=>[]];
     //    
-    $nit = base64_decode($datos['nit']);
-    $source = $datos['fuente'];
-    $folder = sprintf(self::TARGET_DIR,$nit);
-    $fechaExpira = $datos['desc'];//no se requiere fecha pero se usa el campo para pasar la descripcion (shame on me)
+    $nit = $datos['nit'];
+    $source = "file_".$datos['source'];
+    $folder = self::TARGET_DIR.$nit;
+    $fechaExpira = $datos['descripcion'];//no se requiere fecha pero se usa el campo para pasar la descripcion (shame on me)
+    $usuario = $datos['usuario'];
     if(!file_exists($folder)){
       mkdir($folder);
     }    
-    $myFile = new Archivo($archivos[$source],$nit,$source,$fechaExpira);
-    if($myFile->validate($folder)){
+    $myFile = new Archivo($archivos[$source],$nit,$source,$fechaExpira);    
+    if($myFile->validate(self::TARGET_DIR)){      
       $myFile->fileArray['tmp_name'] = '';
-      $res = $this->execGuardar($myFile);
+      $myFile->fileArray['usuario'] = $usuario;
+      $res = $this->execGuardar($myFile);      
       if($res==FALSE){
         $res = $this->execActualizar($myFile);
         if($res){
@@ -72,13 +71,13 @@ class Evidencias{
 
   private function execGuardar($objArchivo){
     //preparar datos
-    $ruta = sprintf(self::TARGET_DIR,$objArchivo->nit)."/file_".$objArchivo->source.".".$objArchivo->extension;
+    $ruta = self::TARGET_DIR.$objArchivo->nit."/".$objArchivo->source.".".$objArchivo->extension;
     $datos_organizados = array($objArchivo->nit
                               ,$objArchivo->source
                               ,$objArchivo->fechaExpira
                               ,$objArchivo->fileArray["type"]
                               ,$ruta
-                              ,$_SESSION['USUARIO']
+                              ,$objArchivo->fileArray["usuario"]
                           );
     //
     $query_string = "INSERT INTO dbo.[ruEvidencias]
@@ -108,7 +107,7 @@ class Evidencias{
     $datos_organizados = array($objArchivo->fileArray["type"]
                               ,$ruta
                               ,$objArchivo->fechaExpira                              
-                              ,$_SESSION['USUARIO']
+                              ,$objArchivo->fileArray["usuario"]
                               ,$objArchivo->nit
                               ,$objArchivo->source);
     //
@@ -137,17 +136,17 @@ class Evidencias{
     //
     $query_string = "SELECT nit
     ,fuente
+    ,descripcion
     ,tipo
-    ,ruta
-    ,fecha_expira    
-    FROM dbo.[ruAnexos]
+    ,ruta    
+    FROM dbo.[ruEvidencias]
     WHERE nit = '%s'";
     $query_string = sprintf($query_string,base64_decode($parametros['i']));
     $res;
     $archivos = array();
     try {      
       $sql = odbc_exec($this->conn,$query_string);
-      while($datos_panel = odbc_fetch_array($sql)){                
+      while($datos_panel = odbc_fetch_array($sql)){
         $fuente = $datos_panel['fuente'];
         $archivos[$fuente] = $datos_panel;
       }
